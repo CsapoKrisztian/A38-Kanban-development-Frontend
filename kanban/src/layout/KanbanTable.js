@@ -6,14 +6,14 @@ function KanbanTable(props) {
 
   return (
     <React.Fragment>
-      <div className="container-fluid p-3">
+      <div className="container-fluid pt-1 pl-3 pr-3 pb-3">
         <div className="table-responsive-sm">
           <table className="table table-sm">
             <thead>
               <tr>
                 <th className="col-sm-1"></th>
                 {statuses.map((status) => (
-                  <th className="col-sm-1">
+                  <th key="" className="col-sm-1">
                     <Cell>{status}</Cell>
                   </th>
                 ))}
@@ -25,9 +25,7 @@ function KanbanTable(props) {
                   <Cell></Cell>
                 </th>
                 <th className="col-sm-1">
-                  <Cell>
-                    Ottoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-                  </Cell>
+                  <Cell></Cell>
                 </th>
                 <th className="col-sm-1">
                   <Cell></Cell>
