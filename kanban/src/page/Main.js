@@ -36,7 +36,7 @@ function Main() {
   }, [statuses]);
 
   if (statusContext.statusesAreLoaded) {
-    content = <KanbanTable />;
+    content = <KanbanTable statuses={statuses} />;
   }
 
   return content;

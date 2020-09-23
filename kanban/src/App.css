@@ -20,7 +20,7 @@ table {
 
 th,
 td {
-  min-width: 272px;
+  min-width: 200px;
   border: 1px solid #ddd;
 }
 

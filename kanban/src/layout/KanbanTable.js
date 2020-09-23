@@ -1,6 +1,8 @@
 import React from "react";
 
-function KanbanTable() {
+function KanbanTable(props) {
+  let { statuses } = props;
+
   return (
     <React.Fragment>
       <div className="container-fluid p-3">
@@ -9,8 +11,9 @@ function KanbanTable() {
             <thead>
               <tr>
                 <th></th>
-                <th>First</th>
-                <th>Second</th>
+                {statuses.map((status) => (
+                  <th>{status}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
