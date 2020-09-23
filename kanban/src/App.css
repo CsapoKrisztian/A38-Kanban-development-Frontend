@@ -14,14 +14,17 @@
 }
 
 table {
-  table-layout: fixed !important;
-  word-wrap: break-word !important;
+  word-wrap: break-word;
+}
+
+th {
+  font-size: 14px;
 }
 
 th,
 td {
-  min-width: 200px;
   border: 1px solid #ddd;
+  width: 15vw !important;
 }
 
 .spinner-container {

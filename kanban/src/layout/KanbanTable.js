@@ -1,4 +1,5 @@
 import React from "react";
+import Cell from "../styled_components/Cell";
 
 function KanbanTable(props) {
   let { statuses } = props;
@@ -6,21 +7,43 @@ function KanbanTable(props) {
   return (
     <React.Fragment>
       <div className="container-fluid p-3">
-        <div className="table-responsive">
-          <table>
+        <div className="table-responsive-sm">
+          <table className="table table-sm">
             <thead>
               <tr>
-                <th></th>
+                <th className="col-sm-1"></th>
                 {statuses.map((status) => (
-                  <th>{status}</th>
+                  <th className="col-sm-1">
+                    <Cell>{status}</Cell>
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th>Otto</th>
-                <td>Issue</td>
-                <td>Issue</td>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell>
+                    Ottoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                  </Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
+                <th className="col-sm-1">
+                  <Cell></Cell>
+                </th>
               </tr>
             </tbody>
           </table>
