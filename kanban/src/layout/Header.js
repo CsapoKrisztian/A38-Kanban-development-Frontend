@@ -14,13 +14,13 @@ function Header() {
           <b>Kanban</b>Sync
         </Link>
         <ul className="navbar-nav mr-auto"></ul>
-        <NavLinks className="row">
-          <Link className="text-white" href="(logout or user page)">
+        <NavLinks className="row pr-1">
+          <Link className="text-white" to="(logout or user page)">
             <div className="col p-2">
               <i className="fas fa-power-off"></i>
             </div>
           </Link>
-          <Link className="text-white mr-3" href="(filter)">
+          <Link className="text-white" to="(filter)">
             <div className="col p-2">
               <i className="fas fa-cogs"></i>
             </div>

@@ -12,3 +12,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+table {
+  table-layout: fixed !important;
+  word-wrap: break-word !important;
+}
+
+th,
+td {
+  min-width: 272px;
+  border: 1px solid #ddd;
+}
