@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StatusContext } from "../context/StatusContext";
+import { LabelContext } from "../context/LabelContext";
 import Loading from "../styled_components/Loading";
 import KanbanTable from "../layout/KanbanTable";
 import axios from "axios";
@@ -8,11 +8,11 @@ import serverUrl from "../context/ServerUrl";
 
 function Main() {
   let content = <Loading />;
-  const statusContext = useContext(StatusContext);
+  const labelContext = useContext(LabelContext);
   const [statuses, setStatuses] = useState([]);
 
   const getStatuses = () => {
-    if (!statusContext.statusesAreLoaded) {
+    if (!labelContext.statusesAreLoaded) {
       const url = `${serverUrl}/statuses`;
       const token = "";
       axios
@@ -23,11 +23,11 @@ function Main() {
         })
         .then((response) => {
           setStatuses(response);
-          statusContext.setStatuses(response);
-          statusContext.setStatusesAreLoaded(true);
+          labelContext.setStatuses(response);
+          labelContext.setStatusesAreLoaded(true);
         });
     } else {
-      setStatuses(statusContext.statuses);
+      setStatuses(labelContext.statuses);
     }
   };
 
@@ -39,7 +39,7 @@ function Main() {
   let projects = ["Project1", "Project2", "Project6"];
   let milestone = ["X"];
 
-  if (statusContext.statusesAreLoaded) {
+  if (labelContext.statusesAreLoaded) {
     content = (
       <React.Fragment>
         <Filters projects={projects} milestone={milestone}></Filters>

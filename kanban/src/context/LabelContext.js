@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export const StatusContext = createContext();
+export const LabelContext = createContext();
 
-export const StatusProvider = (props) => {
+export const LabelProvider = (props) => {
   const standardStatuses = [
     "Backlog",
     "Todo",
@@ -16,10 +16,10 @@ export const StatusProvider = (props) => {
   const [statusesAreLoaded, setStatusesAreLoaded] = useState(true);
 
   return (
-    <StatusContext.Provider
+    <LabelContext.Provider
       value={{ statuses, setStatuses, statusesAreLoaded, setStatusesAreLoaded }}
     >
       {props.children}
-    </StatusContext.Provider>
+    </LabelContext.Provider>
   );
 };

@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { StatusProvider } from "./context/StatusContext";
+import { LabelProvider } from "./context/LabelContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <StatusProvider>
+    <LabelProvider>
       <App />
-    </StatusProvider>
+    </LabelProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
