@@ -9,11 +9,11 @@ const Ribbon = styled.span`
   line-height: 20px;
   padding: 0 20px 0 20px;
   position: relative;
-  margin: 5px 10px 10px 0;
+  margin: 5px 10px 0 0;
   text-decoration: none;
   -webkit-transition: color 0.2s;
-  min-width: 150px !important;
-  max-width: 13vw !important;
+  min-width: 70px !important;
+  max-width: 100%;
   overflow: hidden;
 
   &:after {
