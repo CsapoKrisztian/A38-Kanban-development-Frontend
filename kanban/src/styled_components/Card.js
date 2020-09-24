@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Ribbon from "./Ribbon";
 
 const Container = styled.div`
   margin-bottom: 5px;
   font-size: 12px;
   white-space: normal !important;
+  text-align: left;
 `;
 
 const MilestoneBox = styled.div`
@@ -26,7 +28,15 @@ function Card() {
             </h6>
           </div>
         </div>
-        <div className="body">Title</div>
+
+        <div className="body">
+          <Ribbon>
+            <span>
+              Storyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+            </span>
+          </Ribbon>
+          Title
+        </div>
         <div></div>
       </Container>
     </React.Fragment>
