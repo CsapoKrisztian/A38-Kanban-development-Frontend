@@ -4,6 +4,7 @@ import Loading from "../styled_components/Loading";
 import KanbanTable from "../layout/KanbanTable";
 import axios from "axios";
 import Filters from "../styled_components/Filters";
+import serverUrl from "../context/ServerUrl";
 
 function Main() {
   let content = <Loading />;
@@ -12,7 +13,7 @@ function Main() {
 
   const getStatuses = () => {
     if (!statusContext.statusesAreLoaded) {
-      const url = "";
+      const url = `${serverUrl}/statuses`;
       const token = "";
       axios
         .get(url, {
@@ -36,7 +37,7 @@ function Main() {
   }, [statuses]);
 
   let projects = ["Project1", "Project2", "Project6"];
-  let milestone = "X";
+  let milestone = ["X"];
 
   if (statusContext.statusesAreLoaded) {
     content = (

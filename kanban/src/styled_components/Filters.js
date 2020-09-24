@@ -11,19 +11,32 @@ const FilterStyle = styled.div`
   text-align: left;
 `;
 
-function Filters(props) {
-  const { projects, milestone } = props;
-
-  let projectFilter = " ";
-  if (projects && projects !== undefined) {
-    let projectNames = projects.join(", ");
-    projectFilter = `Projects: ${projectNames}`;
+function showFilters(filterName, labelList) {
+  if (labelList && labelList !== undefined) {
+    let filterNames = labelList.join(", ");
+    return (
+      <div>
+        <b>{filterName}: </b>
+        {filterNames}
+      </div>
+    );
   }
+  return "";
+}
+
+function Filters(props) {
+  const { stories, projects, milestone } = props;
+
+  let storyFilter = showFilters("Stories", stories);
+  let projectFilter = showFilters("Projects", projects);
+  let milestoneFilter = showFilters("Milestones", milestone);
 
   return (
     <React.Fragment>
       <FilterStyle>
-        {projectFilter} | Milestone: {milestone}
+        {storyFilter}
+        {projectFilter}
+        {milestoneFilter}
       </FilterStyle>
     </React.Fragment>
   );
