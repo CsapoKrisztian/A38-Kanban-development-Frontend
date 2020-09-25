@@ -25,9 +25,7 @@ const useApiCall = (url, props) => {
       });
   }, [url]);
 
-  console.log(errorMessage);
   if (errorMessage !== "No errors") {
-    console.log("jjjj");
     history.push(`/error/${errorMessage}`);
   }
 
