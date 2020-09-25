@@ -16,14 +16,17 @@ function Main() {
       const url = `${serverUrl}/statuses`;
       const token = "";
       axios
-        .get(url, {
+        .get(
+          url /*, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
+        } */
+        )
         .then((response) => {
-          setStatuses(response);
-          labelContext.setStatuses(response);
+          setStatuses(response.data);
+          console.log(response.data);
+          labelContext.setStatuses(response.data);
           labelContext.setStatusesAreLoaded(true);
         });
     } else {

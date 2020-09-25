@@ -12,8 +12,8 @@ export const LabelProvider = (props) => {
     "Documentation",
   ];
 
-  const [statuses, setStatuses] = useState(standardStatuses);
-  const [statusesAreLoaded, setStatusesAreLoaded] = useState(true);
+  const [statuses, setStatuses] = useState([]);
+  const [statusesAreLoaded, setStatusesAreLoaded] = useState(false);
 
   return (
     <LabelContext.Provider

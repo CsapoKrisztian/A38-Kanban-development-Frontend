@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const Ribbon = styled.span`
   background: #8e44ad;
-  border-radius: 3px 0 0 3px;
   color: white;
   display: inline-block;
   height: 20px;
