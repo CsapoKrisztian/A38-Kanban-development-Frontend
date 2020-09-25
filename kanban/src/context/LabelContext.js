@@ -1,9 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
+import useApiCall from "../hooks/useApiCall";
+import serverUrl from "../context/ServerUrl";
 
 export const LabelContext = createContext();
 
 export const LabelProvider = (props) => {
-  const standardStatuses = [
+  const defaultStatuses = [
     "Backlog",
     "Todo",
     "Development",
@@ -12,12 +14,11 @@ export const LabelProvider = (props) => {
     "Documentation",
   ];
 
-  const [statuses, setStatuses] = useState([]);
-  const [statusesAreLoaded, setStatusesAreLoaded] = useState(false);
+  const [statuses, statusesAreLoading] = useApiCall(`${serverUrl}/statuses`);
 
   return (
     <LabelContext.Provider
-      value={{ statuses, setStatuses, statusesAreLoaded, setStatusesAreLoaded }}
+      value={{ defaultStatuses, statuses, statusesAreLoading }}
     >
       {props.children}
     </LabelContext.Provider>

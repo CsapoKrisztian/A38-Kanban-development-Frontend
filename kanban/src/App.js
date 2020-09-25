@@ -1,15 +1,20 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Main from "./page/Main";
 import Header from "./layout/Header";
+import ErrorMessage from "./layout/ErrorMessage";
+import history from "./context/history";
 
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router history={history}>
         <Header />
-        <Route exact path="/" component={Main} />
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route path="/error/:message" component={ErrorMessage} />
+        </Switch>
       </Router>
     </div>
   );
