@@ -20,7 +20,6 @@ const useApiCall = (url, props) => {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error.message);
         setErrorMessage(error.message);
       });
   }, [url]);

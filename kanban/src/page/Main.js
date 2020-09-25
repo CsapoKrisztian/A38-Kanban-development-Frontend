@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
-import { LabelContext } from "../context/LabelContext";
+import React from "react";
 import Loading from "../styled_components/Loading";
 import KanbanTable from "../layout/KanbanTable";
 import Filters from "../styled_components/Filters";
+import useApiCall from "../hooks/useApiCall";
+import serverUrl from "../context/ServerUrl";
 
 function Main() {
   let content = <Loading />;
-  const { statuses, statusesAreLoading } = useContext(LabelContext);
+  const [statuses, statusesAreLoading] = useApiCall(`${serverUrl}/statuses`);
 
   let projects = ["Project1", "Project2", "Project6"];
   let milestone = ["X"];
