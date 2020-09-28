@@ -8,7 +8,7 @@ const ScrollWrapper = styled.div`
 `;
 
 function KanbanTable(props) {
-  let { statuses } = props;
+  let { statuses, issues } = props;
 
   return (
     <React.Fragment>
