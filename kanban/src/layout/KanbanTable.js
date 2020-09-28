@@ -12,16 +12,9 @@ const getAlphaNumeric = (str) => {
   return str.replace(/[\W_]+/g, "");
 };
 
-/*const placeIssue = (issue, swimlaneClassName, statusClassName) => {
-  let cell = document.querySelector(`.${statusClassName}.${swimlaneClassName}`);
-  if (cell) {
-    cell.appendChild(<Card />);
-  }
-};*/
 const getCard = (issue, status) => {
   if (issue.status.title === status) {
-    console.log(issue.status.title);
-    return <Card />;
+    return <Card issue={issue} />;
   }
 };
 
@@ -32,16 +25,6 @@ const renderRow = (statuses, issues, swimlaneClassName) => {
     </td>
   ));
 };
-
-/*const renderIssues = (item) => {
-  return item.issues.map((issue) =>
-    placeIssue(
-      issue,
-      getAlphaNumeric(item.story.title),
-      getAlphaNumeric(issue.status.title)
-    )
-  );
-};*/
 
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
