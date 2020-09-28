@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Ribbon from "./Ribbon";
 import { CircleButton, CircleImg, CircleText } from "./Circle";
 import { Link } from "react-router-dom";
+import defaultImg from "../images/user_image.png";
 
 const Container = styled.div`
   margin-bottom: 5px;
@@ -39,7 +40,6 @@ const Footer = styled.div`
 `;
 
 function Card(props) {
-  console.log(props.issue);
   let {
     assignee,
     dueDate,
@@ -136,12 +136,21 @@ function Card(props) {
     );
   };
 
-  const getAssigneeBox = (assignee) => {
+  const getAssigneeBox = (assignee, defaultImg) => {
+    const addDefaultSrc = (ev) => {
+      ev.target.src =
+        "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+    };
+
     let assigneeCircle = "";
     if (assignee != null) {
       assigneeCircle = (
         <CircleButton>
-          <CircleImg src={assignee.avatarUrl} alt={assignee.name} />
+          <CircleImg
+            onError={addDefaultSrc}
+            src={assignee.avatarUrl}
+            alt={assignee.name}
+          />
         </CircleButton>
       );
     } // TODO img validation
@@ -153,7 +162,7 @@ function Card(props) {
       <Container className="card">
         <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
           <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-          {getAssigneeBox(assignee)}
+          {getAssigneeBox(assignee, defaultImg)}
         </div>
 
         <div className="body">

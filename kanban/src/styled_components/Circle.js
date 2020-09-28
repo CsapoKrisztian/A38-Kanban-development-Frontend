@@ -7,7 +7,7 @@ export const CircleButton = styled.div`
   padding-bottom: 30px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #28a745;
+  background-color: rgba(0, 0, 0, 0.03);
 `;
 
 export const CircleImg = styled.img`
@@ -24,7 +24,7 @@ export const CircleText = styled.h3`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: #333;
   margin: 0;
   padding: 0;
   font-size: 6vw;
