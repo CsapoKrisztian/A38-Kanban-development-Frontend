@@ -5,7 +5,6 @@ export const CircleButton = styled.div`
   text-align: center;
   position: relative;
   padding-bottom: 30px;
-  margin-bottom: 5px;
   border-radius: 50%;
   overflow: hidden;
   background-color: #28a745;

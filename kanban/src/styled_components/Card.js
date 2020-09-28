@@ -54,20 +54,26 @@ function Card(props) {
     userNotesCount,
   } = props.issue;
 
-  mileStone = mileStone != null ? mileStone.title : " ";
+  mileStone = mileStone != null ? mileStone.title : "Milestone";
 
   const getPriorityBox = (priority) => {
-    if (priority != null)
-      return (
-        <div className="text-center pt-2 pr-2">
-          <h6 className="align-self-center">
-            <span className="badge badge-danger p-2">
-              {priority.title.slice(-2)}
-            </span>
-          </h6>
-        </div>
+    let badge = (
+      <span className="badge badge-secondary text-secondary p-2"></span>
+    );
+
+    if (priority != null) {
+      badge = (
+        <span className="badge badge-danger p-2">
+          {priority.title.slice(-2)}
+        </span>
       );
-    return " ";
+    }
+
+    return (
+      <div className="col text-right d-flex justify-content-end">
+        <h6 className="align-self-center">{badge}</h6>
+      </div>
+    );
   };
 
   const getStoryRibbon = (story) => {
@@ -138,12 +144,8 @@ function Card(props) {
           <CircleImg src={assignee.avatarUrl} alt={assignee.name} />
         </CircleButton>
       );
-    }
-    return (
-      <div className="col text-right d-flex justify-content-end">
-        {assigneeCircle}
-      </div>
-    );
+    } // TODO img validation
+    return <div className="text-center pb-1 pt-1 pr-2">{assigneeCircle}</div>;
   };
 
   return (
@@ -151,7 +153,7 @@ function Card(props) {
       <Container className="card">
         <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
           <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-          {getPriorityBox(priority)}
+          {getAssigneeBox(assignee)}
         </div>
 
         <div className="body">
@@ -165,7 +167,7 @@ function Card(props) {
             <Footer className="row mt-1">
               {getNotesCounterBox(userNotesCount)}
               {getGitlabLogoBox(issueUrl)}
-              {getAssigneeBox(assignee)}
+              {getPriorityBox(priority)}
             </Footer>
           </div>
         </div>
