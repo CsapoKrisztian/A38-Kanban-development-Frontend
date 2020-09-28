@@ -3,13 +3,14 @@ import Loading from "../styled_components/Loading";
 import KanbanTable from "../layout/KanbanTable";
 import Filters from "../styled_components/Filters";
 import useApiCall from "../hooks/useApiCall";
-import serverUrl from "../context/ServerUrl";
 
 function Main() {
   let content = <Loading />;
-  const [statuses, statusesAreLoading] = useApiCall(`${serverUrl}/statuses`);
+  const [statuses, statusesAreLoading] = useApiCall(
+    `${process.env["REACT_APP_SERVER"]}/statuses`
+  );
   const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
-    `${serverUrl}/issues/orderByStory`
+    `${process.env["REACT_APP_SERVER"]}/issues/orderByStory`
   );
 
   let projects = ["Project1", "Project2", "Project6"];
