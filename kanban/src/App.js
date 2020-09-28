@@ -6,15 +6,17 @@ import LogIn from "./styled_components/LogIn"
 import Header from "./layout/Header";
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Header />
-          <Route exact path="/" component={Main}/>
-          <Route exact path="/login" component={LogIn}/>
-      </Router>
-    </div>
-  );
+
+
+    return (
+        <div className="App">
+            <Router>
+                <Header/>
+                <Route exact path="/" component={Main}/>
+                <Route path="/login" component={LogIn}/>
+            </Router>
+        </div>
+    );
 }
 
 export default App;
