@@ -27,7 +27,20 @@ const Footer = styled.div`
   color: gray;
 `;
 
-function Card() {
+function Card(issue) {
+  let {
+    assignee,
+    dueDate,
+    issueId,
+    issueUrl,
+    milestone,
+    priority,
+    project,
+    reference,
+    story,
+    title,
+    userNotesCount,
+  } = issue;
   return (
     <React.Fragment>
       <Container className="card">

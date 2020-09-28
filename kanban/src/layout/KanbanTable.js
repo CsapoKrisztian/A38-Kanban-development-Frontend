@@ -7,8 +7,63 @@ const ScrollWrapper = styled.div`
   overflow-x: auto;
 `;
 
+const getAlphaNumeric = (str) => {
+  if (str === "" || str === undefined) return "";
+  return str.replace(/[\W_]+/g, "");
+};
+
+/*const placeIssue = (issue, swimlaneClassName, statusClassName) => {
+  let cell = document.querySelector(`.${statusClassName}.${swimlaneClassName}`);
+  if (cell) {
+    cell.appendChild(<Card />);
+  }
+};*/
+const getCard = (issue, status) => {
+  if (issue.status.title === status) {
+    console.log(issue.status.title);
+    return <Card />;
+  }
+};
+
+const renderRow = (statuses, issues, swimlaneClassName) => {
+  return statuses.map((status) => (
+    <td className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}>
+      {issues.map((issue) => getCard(issue, status))}
+    </td>
+  ));
+};
+
+/*const renderIssues = (item) => {
+  return item.issues.map((issue) =>
+    placeIssue(
+      issue,
+      getAlphaNumeric(item.story.title),
+      getAlphaNumeric(issue.status.title)
+    )
+  );
+};*/
+
+const getContentOfFirstCellInRow = (item, swimlane) => {
+  if (swimlane === "STORY") {
+    return item.story.title;
+  }
+
+  let user = ""; //TODO
+  return user;
+};
+
+const renderContentOfTBody = (issues, statuses, swimlane) => {
+  return issues.map((item, index) => (
+    <tr key={index}>
+      <th className="col">{getContentOfFirstCellInRow(item, swimlane)}</th>
+      {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
+    </tr>
+  ));
+};
+
 function KanbanTable(props) {
   let { statuses, issues } = props;
+  let swimlane = "STORY";
 
   return (
     <React.Fragment>
@@ -19,27 +74,14 @@ function KanbanTable(props) {
               <thead>
                 <tr>
                   <th className="col"></th>
-                  {statuses.map((status) => (
-                    <th key="" className="col">
+                  {statuses.map((status, index) => (
+                    <th key={index} className="col">
                       {status}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th className="col"></th>
-                  <th className="col">
-                    <Card />
-                    <Card />
-                  </th>
-                  <th className="col"></th>
-                  <th className="col"></th>
-                  <th className="col"></th>
-                  <th className="col"></th>
-                  <th className="col"></th>
-                </tr>
-              </tbody>
+              <tbody>{renderContentOfTBody(issues, statuses, swimlane)}</tbody>
             </table>
           </div>
         </div>
