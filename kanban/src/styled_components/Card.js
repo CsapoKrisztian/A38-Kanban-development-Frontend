@@ -4,13 +4,7 @@ import Ribbon from "./Ribbon";
 import { CircleButton, CircleImg, CircleText } from "./Circle";
 import { Link } from "react-router-dom";
 import defaultImg from "../images/user_image.png";
-
-const Container = styled.div`
-  margin-bottom: 5px;
-  font-size: 12px;
-  white-space: normal !important;
-  text-align: left;
-`;
+import Container from "./Container";
 
 const MilestoneBox = styled.div`
   text-align: left;

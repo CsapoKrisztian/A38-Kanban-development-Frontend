@@ -2,6 +2,17 @@ import React from "react";
 import Card from "../styled_components/Card";
 import styled from "styled-components";
 
+const Center = styled.th`
+  position: relative;
+`;
+
+const Inner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const ScrollWrapper = styled.div`
   white-space: nowrap;
   overflow-x: auto;
@@ -38,7 +49,9 @@ const getContentOfFirstCellInRow = (item, swimlane) => {
 const renderContentOfTBody = (issues, statuses, swimlane) => {
   return issues.map((item, index) => (
     <tr key={index}>
-      <th className="col">{getContentOfFirstCellInRow(item, swimlane)}</th>
+      <Center className="col">
+        <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
+      </Center>
       {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
     </tr>
   ));
