@@ -1,16 +1,16 @@
-import React from "react";
-import Loading from "../styled_components/Loading";
-import KanbanTable from "../layout/KanbanTable";
-import Filters from "../styled_components/Filters";
-import useApiCall from "../hooks/useApiCall";
-import serverUrl from "../context/ServerUrl";
+import React from 'react';
+import Loading from '../styled_components/Loading';
+import KanbanTable from '../layout/KanbanTable';
+import Filters from '../styled_components/Filters';
+import useApiCall from '../hooks/useApiCall';
+import { serverUrl } from '../context/Urls';
 
 function Main() {
   let content = <Loading />;
   const [statuses, statusesAreLoading] = useApiCall(`${serverUrl}/statuses`);
 
-  let projects = ["Project1", "Project2", "Project6"];
-  let milestone = ["X"];
+  let projects = ['Project1', 'Project2', 'Project6'];
+  let milestone = ['X'];
 
   if (!statusesAreLoading && statuses) {
     content = (

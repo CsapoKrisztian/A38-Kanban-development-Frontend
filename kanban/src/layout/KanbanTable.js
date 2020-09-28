@@ -1,6 +1,6 @@
-import React from "react";
-import Card from "../styled_components/Card";
-import styled from "styled-components";
+import React from 'react';
+import Card from '../styled_components/Card';
+import styled from 'styled-components';
 
 const ScrollWrapper = styled.div`
   white-space: nowrap;
@@ -20,7 +20,7 @@ function KanbanTable(props) {
                 <tr>
                   <th className="col"></th>
                   {statuses.map((status) => (
-                    <th key="" className="col">
+                    <th key={status} className="col">
                       {status}
                     </th>
                   ))}
