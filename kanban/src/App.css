@@ -41,3 +41,7 @@ td {
   text-align: center;
   min-height: 100vh;
 }
+
+.card-header {
+  min-height: 38px;
+}

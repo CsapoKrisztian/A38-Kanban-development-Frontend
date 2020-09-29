@@ -48,7 +48,7 @@ function Card(props) {
     userNotesCount,
   } = props.issue;
 
-  mileStone = mileStone != null ? mileStone.title : "Milestone";
+  mileStone = mileStone != null ? mileStone.title : " ";
 
   const getPriorityBox = (priority) => {
     let badge = (
