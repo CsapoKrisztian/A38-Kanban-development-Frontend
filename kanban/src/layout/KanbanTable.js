@@ -1,6 +1,6 @@
-import React from "react";
-import Card from "../styled_components/Card";
-import styled from "styled-components";
+import React from 'react';
+import Card from '../styled_components/Card';
+import styled from 'styled-components';
 
 const Center = styled.th`
   position: relative;
@@ -19,8 +19,8 @@ const ScrollWrapper = styled.div`
 `;
 
 const getAlphaNumeric = (str) => {
-  if (str === "" || str === undefined) return "";
-  return str.replace(/[\W_]+/g, "");
+  if (str === '' || str === undefined) return '';
+  return str.replace(/[\W_]+/g, '');
 };
 
 const getCard = (issue, status) => {
@@ -38,11 +38,11 @@ const renderRow = (statuses, issues, swimlaneClassName) => {
 };
 
 const getContentOfFirstCellInRow = (item, swimlane) => {
-  if (swimlane === "STORY") {
+  if (swimlane === 'STORY') {
     return item.story.title;
   }
 
-  let user = ""; //TODO
+  let user = ''; //TODO
   return user;
 };
 
@@ -59,7 +59,7 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
 
 function KanbanTable(props) {
   let { statuses, issues } = props;
-  let swimlane = "STORY";
+  let swimlane = 'STORY';
 
   return (
     <React.Fragment>
