@@ -12,3 +12,36 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+table {
+  word-wrap: break-word;
+}
+
+th {
+  font-size: 14px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  width: 15vw !important;
+  padding-top: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  padding-bottom: 0px !important;
+  min-width: 170px !important;
+  max-width: 15vw !important;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.card-header {
+  min-height: 38px;
+}
