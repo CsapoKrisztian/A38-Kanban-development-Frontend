@@ -5,7 +5,7 @@ import Main from './page/Main';
 import Header from './layout/Header';
 import ErrorMessage from './layout/ErrorMessage';
 import history from './context/history';
-import LogIn from './page/LogIn';
+import GetToken from './service/GetToken';
 
 function App() {
   return (
@@ -14,8 +14,8 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={Main} />
-          <Route exact path="/login" component={LogIn} />
           <Route path="/error/:message" component={ErrorMessage} />
+          <Route path="/getToken" component={GetToken} />
         </Switch>
       </Router>
     </div>
