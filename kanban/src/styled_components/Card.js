@@ -119,9 +119,13 @@ function Card(props) {
 
   const getGitlabLogoBox = (issueUrl) => {
     issueUrl = issueUrl != null ? issueUrl : "/";
+    const openTab = (issueUrl) => {
+      window.open(issueUrl);
+    };
+
     return (
       <div className="col text-center d-flex align-items-center justify-content-center">
-        <Link to={issueUrl}>
+        <Link onClick={() => openTab(issueUrl)}>
           <Gray>
             <i className="fab fa-gitlab"></i>
           </Gray>
