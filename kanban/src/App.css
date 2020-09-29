@@ -25,9 +25,9 @@ th,
 td {
   border: 1px solid #ddd;
   width: 15vw !important;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-top: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
   padding-bottom: 0px !important;
   min-width: 170px !important;
   max-width: 15vw !important;
