@@ -7,12 +7,11 @@ const NavLinks = styled.div`
   width: 100px;
 `;
 
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginRight = "250px";
-}
+const NavButton = styled.div`
+  cursor: pointer;
+`;
 
-function Header() {
+function Header(props) {
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-success bg-success">
@@ -24,15 +23,16 @@ function Header() {
         </button>
         <ul className="navbar-nav mr-auto"></ul>
         <NavLinks className="row pr-1">
-          <Link className="text-white" to="(logout or user page)">
-            <div className="col p-2">
+          <div className="text-white col p-2">
+            <NavButton // TODO onClick={logout}
+            >
               <i className="fas fa-power-off"></i>
-            </div>
-          </Link>
+            </NavButton>
+          </div>
           <div className="col p-2 text-white">
-            <button onClick={openNav}>
+            <NavButton onClick={props.toggleOpened}>
               <i className="fas fa-cogs"></i>
-            </button>
+            </NavButton>
           </div>
         </NavLinks>
       </nav>

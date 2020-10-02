@@ -1,22 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginRight = "0";
-}
+const SideMenu = styled.div``;
 
-function Settings() {
+function Settings(props) {
   return (
     <React.Fragment>
-      <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-          &times;
-        </a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-      </div>
+      <SideMenu style={props.currentStyle} className="sidenav"></SideMenu>
     </React.Fragment>
   );
 }
