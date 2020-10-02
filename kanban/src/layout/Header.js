@@ -14,7 +14,7 @@ const NavButton = styled.div`
 function Header(props) {
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-success bg-success">
+      <nav className="navbar sticky-top navbar-expand-lg navbar-success bg-success">
         <Link className="navbar-brand text-white" to="/">
           <b>Kanban</b>Sync
         </Link>
