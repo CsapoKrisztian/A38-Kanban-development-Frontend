@@ -1,11 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { getAuthorizationCodeUrl } from '../context/Urls';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { getAuthorizationCodeUrl } from "../context/Urls";
 
 const NavLinks = styled.div`
   width: 100px;
 `;
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginRight = "250px";
+}
 
 function Header() {
   return (
@@ -24,11 +29,11 @@ function Header() {
               <i className="fas fa-power-off"></i>
             </div>
           </Link>
-          <Link className="text-white" to="(filter)">
-            <div className="col p-2">
+          <div className="col p-2 text-white">
+            <button onClick={openNav}>
               <i className="fas fa-cogs"></i>
-            </div>
-          </Link>
+            </button>
+          </div>
         </NavLinks>
       </nav>
     </React.Fragment>
