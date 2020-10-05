@@ -1,35 +1,15 @@
 import React from "react";
 import ToggleSwitch from "../styled_components/ToggleSwitch";
-import Label from "../styled_components/Label";
-import useApiCall from "../hooks/useApiCall";
 import {
   SideMenu,
   Subtitle,
   FilterBox,
   ScrollableBox,
 } from "../styled_components/SidebarStyle";
+import ProjectLabels from "../styled_components/sidebar_components/ProjectLabels";
+import StorySelector from "../styled_components/sidebar_components/StorySelector";
 
 function Settings(props) {
-  let projectLabels = "";
-
-  const [projects, projectsAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}/projects`,
-    "GET"
-  );
-
-  if (!projectsAreLoading && projects) {
-    projectLabels = projects.map((project, index) => (
-      <Label
-        key={index}
-        title={
-          project.group === null
-            ? project.name
-            : project.group.name + "/" + project.name
-        }
-      />
-    ));
-  }
-
   return (
     <React.Fragment>
       <SideMenu style={props.currentStyle} className="sidenav">
@@ -44,13 +24,15 @@ function Settings(props) {
 
         <Subtitle>PROJECTS</Subtitle>
         <FilterBox className="">
-          <ScrollableBox>{projectLabels}</ScrollableBox>
+          <ScrollableBox>
+            <ProjectLabels />
+          </ScrollableBox>
         </FilterBox>
 
         <Subtitle>STORIES</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label title="Story" color="#34495E" />
+            <StorySelector />
           </ScrollableBox>
         </FilterBox>
 
