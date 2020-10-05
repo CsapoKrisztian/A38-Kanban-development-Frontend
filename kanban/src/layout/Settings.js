@@ -52,7 +52,21 @@ function Settings(props) {
           <div className="text-center">
             <ToggleSwitch />
           </div>
-          <div className="text-right">Project</div>
+          <div className="text-right">Story</div>
+        </FilterBox>
+
+        <Subtitle>PROJECTS</Subtitle>
+        <FilterBox className="">
+          <ScrollableBox>
+            <Label title="Project" />
+          </ScrollableBox>
+        </FilterBox>
+
+        <Subtitle>STORIES</Subtitle>
+        <FilterBox className="">
+          <ScrollableBox>
+            <Label title="Story" color="red" />
+          </ScrollableBox>
         </FilterBox>
 
         <Subtitle>MILESTONE</Subtitle>
@@ -63,20 +77,6 @@ function Settings(props) {
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
-        </FilterBox>
-
-        <Subtitle>STORIES</Subtitle>
-        <FilterBox className="">
-          <ScrollableBox>
-            <Label title="Story" color="red" />
-          </ScrollableBox>
-        </FilterBox>
-
-        <Subtitle>Projects</Subtitle>
-        <FilterBox className="">
-          <ScrollableBox>
-            <Label title="Project" />
-          </ScrollableBox>
         </FilterBox>
       </SideMenu>
     </React.Fragment>
