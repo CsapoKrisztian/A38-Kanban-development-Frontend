@@ -40,13 +40,11 @@ function Main() {
   let content = <Loading />;
   const [statuses, statusesAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/statuses`,
-    'GET',
-    false
+    'GET'
   );
   const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/issues/orderByStory`,
     'POST',
-    true,
     projectIds,
     milestoneTitles,
     storyTitles
