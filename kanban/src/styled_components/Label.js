@@ -1,28 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const LabelStyle = styled.button`
-  margin: 0px 6px 6px 0px !important;
-  max-width: 100%;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 5px;
-`;
-
-const off = `
-background-color: #6c757d;
-
-`;
-
 function Label(props) {
-  let style = off;
+  const offBgColor = "#6c757d";
+  const [bgColor, setBgColor] = useState(offBgColor);
+
+  const LabelStyle = styled.button`
+    background-color: ${(props) => (props.bg ? props.bg : "#17a2b8")};
+    &:hover {
+      filter: brightness(125%);
+    }
+    border: none;
+    margin: 0px 6px 6px 0px !important;
+    padding: 5px 10px;
+    max-width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    &:focus {
+      outline: 0;
+    }
+  `;
 
   return (
     <React.Fragment>
-      <LabelStyle type="button">{props.title}</LabelStyle>
+      <LabelStyle
+        bg={bgColor}
+        type="button"
+        onClick={() =>
+          setBgColor(bgColor === offBgColor ? props.color : offBgColor)
+        }
+      >
+        {props.title}
+      </LabelStyle>
     </React.Fragment>
   );
 }

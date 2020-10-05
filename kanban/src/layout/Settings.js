@@ -68,15 +68,7 @@ function Settings(props) {
         <Subtitle>STORIES</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label title="Story" />
-            <Label title="Story" />
-            <Label title="Story" />
-            <Label title="Story" />
-            <Label title="Story" />
-            <Label title="Storyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" />
-            <Label title="Story" />
-            <Label title="Story" />
-            <Label title="Story" />
+            <Label title="Story" color="red" />
           </ScrollableBox>
         </FilterBox>
 
