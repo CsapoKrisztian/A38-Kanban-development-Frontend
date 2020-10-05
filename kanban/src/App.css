@@ -5,17 +5,19 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #111;
+  background: #0b0f0f;
+  border-radius: 4px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #bbb;
+  background: #939ba2;
+  border-radius: 3px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #888;
+  background: #6c757d;
 }
 
 .navbar {

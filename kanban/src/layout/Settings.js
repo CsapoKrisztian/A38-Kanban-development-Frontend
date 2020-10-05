@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import ToggleSwitch from '../styled_components/ToggleSwitch';
+import React from "react";
+import styled from "styled-components";
+import ToggleSwitch from "../styled_components/ToggleSwitch";
 
 const SideMenu = styled.div`
   height: 100%;
@@ -38,6 +38,7 @@ const ScrollableBox = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 200px;
+  padding-right: 5px;
 `;
 
 const Label = styled.div`
