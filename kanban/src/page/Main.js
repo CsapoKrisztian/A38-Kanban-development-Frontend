@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Loading from '../styled_components/Loading';
 import KanbanTable from '../layout/KanbanTable';
 import Filters from '../styled_components/Filters';
@@ -6,7 +6,7 @@ import useApiCallGET from '../hooks/useApiCallGET';
 import useApiCallPOST from '../hooks/useApiCallPOST';
 
 function Main() {
-  let projectIds = [
+  const [projectIds, setProjectIds] = useState([
     'gid://gitlab/Project/1',
     'gid://gitlab/Project/2',
     'gid://gitlab/Project/3',
@@ -14,8 +14,9 @@ function Main() {
     'gid://gitlab/Project/5',
     'gid://gitlab/Project/6',
     'gid://gitlab/Project/7',
-  ];
-  let milestoneTitles = [
+  ]);
+
+  const [milestoneTitles, setMileStoneTitles] = useState([
     'First Milestone',
     'Milestone 4',
     'Third Milestone',
@@ -23,8 +24,9 @@ function Main() {
     'Milestone 1',
     'Milestone 3',
     'Milestone 2',
-  ];
-  let storyTitles = [
+  ]);
+
+  const [storyTitles, setStoryTitles] = useState([
     'Story 3',
     'story 1',
     'Documentation',
@@ -33,14 +35,17 @@ function Main() {
     'Story 2',
     'teszt',
     'Story 1',
-  ];
+  ]);
 
   let content = <Loading />;
   const [statuses, statusesAreLoading] = useApiCallGET(
     `${process.env['REACT_APP_SERVER']}/statuses`
   );
   const [issuesByStory, issuesByStoryAreLoading] = useApiCallPOST(
-    `${process.env['REACT_APP_SERVER']}/issues/orderByStory`
+    `${process.env['REACT_APP_SERVER']}/issues/orderByStory`,
+    projectIds,
+    milestoneTitles,
+    storyTitles
   );
 
   let projects = ['Project1', 'Project2', 'Project6'];
