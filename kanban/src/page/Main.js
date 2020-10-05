@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Loading from '../styled_components/Loading';
 import KanbanTable from '../layout/KanbanTable';
 import Filters from '../styled_components/Filters';
-import useApiCallGET from '../hooks/useApiCallGET';
-import useApiCallPOST from '../hooks/useApiCallPOST';
+
+import useApiCall from '../hooks/useApiCall';
 
 function Main() {
   const [projectIds, setProjectIds] = useState([
@@ -38,11 +38,13 @@ function Main() {
   ]);
 
   let content = <Loading />;
-  const [statuses, statusesAreLoading] = useApiCallGET(
-    `${process.env['REACT_APP_SERVER']}/statuses`
+  const [statuses, statusesAreLoading] = useApiCall(
+    `${process.env['REACT_APP_SERVER']}/statuses`,
+    'GET'
   );
-  const [issuesByStory, issuesByStoryAreLoading] = useApiCallPOST(
+  const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/issues/orderByStory`,
+    'POST',
     projectIds,
     milestoneTitles,
     storyTitles
