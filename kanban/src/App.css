@@ -1,16 +1,25 @@
-.App {
-  text-align: center;
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bbb;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+.navbar {
+  height: 60px !important;
 }
 
 table {
@@ -19,6 +28,7 @@ table {
 
 th {
   font-size: 14px;
+  text-align: center;
 }
 
 th,
@@ -44,4 +54,8 @@ td {
 
 .card-header {
   min-height: 38px;
+}
+
+#main {
+  transition: margin-right 0.3s;
 }
