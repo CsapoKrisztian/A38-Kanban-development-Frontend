@@ -50,7 +50,7 @@ function Settings(props) {
         <Subtitle>STORIES</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label title="Story" color="red" />
+            <Label title="Story" color="#34495E" />
           </ScrollableBox>
         </FilterBox>
 

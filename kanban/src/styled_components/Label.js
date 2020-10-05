@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 function Label(props) {
   const offBgColor = "#6c757d";
+  const [on, setOn] = useState(false);
   const [bgColor, setBgColor] = useState(offBgColor);
 
   const LabelStyle = styled.button`
@@ -31,9 +32,10 @@ function Label(props) {
       <LabelStyle
         bg={bgColor}
         type="button"
-        onClick={() =>
-          setBgColor(bgColor === offBgColor ? props.color : offBgColor)
-        }
+        onClick={() => {
+          setOn(on ? false : true);
+          setBgColor(bgColor === offBgColor ? props.color : offBgColor);
+        }}
       >
         {props.title}
       </LabelStyle>
