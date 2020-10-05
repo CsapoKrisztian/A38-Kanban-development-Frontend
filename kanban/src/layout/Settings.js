@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ToggleSwitch from "../styled_components/ToggleSwitch";
+import Label from "../styled_components/Label";
 
 const SideMenu = styled.div`
   height: 100%;
@@ -41,14 +42,6 @@ const ScrollableBox = styled.div`
   padding-right: 5px;
 `;
 
-const Label = styled.div`
-  margin: 0px 6px 0px 0px !important;
-  max-width: 100%;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
 function Settings(props) {
   return (
     <React.Fragment>
@@ -75,52 +68,22 @@ function Settings(props) {
         <Subtitle>STORIES</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">
-              StoryLongerTitle
-            </Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">
-              StoryLongLongSuperDuperLongTitle
-            </Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
-            <Label className="badge badge-secondary p-2">Story</Label>
+            <Label title="Story" />
+            <Label title="Story" />
+            <Label title="Story" />
+            <Label title="Story" />
+            <Label title="Story" />
+            <Label title="Storyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" />
+            <Label title="Story" />
+            <Label title="Story" />
+            <Label title="Story" />
           </ScrollableBox>
         </FilterBox>
 
         <Subtitle>Projects</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label className="badge badge-info p-2">Project</Label>
-            <Label className="badge badge-info p-2">Project</Label>
-            <Label className="badge badge-info p-2">ProjectLongTitle</Label>
-            <Label className="badge badge-info p-2">Project</Label>
-            <Label className="badge badge-info p-2">
-              ProjectLongLongSuperDuperLongTitle
-            </Label>
-            <Label className="badge badge-info p-2">Project</Label>
-            <Label className="badge badge-info p-2">Project</Label>
+            <Label title="Project" />
           </ScrollableBox>
         </FilterBox>
       </SideMenu>
