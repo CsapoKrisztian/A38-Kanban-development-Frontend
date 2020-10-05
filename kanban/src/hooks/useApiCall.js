@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import history from '../context/history';
 
-const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
+const useApiCall = (
+  url,
+  method,
+  withCredentials,
+  projectIds,
+  milestoneTitles,
+  storyTitles
+) => {
   const [fetchedData, setFetchedData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('No errors');
@@ -12,6 +19,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
     axios({
       method: method,
       url: url,
+      // withCredentials: withCredentials,
       data: {
         projectIds,
         milestoneTitles,
@@ -25,7 +33,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
       .catch((error) => {
         setErrorMessage(error.message);
       });
-  }, [milestoneTitles, projectIds, method, storyTitles, url]);
+  }, [milestoneTitles, projectIds, method, storyTitles, url, withCredentials]);
 
   if (errorMessage !== 'No errors') {
     history.push(`/error/${errorMessage}`);
