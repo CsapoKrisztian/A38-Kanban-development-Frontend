@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import ToggleSwitch from "../styled_components/ToggleSwitch";
+import React from 'react';
+import styled from 'styled-components';
+import ToggleSwitch from '../styled_components/ToggleSwitch';
 
 const SideMenu = styled.div`
   height: 100%;
@@ -63,8 +63,8 @@ function Settings(props) {
 
         <Subtitle>MILESTONE</Subtitle>
         <FilterBox className="">
-          <select class="custom-select">
-            <option selected>Select milestone</option>
+          <select className="custom-select">
+            <option defaultValue>Select milestone</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>

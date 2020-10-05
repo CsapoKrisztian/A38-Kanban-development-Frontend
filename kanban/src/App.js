@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import "./App.css";
-import { Router, Route, Switch } from "react-router-dom";
-import Main from "./page/Main";
-import Header from "./layout/Header";
-import ErrorMessage from "./layout/ErrorMessage";
-import history from "./context/history";
-import GetToken from "./service/GetToken";
-import Settings from "./layout/Settings";
+import React, { useState } from 'react';
+import './App.css';
+import { Router, Route, Switch } from 'react-router-dom';
+import Main from './page/Main';
+import Header from './layout/Header';
+import ErrorMessage from './layout/ErrorMessage';
+import history from './context/history';
+import GetToken from './service/GetToken';
+import Settings from './layout/Settings';
 
 const openedStyle = {
-  width: "250px",
+  width: '250px',
 };
 
 const closedStyle = {
@@ -17,7 +17,7 @@ const closedStyle = {
 };
 
 const pushedStyle = {
-  marginRight: "250px",
+  marginRight: '250px',
 };
 
 const expandedStyle = {
