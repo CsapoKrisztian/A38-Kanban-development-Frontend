@@ -17,24 +17,20 @@ function Main() {
   ]);
 
   const [milestoneTitles, setMileStoneTitles] = useState([
-    "First Milestone",
     "Milestone 4",
-    "Third Milestone",
-    "Second Milestone",
     "Milestone 1",
     "Milestone 3",
     "Milestone 2",
+    "Milestone 5",
   ]);
 
   const [storyTitles, setStoryTitles] = useState([
-    "Story 3",
-    "story 1",
     "Documentation",
-    "story 2",
-    "story 3",
-    "Story 2",
-    "teszt",
-    "Story 1",
+    "Test story 1",
+    "Test story 2",
+    "Test story 3",
+    "Test story 4",
+    "Test story 5",
   ]);
 
   let content = <Loading />;

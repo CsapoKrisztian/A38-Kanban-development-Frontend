@@ -9,8 +9,8 @@ export const SideMenu = styled.div`
   right: 0;
   background-color: #202b2d;
   overflow-x: hidden;
+  overflow-y: auto;
   transition: 0.3s;
-  padding-top: 50px;
 `;
 
 export const Subtitle = styled.div`
@@ -38,4 +38,12 @@ export const ScrollableBox = styled.div`
   overflow-y: auto;
   max-height: 200px;
   padding-right: 5px;
+`;
+
+export const Wrapper = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-bottom: 50px;
+  padding-top: 50px;
 `;
