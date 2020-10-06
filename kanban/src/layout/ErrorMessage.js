@@ -24,7 +24,7 @@ function ErrorMessage() {
   let { message } = useParams();
   return (
     <React.Fragment>
-      <Container className="">
+      <Container className="text-center">
         <ErrorLogo className="img-fluid" src={errorImg} alt="" />
         <br />
         <Message className="text-secondary text-center m-2">{message}</Message>

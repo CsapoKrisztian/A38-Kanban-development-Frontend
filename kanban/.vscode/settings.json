@@ -7,7 +7,9 @@
         "deets",
         "gitlab",
         "kanban",
+        "scrollbar",
         "sidenav",
+        "swimlanes",
         "webfonts"
     ]
 }
