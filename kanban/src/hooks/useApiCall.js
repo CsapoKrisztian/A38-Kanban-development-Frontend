@@ -11,6 +11,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
     setLoading(true);
     axios({
       method: method,
+      withCredentials: true,
       url: url,
       data: {
         projectIds,
