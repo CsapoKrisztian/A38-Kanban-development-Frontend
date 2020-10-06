@@ -11,7 +11,7 @@ const GetToken = () => {
 
   const getTokenUrl = `${serverUrl}/getToken?code=${code}`;
 
-  axios.get(getTokenUrl, { credentials: 'same-origin' }).then((response) => {
+  axios.get(getTokenUrl, { withCredentials: true }).then((response) => {
     console.log(response.data);
   });
 
