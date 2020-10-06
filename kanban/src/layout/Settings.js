@@ -1,46 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import ToggleSwitch from "../styled_components/ToggleSwitch";
-import Label from "../styled_components/Label";
-
-const SideMenu = styled.div`
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 60px;
-  right: 0;
-  background-color: #202b2d;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 50px;
-`;
-const Subtitle = styled.div`
-  margin: 5px 0px 5px 0px;
-  padding: 0 15px 0 15px;
-  overflow-x: hidden;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-align: left;
-  color: #888;
-  text-transform: uppercase;
-  width: 100%;
-  border-bottom: 1px solid #888;
-`;
-
-const FilterBox = styled.div`
-  color: white;
-  font-size: 16px;
-  margin: 10px 15px 40px 15px;
-`;
-
-const ScrollableBox = styled.div`
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: 200px;
-  padding-right: 5px;
-`;
+import {
+  SideMenu,
+  Subtitle,
+  FilterBox,
+  ScrollableBox,
+} from "../styled_components/SidebarStyle";
+import ProjectLabels from "../styled_components/sidebar_components/ProjectLabels";
+import StorySelector from "../styled_components/sidebar_components/StorySelector";
 
 function Settings(props) {
   return (
@@ -58,14 +25,14 @@ function Settings(props) {
         <Subtitle>PROJECTS</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label title="Project" />
+            <ProjectLabels />
           </ScrollableBox>
         </FilterBox>
 
         <Subtitle>STORIES</Subtitle>
         <FilterBox className="">
           <ScrollableBox>
-            <Label title="Story" color="red" />
+            <StorySelector />
           </ScrollableBox>
         </FilterBox>
 
