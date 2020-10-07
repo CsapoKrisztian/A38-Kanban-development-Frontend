@@ -4,7 +4,7 @@ import useApiCall from "../../hooks/useApiCall";
 import { FilterContext } from "../../context/FilterContext";
 
 function StoryLabels(props) {
-  let storyLabels = <p>"No stories in the selected projects."</p>;
+  let storyLabels = <p>No stories in the selected projects.</p>;
 
   const [stories, storiesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/stories`,

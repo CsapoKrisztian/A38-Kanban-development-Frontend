@@ -14,7 +14,7 @@ function MilestoneSelector() {
     setStoryTitles,
   ] = useContext(FilterContext);
 
-  let milestoneOptions = "No selected projects";
+  let milestoneOptions = <p>No selected projects</p>;
 
   if (
     projectIds !== undefined &&

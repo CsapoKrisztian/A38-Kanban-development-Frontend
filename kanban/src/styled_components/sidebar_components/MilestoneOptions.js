@@ -3,7 +3,7 @@ import { FilterContext } from "../../context/FilterContext";
 import useApiCall from "../../hooks/useApiCall";
 
 function MilestoneOptions(props) {
-  let milestoneDropdown = "No milestones in the selected projects.";
+  let milestoneDropdown = <p>No milestones in the selected projects.</p>;
 
   const [milestones, milestonesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/milestones`,

@@ -13,7 +13,7 @@ function StorySelector() {
     storyTitles,
     setStoryTitles,
   ] = useContext(FilterContext);
-  let storyLabels = <p>"No selected projects"</p>;
+  let storyLabels = <p>No selected projects</p>;
 
   if (
     projectIds !== undefined &&
