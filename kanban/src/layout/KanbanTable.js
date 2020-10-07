@@ -20,9 +20,7 @@ function KanbanTable(props) {
     storyTitles,
     setStoryTitles,
   ] = useContext(FilterContext);
-  let tableBody = <tr></tr>;
-
-  const [forceUpdate, setForceUpdate] = useState(tableBody);
+  const [tableBody, setTableBody] = useState(<tr></tr>);
 
   let disabled = true;
 
@@ -42,7 +40,7 @@ function KanbanTable(props) {
       milestoneTitles &&
       storyTitles
     ) {
-      tableBody = (
+      let issuesInTable = (
         <React.Fragment>
           <RenderIssues
             statuses={statuses}
@@ -53,7 +51,7 @@ function KanbanTable(props) {
           />
         </React.Fragment>
       );
-      setForceUpdate(tableBody);
+      setTableBody(issuesInTable);
     }
   };
 
@@ -73,7 +71,7 @@ function KanbanTable(props) {
                   ))}
                 </tr>
               </thead>
-              <tbody>{forceUpdate}</tbody>
+              <tbody>{tableBody}</tbody>
             </table>
           </div>
         </div>
@@ -82,8 +80,8 @@ function KanbanTable(props) {
         <button
           type="button"
           disabled={disabled}
-          className="btn btn-info"
-          onClick={() => getIssues()}
+          className="btn btn-success"
+          onClick={getIssues}
         >
           Get issues
         </button>

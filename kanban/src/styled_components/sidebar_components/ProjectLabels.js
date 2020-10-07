@@ -44,6 +44,7 @@ function ProjectLabels() {
     projectLabels = projects.map((project, index) => (
       <Label
         key={index}
+        projectId={project.id}
         addFilter={() => {
           addFilter(project.id);
         }}

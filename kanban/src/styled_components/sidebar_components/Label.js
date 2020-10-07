@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import { FilterContext } from "../../context/FilterContext";
 
 const LabelStyle = styled.button`
   background-color: ${(props) => (props.bg ? props.bg : "#17a2b8")};
@@ -24,23 +25,48 @@ const LabelStyle = styled.button`
 
 function Label(props) {
   const offBgColor = "#6c757d";
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
+
   const [bgColor, setBgColor] = useState(offBgColor);
 
+  const selectLabel = () => {
+    setBgColor(props.color);
+    props.addFilter();
+  };
+
+  const deselectLabel = () => {
+    setBgColor(offBgColor);
+    props.deleteFilter();
+  };
+
+  const handleClick = () => {
+    if (props.projectId == null) {
+      if (storyTitles.indexOf(props.title) < 0) {
+        console.log(storyTitles.indexOf(props.title));
+        selectLabel();
+      } else {
+        deselectLabel();
+      }
+    } else {
+      if (projectIds.indexOf(props.projectId) < 0) {
+        selectLabel();
+      } else {
+        deselectLabel();
+      }
+    }
+  };
   return (
     <React.Fragment>
-      <LabelStyle
-        bg={bgColor}
-        type="button"
-        onClick={() => {
-          if (bgColor === offBgColor) {
-            setBgColor(props.color);
-            props.addFilter();
-          } else {
-            setBgColor(offBgColor);
-            props.deleteFilter();
-          }
-        }}
-      >
+      <LabelStyle bg={bgColor} type="button" onClick={() => handleClick()}>
         {props.title}
       </LabelStyle>
     </React.Fragment>
