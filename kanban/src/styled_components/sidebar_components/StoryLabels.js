@@ -4,7 +4,7 @@ import useApiCall from "../../hooks/useApiCall";
 import { FilterContext } from "../../context/FilterContext";
 
 function StoryLabels(props) {
-  let storyLabels = "No stories in the selected projects.";
+  let storyLabels = <p>"No stories in the selected projects."</p>;
 
   const [stories, storiesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/stories`,
@@ -12,21 +12,35 @@ function StoryLabels(props) {
     props.projectIds
   );
 
-  const filterContext = useContext(FilterContext);
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
 
   const addFilter = (storyTitle) => {
-    let newStoryTitles = filterContext.storyTitles;
+    let newStoryTitles = storyTitles;
     newStoryTitles.push(storyTitle);
-    filterContext.setStoryTitles(newStoryTitles);
+    setStoryTitles(newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = filterContext.storyTitles;
+    let newStoryTitles = storyTitles;
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
-    filterContext.setStoryTitles(newStoryTitles);
+    setStoryTitles(newStoryTitles);
   };
 
-  if (!storiesAreLoading && stories) {
+  if (
+    !storiesAreLoading &&
+    stories !== undefined &&
+    stories !== null &&
+    stories.length > 0
+  ) {
     storyLabels = stories.map((story, index) => (
       <Label
         key={index}
@@ -37,7 +51,7 @@ function StoryLabels(props) {
           deleteFilter(story);
         }}
         title={story}
-        color="#34495E"
+        color="#8e44ad"
       />
     ));
   }

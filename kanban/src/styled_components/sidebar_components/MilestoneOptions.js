@@ -11,21 +11,35 @@ function MilestoneOptions(props) {
     props.projectIds
   );
 
-  const filterContext = useContext(FilterContext);
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
 
   const handleChange = (e) => {
     if (e.target.value === "0") {
-      filterContext.setMilestoneTitles([]);
+      setMilestoneTitles([]);
     } else if (e.target.value === "allmilestones") {
-      filterContext.setMilestoneTitles(milestones);
+      setMilestoneTitles(milestones);
     } else {
-      filterContext.setMilestoneTitles([e.target.value]);
+      setMilestoneTitles([e.target.value]);
     }
   };
 
   let milestoneOptions = "";
 
-  if (!milestonesAreLoading && milestones !== null && milestones.length != 0) {
+  if (
+    !milestonesAreLoading &&
+    milestones !== undefined &&
+    milestones !== null &&
+    milestones.length != 0
+  ) {
     milestoneOptions = milestones.map((milestone, index) => (
       <option key={index} value={milestone}>
         {milestone}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { FilterContext } from "../../context/FilterContext";
 import StoryLabels from "./StoryLabels";
 
@@ -13,12 +13,14 @@ function StorySelector() {
     storyTitles,
     setStoryTitles,
   ] = useContext(FilterContext);
-  const [selectedProjectIds] = useState(projectIds);
+  let storyLabels = <p>"No selected projects"</p>;
 
-  let storyLabels = "No selected projects";
-
-  if (projectIds !== undefined && projectIds.length != 0) {
-    storyLabels = <StoryLabels projectIds={selectedProjectIds} />;
+  if (
+    projectIds !== undefined &&
+    projectIds !== null &&
+    projectIds.length > 0
+  ) {
+    storyLabels = <StoryLabels projectIds={projectIds} />;
   }
 
   return storyLabels;
