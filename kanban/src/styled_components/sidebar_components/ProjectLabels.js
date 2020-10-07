@@ -25,12 +25,15 @@ function ProjectLabels() {
     let newProjectIds = new Array(projectIds);
     newProjectIds.push(projectId);
     setProjectIds(newProjectIds);
+    console.log(projectIds);
   };
 
   const deleteFilter = (projectId) => {
     let newProjectIds = new Array(projectIds);
     newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
     setProjectIds(newProjectIds);
+    console.log(projectIds);
+    console.log(swimlane);
   };
 
   if (!projectsAreLoading && projects) {

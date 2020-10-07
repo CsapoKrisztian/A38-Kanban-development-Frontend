@@ -46,17 +46,19 @@ const SwitchSlider = styled.span`
 `;
 
 function ToggleSwitch() {
-  const filterContext = useContext(FilterContext);
+  const [swimlane, setSwimlane] = useContext(FilterContext);
 
-  const toggleStory = () => {
-    filterContext.setSwimlane(
-      filterContext.swimlane === "STORY" ? "ASSIGNEE" : "STORY"
-    );
+  const toggleSwimlane = () => {
+    setSwimlane(swimlane === "STORY" ? "ASSIGNEE" : "STORY");
   };
 
   return (
     <SwitchLabel>
-      <SwitchInput type="checkbox" onChange={toggleStory} />
+      <SwitchInput
+        type="checkbox"
+        checked={swimlane === "STORY" ? true : false}
+        onChange={toggleSwimlane}
+      />
       <SwitchSlider className="slider" />
     </SwitchLabel>
   );
