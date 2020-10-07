@@ -35,7 +35,12 @@ function ProjectLabels() {
     console.log(projectIds);
   };
 
-  if (!projectsAreLoading && projects) {
+  if (
+    !projectsAreLoading &&
+    projects !== undefined &&
+    projects !== null &&
+    projects.length > 0
+  ) {
     projectLabels = projects.map((project, index) => (
       <Label
         key={index}

@@ -23,7 +23,13 @@ function KanbanTable(props) {
 
   let tableBody = <tr></tr>;
 
-  if (projectIds && milestoneTitles && storyTitles) {
+  if (
+    projectIds !== undefined &&
+    projectIds !== null &&
+    projectIds.length > 0 &&
+    milestoneTitles &&
+    storyTitles
+  ) {
     tableBody = <RenderIssues statuses={statuses} />;
   }
 
