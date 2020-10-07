@@ -42,10 +42,15 @@ function KanbanTable(props) {
       milestoneTitles &&
       storyTitles
     ) {
-      console.log("llllllllllllllll");
       tableBody = (
         <React.Fragment>
-          <RenderIssues statuses={statuses} />
+          <RenderIssues
+            statuses={statuses}
+            swimlane={swimlane}
+            projectIds={projectIds}
+            milestoneTitles={milestoneTitles}
+            storyTitles={storyTitles}
+          />
         </React.Fragment>
       );
       setForceUpdate(tableBody);
@@ -73,7 +78,7 @@ function KanbanTable(props) {
           </div>
         </div>
       </ScrollWrapper>
-      <div className="w-100 d-flex justify-content-center">
+      <div className="w-100 d-flex justify-content-center mb-5">
         <button
           type="button"
           disabled={disabled}
