@@ -1,10 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { FilterContext } from "../../context/FilterContext";
 
 function Label(props) {
   const offBgColor = "#6c757d";
-  const [projectIds, setProjectIds] = useContext(FilterContext);
   const [bgColor, setBgColor] = useState(offBgColor);
 
   const LabelStyle = styled.button`
@@ -34,15 +32,13 @@ function Label(props) {
         bg={bgColor}
         type="button"
         onClick={() => {
-          let newSet = new Set(projectIds);
           if (bgColor === offBgColor) {
             setBgColor(props.color);
-            newSet.add(props.projectId);
+            props.addFilter();
           } else {
             setBgColor(offBgColor);
-            newSet.delete(props.projectId);
+            props.deleteFilter();
           }
-          setProjectIds((prevSet) => newSet);
         }}
       >
         {props.title}

@@ -1,68 +1,21 @@
-import React from 'react';
-import Card from '../styled_components/Card';
-import styled from 'styled-components';
-
-const Center = styled.th`
-  position: relative;
-`;
-
-const Inner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+import React, { useContext } from "react";
+import styled from "styled-components";
+import { FilterContext } from "../context/FilterContext";
+import RenderIssues from "../styled_components/RenderIssues";
 
 const ScrollWrapper = styled.div`
   white-space: nowrap;
   overflow-x: auto;
 `;
 
-const getAlphaNumeric = (str) => {
-  if (str === '' || str === undefined) return '';
-  return str.replace(/[\W_]+/g, '');
-};
-
-const getCard = (issue, status) => {
-  if (issue.status.title === status) {
-    return <Card key={issue.id} issue={issue} />;
-  }
-};
-
-const renderRow = (statuses, issues, swimlaneClassName) => {
-  return statuses.map((status) => (
-    <td
-      key={status.title}
-      className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
-    >
-      {issues.map((issue) => getCard(issue, status))}
-    </td>
-  ));
-};
-
-const getContentOfFirstCellInRow = (item, swimlane) => {
-  if (swimlane === 'STORY') {
-    return item.story.title;
-  }
-
-  let user = ''; //TODO
-  return user;
-};
-
-const renderContentOfTBody = (issues, statuses, swimlane) => {
-  return issues.map((item, index) => (
-    <tr key={index}>
-      <Center className="col">
-        <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
-      </Center>
-      {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
-    </tr>
-  ));
-};
-
 function KanbanTable(props) {
-  let { statuses, issues } = props;
-  let swimlane = 'STORY';
+  let { statuses } = props;
+  const [projectIds, milestoneTitles, storyTitles] = useContext(FilterContext);
+  let tableBody = "";
+
+  if (projectIds && milestoneTitles && storyTitles) {
+    tableBody = <RenderIssues statuses={statuses} />;
+  }
 
   return (
     <React.Fragment>
@@ -80,7 +33,7 @@ function KanbanTable(props) {
                   ))}
                 </tr>
               </thead>
-              <tbody>{renderContentOfTBody(issues, statuses, swimlane)}</tbody>
+              <tbody>{tableBody}</tbody>
             </table>
           </div>
         </div>
