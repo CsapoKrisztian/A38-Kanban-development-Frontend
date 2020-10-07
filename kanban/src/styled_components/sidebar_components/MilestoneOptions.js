@@ -25,7 +25,7 @@ function MilestoneOptions(props) {
 
   let milestoneOptions = "";
 
-  if (!milestonesAreLoading && milestones) {
+  if (!milestonesAreLoading && milestones !== null && milestones.length != 0) {
     milestoneOptions = milestones.map((milestone, index) => (
       <option key={index} value={milestone}>
         {milestone}

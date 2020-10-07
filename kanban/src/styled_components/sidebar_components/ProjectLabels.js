@@ -22,18 +22,17 @@ function ProjectLabels() {
   );
 
   const addFilter = (projectId) => {
-    let newProjectIds = new Array(projectIds);
+    let newProjectIds = projectIds;
     newProjectIds.push(projectId);
-    setProjectIds(newProjectIds);
+    setProjectIds(new Array(newProjectIds));
     console.log(projectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newProjectIds = new Array(projectIds);
+    let newProjectIds = projectIds;
     newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
-    setProjectIds(newProjectIds);
+    setProjectIds(new Array(newProjectIds));
     console.log(projectIds);
-    console.log(swimlane);
   };
 
   if (!projectsAreLoading && projects) {

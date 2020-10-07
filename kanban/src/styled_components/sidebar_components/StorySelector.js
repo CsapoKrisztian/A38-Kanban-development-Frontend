@@ -3,12 +3,21 @@ import { FilterContext } from "../../context/FilterContext";
 import StoryLabels from "./StoryLabels";
 
 function StorySelector() {
-  const filterContext = useContext(FilterContext);
-  const [selectedProjectIds] = useState(filterContext.projectIds);
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
+  const [selectedProjectIds] = useState(projectIds);
 
   let storyLabels = "No selected projects";
 
-  if (filterContext.projectIds) {
+  if (projectIds !== undefined && projectIds.length != 0) {
     storyLabels = <StoryLabels projectIds={selectedProjectIds} />;
   }
 

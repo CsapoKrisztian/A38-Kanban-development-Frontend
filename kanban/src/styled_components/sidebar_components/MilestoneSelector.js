@@ -3,12 +3,21 @@ import { FilterContext } from "../../context/FilterContext";
 import MilestoneOptions from "./MilestoneOptions";
 
 function MilestoneSelector() {
-  const filterContext = useContext(FilterContext);
-  const [selectedProjectIds] = useState(filterContext.projectIds);
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
+  const [selectedProjectIds] = useState(projectIds);
 
   let milestoneOptions = "No selected projects";
 
-  if (filterContext.projectIds) {
+  if (projectIds !== undefined && projectIds.length != 0) {
     milestoneOptions = <MilestoneOptions projectIds={selectedProjectIds} />;
   }
 
