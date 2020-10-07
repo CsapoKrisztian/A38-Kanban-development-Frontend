@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export const FilterContext = createContext();
 
 export const FilterProvider = (props) => {
-  const [swimlane, setSwimlane] = useState("STORY");
+  const [swimlane, setSwimlane] = useState("ASSIGNEE");
   const [projectIds, setProjectIds] = useState([]);
   const [storyTitles, setStoryTitles] = useState([]);
   const [milestoneTitles, setMilestoneTitles] = useState([]);

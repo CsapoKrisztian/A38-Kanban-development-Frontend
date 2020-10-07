@@ -42,8 +42,8 @@ const getContentOfFirstCellInRow = (item, swimlane) => {
     return item.story.title;
   }
 
-  let user = ""; //TODO
-  return user;
+  let assignee = item.assignee.name;
+  return assignee;
 };
 
 const renderContentOfTBody = (issues, statuses, swimlane) => {
@@ -52,14 +52,25 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
       <Center className="col">
         <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
       </Center>
-      {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
+      {renderRow(
+        statuses,
+        item.issues,
+        getAlphaNumeric(
+          swimlane === "STORY" ? item.story.title : item.assignee.name
+        )
+      )}
     </tr>
   ));
 };
 
 function RenderIssues(props) {
-  const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}/issues/orderByStory`,
+  let urlGetIssues =
+    props.swimlane === "STORY"
+      ? process.env["REACT_APP_ISSUES_BY_STORY"]
+      : process.env["REACT_APP_ISSUES_BY_ASSIGNEE"];
+
+  const [issues, issuesAreLoading] = useApiCall(
+    `${process.env["REACT_APP_SERVER"]}${urlGetIssues}`,
     "POST",
     props.projectIds,
     props.milestoneTitles,
@@ -69,16 +80,12 @@ function RenderIssues(props) {
   let tableBody = <tr></tr>;
 
   if (
-    !issuesByStoryAreLoading &&
-    issuesByStory !== undefined &&
-    issuesByStory !== null &&
-    issuesByStory.length > 0
+    !issuesAreLoading &&
+    issues !== undefined &&
+    issues !== null &&
+    issues.length > 0
   ) {
-    tableBody = renderContentOfTBody(
-      issuesByStory,
-      props.statuses,
-      props.swimlane
-    );
+    tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
   }
 
   return <React.Fragment>{tableBody}</React.Fragment>;
