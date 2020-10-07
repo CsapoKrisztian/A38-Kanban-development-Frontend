@@ -1,30 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { getAuthorizationCodeUrl } from "../context/Urls";
 
 const NavLinks = styled.div`
-  width = 300px;
+  width: 100px;
 `;
 
-function Header() {
+const NavButton = styled.div`
+  cursor: pointer;
+`;
+
+function Header(props) {
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-success bg-success">
+      <nav className="navbar sticky-top navbar-expand-lg navbar-success bg-success">
         <Link className="navbar-brand text-white" to="/">
           <b>Kanban</b>Sync
         </Link>
+        <button onClick={() => (window.location = getAuthorizationCodeUrl)}>
+          Login
+        </button>
         <ul className="navbar-nav mr-auto"></ul>
-        <NavLinks className="row">
-          <Link className="text-white" href="(logout or user page)">
-            <div className="col p-2">
+        <NavLinks className="row pr-1">
+          <div className="text-white col p-2">
+            <NavButton // TODO onClick={logout}
+            >
               <i className="fas fa-power-off"></i>
-            </div>
-          </Link>
-          <Link className="text-white mr-3" href="(filter)">
-            <div className="col p-2">
+            </NavButton>
+          </div>
+          <div className="col p-2 text-white">
+            <NavButton onClick={props.toggleOpened}>
               <i className="fas fa-cogs"></i>
-            </div>
-          </Link>
+            </NavButton>
+          </div>
         </NavLinks>
       </nav>
     </React.Fragment>

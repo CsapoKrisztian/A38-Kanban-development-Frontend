@@ -1,14 +1,63 @@
-.App {
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0b0f0f;
+  border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #939ba2;
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6c757d;
+}
+
+.navbar {
+  height: 60px !important;
+}
+
+table {
+  word-wrap: break-word;
+}
+
+th {
+  font-size: 14px;
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+th,
+td {
+  border: 1px solid #ddd;
+  width: 15vw !important;
+  padding-top: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  padding-bottom: 0px !important;
+  min-width: 170px !important;
+  max-width: 15vw !important;
+}
+
+.spinner-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.card-header {
+  min-height: 38px;
+}
+
+#main {
+  transition: margin-right 0.3s;
 }
