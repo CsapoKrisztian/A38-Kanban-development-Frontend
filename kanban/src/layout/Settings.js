@@ -9,6 +9,7 @@ import {
 } from "../styled_components/SidebarStyle";
 import ProjectLabels from "../styled_components/sidebar_components/ProjectLabels";
 import StorySelector from "../styled_components/sidebar_components/StorySelector";
+import MilestoneSelector from "../styled_components/sidebar_components/MilestoneSelector";
 
 function Settings(props) {
   return (
@@ -25,36 +26,22 @@ function Settings(props) {
           </FilterBox>
 
           <Subtitle>PROJECTS</Subtitle>
-          <FilterBox className="">
+          <FilterBox>
             <ScrollableBox>
               <ProjectLabels />
             </ScrollableBox>
           </FilterBox>
 
           <Subtitle>STORIES</Subtitle>
-          <FilterBox className="">
+          <FilterBox>
             <ScrollableBox>
               <StorySelector />
             </ScrollableBox>
           </FilterBox>
 
           <Subtitle>MILESTONE</Subtitle>
-          <FilterBox className="">
-            <select className="custom-select">
-              <option defaultValue>Select milestone</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <FilterBox>
+            <MilestoneSelector />
           </FilterBox>
         </Wrapper>
       </SideMenu>

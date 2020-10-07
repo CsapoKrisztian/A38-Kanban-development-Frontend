@@ -5,7 +5,16 @@ import { FilterContext } from "../../context/FilterContext";
 
 function ProjectLabels() {
   let projectLabels = "";
-  const [projectIds, setProjectIds] = useContext(FilterContext);
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
 
   const [projects, projectsAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/projects`,
@@ -20,7 +29,7 @@ function ProjectLabels() {
 
   const deleteFilter = (projectId) => {
     let newProjectIds = new Array(projectIds);
-    newProjectIds.push(projectId);
+    newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
     setProjectIds(newProjectIds);
   };
 
@@ -28,8 +37,12 @@ function ProjectLabels() {
     projectLabels = projects.map((project, index) => (
       <Label
         key={index}
-        setFilter={() => addFilter(project.id)}
-        deleteFilter={() => deleteFilter(project.id)}
+        addFilter={() => {
+          addFilter(project.id);
+        }}
+        deleteFilter={() => {
+          deleteFilter(project.id);
+        }}
         title={
           project.group === null
             ? project.name

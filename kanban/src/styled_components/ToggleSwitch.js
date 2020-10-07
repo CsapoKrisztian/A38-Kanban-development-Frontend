@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { FilterContext } from "../context/FilterContext";
 
 const SwitchLabel = styled.label`
   position: relative;
@@ -45,12 +46,17 @@ const SwitchSlider = styled.span`
 `;
 
 function ToggleSwitch() {
+  const filterContext = useContext(FilterContext);
+
+  const toggleStory = () => {
+    filterContext.setSwimlane(
+      filterContext.swimlane === "STORY" ? "ASSIGNEE" : "STORY"
+    );
+  };
+
   return (
     <SwitchLabel>
-      <SwitchInput
-        type="checkbox"
-        // TODO onChange={toggleStory}
-      />
+      <SwitchInput type="checkbox" onChange={toggleStory} />
       <SwitchSlider className="slider" />
     </SwitchLabel>
   );

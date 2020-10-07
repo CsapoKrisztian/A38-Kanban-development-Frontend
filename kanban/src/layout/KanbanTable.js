@@ -10,10 +10,15 @@ const ScrollWrapper = styled.div`
 
 function KanbanTable(props) {
   let { statuses } = props;
-  const [projectIds, milestoneTitles, storyTitles] = useContext(FilterContext);
-  let tableBody = "";
+  const filterContext = useContext(FilterContext);
 
-  if (projectIds && milestoneTitles && storyTitles) {
+  let tableBody = <tr></tr>;
+
+  if (
+    filterContext.projectIds &&
+    filterContext.milestoneTitles &&
+    filterContext.storyTitles
+  ) {
     tableBody = <RenderIssues statuses={statuses} />;
   }
 

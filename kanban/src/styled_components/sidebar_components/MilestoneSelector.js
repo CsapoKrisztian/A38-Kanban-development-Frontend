@@ -1,18 +1,18 @@
 import React, { useContext, useState } from "react";
 import { FilterContext } from "../../context/FilterContext";
-import StoryLabels from "./StoryLabels";
+import MilestoneOptions from "./MilestoneOptions";
 
-function StorySelector() {
+function MilestoneSelector() {
   const filterContext = useContext(FilterContext);
   const [selectedProjectIds] = useState(filterContext.projectIds);
 
-  let storyLabels = "No selected projects";
+  let milestoneOptions = "No selected projects";
 
   if (filterContext.projectIds) {
-    storyLabels = <StoryLabels projectIds={selectedProjectIds} />;
+    milestoneOptions = <MilestoneOptions projectIds={selectedProjectIds} />;
   }
 
-  return storyLabels;
+  return milestoneOptions;
 }
 
-export default StorySelector;
+export default MilestoneSelector;

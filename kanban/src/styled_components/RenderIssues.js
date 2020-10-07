@@ -58,21 +58,23 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
 };
 
 function RenderIssues(props) {
-  const [swimlane, projectIds, milestoneTitles, storyTitles] = useContext(
-    FilterContext
-  );
+  const filterContext = useContext(FilterContext);
   const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/issues/orderByStory`,
     "POST",
-    projectIds,
-    milestoneTitles,
-    storyTitles
+    filterContext.projectIds,
+    filterContext.milestoneTitles,
+    filterContext.storyTitles
   );
 
   let tableBody = "";
 
   if (!issuesByStoryAreLoading && issuesByStory) {
-    tableBody = renderContentOfTBody(issuesByStory, props.statuses, swimlane);
+    tableBody = renderContentOfTBody(
+      issuesByStory,
+      props.statuses,
+      filterContext.swimlane
+    );
   }
 
   return <React.Fragment>{tableBody}</React.Fragment>;
