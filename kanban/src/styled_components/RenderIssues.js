@@ -27,9 +27,9 @@ const getCard = (issue, status) => {
 };
 
 const renderRow = (statuses, issues, swimlaneClassName) => {
-  return statuses.map((status) => (
+  return statuses.map((status, index) => (
     <td
-      key={status.title}
+      key={index}
       className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
     >
       {issues.map((issue) => getCard(issue, status))}
@@ -76,7 +76,7 @@ function RenderIssues(props) {
     storyTitles
   );
 
-  let tableBody = "";
+  let tableBody = <tr></tr>;
 
   if (
     !issuesByStoryAreLoading &&

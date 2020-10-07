@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FilterContext } from "../context/FilterContext";
 import RenderIssues from "../styled_components/RenderIssues";
@@ -20,18 +20,37 @@ function KanbanTable(props) {
     storyTitles,
     setStoryTitles,
   ] = useContext(FilterContext);
-
   let tableBody = <tr></tr>;
+
+  const [forceUpdate, setForceUpdate] = useState(tableBody);
+
+  let disabled = true;
 
   if (
     projectIds !== undefined &&
     projectIds !== null &&
-    projectIds.length > 0 &&
-    milestoneTitles &&
-    storyTitles
+    projectIds.length > 0
   ) {
-    tableBody = <RenderIssues statuses={statuses} />;
+    disabled = false;
   }
+
+  const getIssues = () => {
+    if (
+      projectIds !== undefined &&
+      projectIds !== null &&
+      projectIds.length > 0 &&
+      milestoneTitles &&
+      storyTitles
+    ) {
+      console.log("llllllllllllllll");
+      tableBody = (
+        <React.Fragment>
+          <RenderIssues statuses={statuses} />
+        </React.Fragment>
+      );
+      setForceUpdate(tableBody);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -49,11 +68,21 @@ function KanbanTable(props) {
                   ))}
                 </tr>
               </thead>
-              <tbody>{tableBody}</tbody>
+              <tbody>{forceUpdate}</tbody>
             </table>
           </div>
         </div>
       </ScrollWrapper>
+      <div className="w-100 d-flex justify-content-center">
+        <button
+          type="button"
+          disabled={disabled}
+          className="btn btn-info"
+          onClick={() => getIssues()}
+        >
+          Get issues
+        </button>
+      </div>
     </React.Fragment>
   );
 }
