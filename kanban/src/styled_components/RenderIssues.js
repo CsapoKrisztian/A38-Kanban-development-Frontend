@@ -54,7 +54,7 @@ const getAssigneeBox = (assignee, defaultImg) => {
     </CircleButton>
   );
   return (
-    <div>
+    <div className="text-secondary font-weight-bold">
       <div className="row d-flex justify-content-center">{assigneeCircle}</div>
       <div className="text-center p-2">{assignee.name}</div>
     </div>
@@ -63,7 +63,9 @@ const getAssigneeBox = (assignee, defaultImg) => {
 
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
-    return item.story.title;
+    return (
+      <h5 className="text-secondary font-weight-bold">{item.story.title}</h5>
+    );
   }
 
   return getAssigneeBox(item.assignee);
