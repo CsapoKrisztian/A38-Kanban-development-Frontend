@@ -3,6 +3,7 @@ import useApiCall from "../hooks/useApiCall";
 import styled from "styled-components";
 import Card from "./Card";
 import { FilterContext } from "../context/FilterContext";
+import { CircleButton, CircleImg } from "./Circle";
 
 const Center = styled.th`
   position: relative;
@@ -37,13 +38,37 @@ const renderRow = (statuses, issues, swimlaneClassName) => {
   ));
 };
 
+const getAssigneeBox = (assignee, defaultImg) => {
+  const addDefaultSrc = (ev) => {
+    ev.target.src =
+      "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+  };
+
+  let assigneeCircle = (
+    <CircleButton size={"60px"}>
+      <CircleImg
+        onError={addDefaultSrc}
+        src={assignee.avatarUrl}
+        alt={assignee.name}
+      />
+    </CircleButton>
+  );
+  return (
+    <div className="text-secondary font-weight-bold">
+      <div className="row d-flex justify-content-center">{assigneeCircle}</div>
+      <div className="text-center p-2">{assignee.name}</div>
+    </div>
+  );
+};
+
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
-    return item.story.title;
+    return (
+      <h5 className="text-secondary font-weight-bold">{item.story.title}</h5>
+    );
   }
 
-  let user = ""; //TODO
-  return user;
+  return getAssigneeBox(item.assignee);
 };
 
 const renderContentOfTBody = (issues, statuses, swimlane) => {
@@ -52,14 +77,25 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
       <Center className="col">
         <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
       </Center>
-      {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
+      {renderRow(
+        statuses,
+        item.issues,
+        getAlphaNumeric(
+          swimlane === "STORY" ? item.story.title : item.assignee.name
+        )
+      )}
     </tr>
   ));
 };
 
 function RenderIssues(props) {
-  const [issuesByStory, issuesByStoryAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}/issues/orderByStory`,
+  let urlGetIssues =
+    props.swimlane === "STORY"
+      ? process.env["REACT_APP_ISSUES_BY_STORY"]
+      : process.env["REACT_APP_ISSUES_BY_ASSIGNEE"];
+
+  const [issues, issuesAreLoading] = useApiCall(
+    `${process.env["REACT_APP_SERVER"]}${urlGetIssues}`,
     "POST",
     props.projectIds,
     props.milestoneTitles,
@@ -69,16 +105,18 @@ function RenderIssues(props) {
   let tableBody = <tr></tr>;
 
   if (
-    !issuesByStoryAreLoading &&
-    issuesByStory !== undefined &&
-    issuesByStory !== null &&
-    issuesByStory.length > 0
+    !issuesAreLoading &&
+    issues !== undefined &&
+    issues !== null &&
+    issues.length > 0
   ) {
-    tableBody = renderContentOfTBody(
-      issuesByStory,
-      props.statuses,
-      props.swimlane
-    );
+    if (
+      (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
+      (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
+    ) {
+      console.log(issues);
+      tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
+    }
   }
 
   return <React.Fragment>{tableBody}</React.Fragment>;

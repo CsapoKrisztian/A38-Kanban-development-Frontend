@@ -59,9 +59,6 @@ function ToggleSwitch() {
 
   const toggleSwimlane = () => {
     setSwimlane(swimlane === "STORY" ? "ASSIGNEE" : "STORY");
-    console.log(projectIds);
-    console.log(storyTitles);
-    console.log(milestoneTitles);
   };
 
   return (

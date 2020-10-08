@@ -51,7 +51,6 @@ function Label(props) {
   const handleClick = () => {
     if (props.projectId == null) {
       if (storyTitles.indexOf(props.title) < 0) {
-        console.log(storyTitles.indexOf(props.title));
         selectLabel();
       } else {
         deselectLabel();

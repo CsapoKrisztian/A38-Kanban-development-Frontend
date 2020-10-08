@@ -40,17 +40,17 @@ function KanbanTable(props) {
       milestoneTitles &&
       storyTitles
     ) {
+      console.log(swimlane);
       let issuesInTable = (
-        <React.Fragment>
-          <RenderIssues
-            statuses={statuses}
-            swimlane={swimlane}
-            projectIds={projectIds}
-            milestoneTitles={milestoneTitles}
-            storyTitles={storyTitles}
-          />
-        </React.Fragment>
+        <RenderIssues
+          statuses={[...statuses]}
+          swimlane={swimlane}
+          projectIds={[...projectIds]}
+          milestoneTitles={[...milestoneTitles]}
+          storyTitles={[...storyTitles]}
+        />
       );
+
       setTableBody(issuesInTable);
     }
   };
@@ -81,7 +81,7 @@ function KanbanTable(props) {
           type="button"
           disabled={disabled}
           className="btn btn-success"
-          onClick={getIssues}
+          onClick={() => getIssues()}
         >
           Get issues
         </button>

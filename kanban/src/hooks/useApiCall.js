@@ -13,16 +13,11 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
       method: method,
       withCredentials: true,
       url: url,
-      data: {
-        projectIds,
-        milestoneTitles,
-        storyTitles,
-      },
+      data: { projectIds, milestoneTitles, storyTitles },
     })
       .then((response) => {
         setFetchedData(response.data);
         setLoading(false);
-        console.log(response.data);
       })
       .catch((error) => {
         setErrorMessage(error.message);
