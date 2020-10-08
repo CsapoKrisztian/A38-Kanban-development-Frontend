@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import useApiCall from "../hooks/useApiCall";
 import styled from "styled-components";
 import Card from "./Card";
-import { FilterContext } from "../context/FilterContext";
 import { CircleButton, CircleImg } from "./Circle";
 
 const Center = styled.th`
@@ -54,7 +53,6 @@ const getAssigneeBox = (assignee, defaultImg) => {
       <CircleImg onError={addDefaultSrc} src={avatarSrc} alt={assignee.name} />
     </CircleButton>
   );
-  console.log(avatarSrc);
   return (
     <div className="text-secondary font-weight-bold">
       <div className="row d-flex justify-content-center">{assigneeCircle}</div>

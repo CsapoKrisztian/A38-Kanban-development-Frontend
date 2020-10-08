@@ -40,7 +40,6 @@ function KanbanTable(props) {
       milestoneTitles &&
       storyTitles
     ) {
-      console.log(swimlane);
       let issuesInTable = (
         <RenderIssues
           statuses={[...statuses]}

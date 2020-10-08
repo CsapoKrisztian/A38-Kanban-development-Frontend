@@ -28,6 +28,11 @@ const Gray = styled.span`
   }
 `;
 
+const PriorityBadge = styled.span`
+  background-color: ${(props) =>
+    props.color ? props.color : "#6c757d"} !important;
+`;
+
 const Footer = styled.div`
   font-size: 14px;
   color: gray;
@@ -56,9 +61,12 @@ function Card(props) {
 
     if (priority != null) {
       badge = (
-        <span className="badge badge-danger p-2">
+        <PriorityBadge
+          className="badge badge-danger p-2"
+          color={priority.color}
+        >
           {priority.title.slice(-2)}
-        </span>
+        </PriorityBadge>
       );
     }
 
@@ -155,7 +163,7 @@ function Card(props) {
           />
         </CircleButton>
       );
-    } // TODO img validation
+    }
     return <div className="text-center pb-1 pt-1 pr-2">{assigneeCircle}</div>;
   };
 
