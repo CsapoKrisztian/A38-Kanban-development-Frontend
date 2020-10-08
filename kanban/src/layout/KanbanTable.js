@@ -33,8 +33,6 @@ function KanbanTable(props) {
   }
 
   const getIssues = () => {
-    console.log(milestoneTitles);
-    console.log(storyTitles);
     if (
       projectIds !== undefined &&
       projectIds !== null &&
@@ -42,8 +40,7 @@ function KanbanTable(props) {
       milestoneTitles &&
       storyTitles
     ) {
-      console.log(milestoneTitles);
-      console.log(storyTitles);
+      console.log(swimlane);
       let issuesInTable = (
         <RenderIssues
           statuses={[...statuses]}

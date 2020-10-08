@@ -25,14 +25,12 @@ function ProjectLabels() {
     let newProjectIds = JSON.parse(JSON.stringify(projectIds));
     newProjectIds.push(projectId);
     setProjectIds(newProjectIds);
-    console.log(projectIds);
   };
 
   const deleteFilter = (projectId) => {
     let newProjectIds = JSON.parse(JSON.stringify(projectIds));
     newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
     setProjectIds(newProjectIds);
-    console.log(projectIds);
   };
 
   if (

@@ -110,7 +110,13 @@ function RenderIssues(props) {
     issues !== null &&
     issues.length > 0
   ) {
-    tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
+    if (
+      (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
+      (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
+    ) {
+      console.log(issues);
+      tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
+    }
   }
 
   return <React.Fragment>{tableBody}</React.Fragment>;
