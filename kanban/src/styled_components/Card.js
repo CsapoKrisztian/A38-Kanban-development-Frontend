@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import Ribbon from './Ribbon';
-import { CircleButton, CircleImg } from './Circle';
-import { Link } from 'react-router-dom';
-import defaultImg from '../images/user_image.png';
-import Container from './Container';
+import React from "react";
+import styled from "styled-components";
+import Ribbon from "./Ribbon";
+import { CircleButton, CircleImg } from "./Circle";
+import { Link } from "react-router-dom";
+import defaultImg from "../images/user_image.png";
+import Container from "./Container";
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -47,7 +47,7 @@ function Card(props) {
     userNotesCount,
   } = props.issue;
 
-  mileStone = mileStone != null ? mileStone.title : ' ';
+  mileStone = mileStone != null ? mileStone.title : " ";
 
   const getPriorityBox = (priority) => {
     let badge = (
@@ -77,7 +77,7 @@ function Card(props) {
         </div>
       );
     }
-    return '';
+    return "";
   };
 
   const getDueDateBox = (dueDate) => {
@@ -88,22 +88,22 @@ function Card(props) {
         </Information>
       );
     }
-    return '';
+    return "";
   };
 
-  title = title != null ? title : 'No title';
+  title = title != null ? title : "No title";
 
   const getOtherLabelsBox = (project, reference) => {
-    project = project != null ? project.name : '';
-    reference = reference != null ? reference : '';
-    if (project !== '' || reference !== '') {
+    project = project != null ? project.name : "";
+    reference = reference != null ? reference : "";
+    if (project !== "" || reference !== "") {
       return (
         <Information>
           {project} {reference}
         </Information>
       );
     }
-    return '';
+    return "";
   };
 
   const getNotesCounterBox = (userNotesCount) => {
@@ -117,7 +117,7 @@ function Card(props) {
   };
 
   const getGitlabLogoBox = (webUrl) => {
-    webUrl = webUrl != null ? webUrl : '/';
+    webUrl = webUrl != null ? webUrl : "/";
     const openTab = (webUrl) => {
       window.open(webUrl);
     };
@@ -136,16 +136,21 @@ function Card(props) {
   const getAssigneeBox = (assignee, defaultImg) => {
     const addDefaultSrc = (ev) => {
       ev.target.src =
-        'https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
+        "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
     };
 
-    let assigneeCircle = '';
+    let avatarSrc =
+      assignee.avatarUrl.indexOf("https") !== -1
+        ? assignee.avatarUrl
+        : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
+
+    let assigneeCircle = "";
     if (assignee != null) {
       assigneeCircle = (
         <CircleButton>
           <CircleImg
             onError={addDefaultSrc}
-            src={assignee.avatarUrl}
+            src={avatarSrc}
             alt={assignee.name}
           />
         </CircleButton>
