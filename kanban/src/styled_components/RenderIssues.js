@@ -44,15 +44,17 @@ const getAssigneeBox = (assignee, defaultImg) => {
       "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
   };
 
+  let avatarSrc =
+    assignee.avatarUrl.indexOf("https") !== -1
+      ? assignee.avatarUrl
+      : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
+
   let assigneeCircle = (
     <CircleButton size={"60px"}>
-      <CircleImg
-        onError={addDefaultSrc}
-        src={assignee.avatarUrl}
-        alt={assignee.name}
-      />
+      <CircleImg onError={addDefaultSrc} src={avatarSrc} alt={assignee.name} />
     </CircleButton>
   );
+  console.log(avatarSrc);
   return (
     <div className="text-secondary font-weight-bold">
       <div className="row d-flex justify-content-center">{assigneeCircle}</div>
@@ -114,7 +116,6 @@ function RenderIssues(props) {
       (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
       (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
     ) {
-      console.log(issues);
       tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
     }
   }
