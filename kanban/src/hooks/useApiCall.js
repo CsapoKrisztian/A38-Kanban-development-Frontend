@@ -6,18 +6,16 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
   const [fetchedData, setFetchedData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("No errors");
+  console.log("useapicall" + storyTitles);
 
   useEffect(() => {
+    console.log("useeffect");
     setLoading(true);
     axios({
       method: method,
       withCredentials: true,
       url: url,
-      data: {
-        projectIds,
-        milestoneTitles,
-        storyTitles,
-      },
+      data: { projectIds, milestoneTitles, storyTitles },
     })
       .then((response) => {
         setFetchedData(response.data);

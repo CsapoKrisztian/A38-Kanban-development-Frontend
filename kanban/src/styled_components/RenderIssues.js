@@ -37,13 +37,33 @@ const renderRow = (statuses, issues, swimlaneClassName) => {
   ));
 };
 
+/*const getAssigneeBox = (assignee, defaultImg) => {
+  const addDefaultSrc = (ev) => {
+    ev.target.src =
+      'https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
+  };
+
+  let assigneeCircle = '';
+  if (assignee != null) {
+    assigneeCircle = (
+      <CircleButton>
+        <CircleImg
+          onError={addDefaultSrc}
+          src={assignee.avatarUrl}
+          alt={assignee.name}
+        />
+      </CircleButton>
+    );
+  } // TODO img validation
+return <div className="text-center p-2">{assigneeCircle}{assignee.name}</div>;
+};*/
+
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
     return item.story.title;
   }
 
-  let assignee = item.assignee.name;
-  return assignee;
+  return item.assignee.name;
 };
 
 const renderContentOfTBody = (issues, statuses, swimlane) => {
