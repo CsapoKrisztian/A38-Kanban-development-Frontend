@@ -8,8 +8,7 @@ const useToken = (getTokenUrl) => {
   useEffect(() => {
     setTokenIsLoading(true);
     axios.get(getTokenUrl, { withCredentials: true }).then((response) => {
-      console.log(response.data);
-      if (response.data.indexOf("accessToken")) setIsToken(true);
+      if (response.data.indexOf("accessToken") !== -1) setIsToken(true);
       setTokenIsLoading(false);
     });
   }, [getTokenUrl]);

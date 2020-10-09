@@ -6,7 +6,6 @@ import { getAuthorizationCodeUrl } from "../context/Urls";
 
 function Auth() {
   const [gotToken, setGotToken] = useContext(AccessContext);
-
   let content = <Loading />;
   if (gotToken) {
     content = <Main />;

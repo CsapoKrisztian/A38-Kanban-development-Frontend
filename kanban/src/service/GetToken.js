@@ -18,11 +18,7 @@ const GetToken = () => {
 
   if (!tokenIsLoading && isToken) {
     setGotToken(true);
-    content = (
-      <React.Fragment>
-        <Redirect to="/" />;
-      </React.Fragment>
-    );
+    content = <Redirect to="/" />;
   }
   return content;
 };
