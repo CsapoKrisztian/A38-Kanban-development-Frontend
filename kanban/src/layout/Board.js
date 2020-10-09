@@ -1,11 +1,11 @@
 import React from "react";
 import Loading from "../styled_components/Loading";
-import KanbanTable from "../layout/KanbanTable";
+import KanbanTable from "./KanbanTable";
 import Filters from "../styled_components/Filters";
 
 import useApiCall from "../hooks/useApiCall";
 
-function Main() {
+function Board() {
   let content = <Loading />;
 
   const [statuses, statusesAreLoading] = useApiCall(
@@ -28,4 +28,4 @@ function Main() {
   return content;
 }
 
-export default Main;
+export default Board;
