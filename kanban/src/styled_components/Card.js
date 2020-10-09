@@ -142,16 +142,19 @@ function Card(props) {
   };
 
   const getAssigneeBox = (assignee, defaultImg) => {
+    const defaultSrc =
+      "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
     const addDefaultSrc = (ev) => {
-      ev.target.src =
-        "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+      ev.target.src = defaultSrc;
     };
 
-    let avatarSrc =
-      assignee.avatarUrl.indexOf("https") !== -1
-        ? assignee.avatarUrl
-        : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
-
+    let avatarSrc = defaultSrc;
+    if (assignee.avatarUrl !== null) {
+      avatarSrc =
+        assignee.avatarUrl.indexOf("https") !== -1
+          ? assignee.avatarUrl
+          : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
+    }
     let assigneeCircle = "";
     if (assignee != null) {
       assigneeCircle = (
