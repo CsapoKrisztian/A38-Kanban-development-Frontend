@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import useApiCall from "../hooks/useApiCall";
 import styled from "styled-components";
 import Card from "./Card";
 import { CircleButton, CircleImg } from "./Circle";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
+import axios from "axios";
+import { getLastPartAfterSlash } from "../service/Util";
 
 const Center = styled.th`
   position: relative;
@@ -27,9 +29,13 @@ const getCard = (issue, status, index) => {
   }
 };
 
-const renderRow = (statuses, issues, swimlaneClassName) => {
+const renderRow = (statuses, issues, swimlaneClassName, isDropDisabled) => {
+  console.log("object");
   return statuses.map((status, index) => (
-    <Droppable droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}>
+    <Droppable
+      droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}
+      isDropDisabled={isDropDisabled}
+    >
       {(provided) => (
         <td
           id={`${swimlaneClassName}${getAlphaNumeric(status)}`}
@@ -80,7 +86,12 @@ const getContentOfFirstCellInRow = (item, swimlane) => {
   return getAssigneeBox(item.assignee);
 };
 
-const renderContentOfTBody = (issues, statuses, swimlane) => {
+const renderContentOfTBody = (
+  issues,
+  statuses,
+  swimlane,
+  storyOfDraggedIssue
+) => {
   return issues.map((item, index) => (
     <tr key={index}>
       <Center className="col">
@@ -91,29 +102,51 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
         item.issues,
         getAlphaNumeric(
           swimlane === "STORY" ? item.story.title : item.assignee.name
-        )
+        ),
+        swimlane === "STORY" && storyOfDraggedIssue === item.story.title
+          ? true
+          : false
       )}
     </tr>
   ));
 };
 
-const handleOnDragEnd = (result) => {
-  const { destination, source, draggableId } = result;
-  if (!destination) return;
-  if (
-    destination.droppableId === source.droppableId &&
-    destination.index === source.index
-  ) {
-    return;
-  }
+const updateStatus = (sourceCell, destinationCell, card, id) => {
+  // Compare index of source and destination cell to find out has status changed or not
+  let indexOfSourceCell = Array.prototype.indexOf.call(
+    sourceCell.parentNode.children,
+    sourceCell
+  );
+  let indexOfDestinationCell = Array.prototype.indexOf.call(
+    destinationCell.parentNode.children,
+    destinationCell
+  );
 
-  console.log(destination.droppableId);
-  console.log(destination);
-  let destinationCell = document.getElementById(destination.droppableId);
-  console.log(destinationCell);
-  if (destinationCell !== null) {
-    destinationCell.appendChild(document.getElementById(draggableId));
-  }
+  console.log(indexOfSourceCell);
+  console.log(indexOfDestinationCell);
+  // If status has not changed no need to update the status
+  if (indexOfSourceCell === indexOfDestinationCell) return;
+
+  // Get new status
+  let newLabel = document.querySelector(
+    "#board th:nth-child(" + (indexOfDestinationCell + 1) + ")"
+  ).innerHTML;
+
+  // Get projectID
+  let longProjectId = card
+    .querySelector(".projectname")
+    .getAttribute("data-project-id");
+  let projectID = getLastPartAfterSlash(longProjectId);
+
+  // Update status
+  axios({
+    method: "POST",
+    withCredentials: true,
+    url: `${process.env["REACT_APP_SERVER"]}/update`,
+    data: { projectID, id, newLabel },
+  }).then((response) => {
+    console.log(response.data);
+  });
 };
 
 function RenderIssues(props) {
@@ -130,6 +163,38 @@ function RenderIssues(props) {
     props.storyTitles
   );
 
+  const [storyOfDraggedIssue, setStoryOfDraggedIssue] = useState("");
+
+  const handleOnDragStart = (start) => {
+    let card = document.getElementById(start.draggableId);
+    let ribbon = card.querySelector(".storyRibbon");
+    if (ribbon !== undefined && ribbon !== null)
+      setStoryOfDraggedIssue(ribbon.innerHTML);
+  };
+
+  const handleOnDragEnd = (result) => {
+    console.log(result);
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    let sourceCell = document.getElementById(source.droppableId);
+    let destinationCell = document.getElementById(destination.droppableId);
+    let card = document.getElementById(draggableId);
+
+    // Append destination cell with the dragged issue card if the destination is valid
+    if (updateStatus(sourceCell, destinationCell, card, draggableId)) {
+      destinationCell.appendChild(card);
+    }
+
+    setStoryOfDraggedIssue("");
+  };
+
   let tableBody = <tr></tr>;
 
   if (
@@ -142,9 +207,18 @@ function RenderIssues(props) {
       (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
       (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
     ) {
+      console.log(issues);
       tableBody = (
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          {renderContentOfTBody(issues, props.statuses, props.swimlane)}
+        <DragDropContext
+          onDragEnd={handleOnDragEnd}
+          onDragStart={handleOnDragStart}
+        >
+          {renderContentOfTBody(
+            issues,
+            props.statuses,
+            props.swimlane,
+            storyOfDraggedIssue
+          )}
         </DragDropContext>
       );
     }

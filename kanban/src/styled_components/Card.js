@@ -82,7 +82,7 @@ function Card(props) {
     if (story != null) {
       return (
         <div className="pr-3">
-          <Ribbon>{story.title}</Ribbon>
+          <Ribbon className="storyRibbon">{story.title}</Ribbon>
         </div>
       );
     }
@@ -103,12 +103,15 @@ function Card(props) {
   title = title != null ? title : "No title";
 
   const getOtherLabelsBox = (project, reference) => {
-    project = project != null ? project.name : "";
+    let projectName = project != null ? project.name : "";
     reference = reference != null ? reference : "";
-    if (project !== "" || reference !== "") {
+    if (projectName !== "" || reference !== "") {
       return (
         <Information>
-          {project} {reference}
+          <span className="projectname" data-project-id={project.id}>
+            {projectName}
+          </span>{" "}
+          {reference}
         </Information>
       );
     }
@@ -191,7 +194,7 @@ function Card(props) {
               {getAssigneeBox(assignee, defaultImg)}
             </div>
 
-            <div className="body">
+            <div>
               {getStoryRibbon(story)}
 
               <div className="pl-2 pr-2">
