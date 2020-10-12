@@ -5,6 +5,7 @@ import { CircleButton, CircleImg } from "./Circle";
 import { Link } from "react-router-dom";
 import defaultImg from "../images/user_image.png";
 import Container from "./Container";
+import { Draggable } from "react-beautiful-dnd";
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -172,29 +173,41 @@ function Card(props) {
 
   return (
     <React.Fragment>
-      <Container className="card">
-        <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
-          <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-          {getAssigneeBox(assignee, defaultImg)}
-        </div>
+      <Draggable
+        draggableId={props.issue.id}
+        key={props.issue.id}
+        index={props.index}
+      >
+        {(provided) => (
+          <Container
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            className="card"
+          >
+            <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
+              <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
+              {getAssigneeBox(assignee, defaultImg)}
+            </div>
 
-        <div className="body">
-          {getStoryRibbon(story)}
+            <div className="body">
+              {getStoryRibbon(story)}
 
-          <div className="pl-2 pr-2">
-            {getDueDateBox(dueDate)}
-            <h6 className="mt-1 mb-1">{title}</h6>
-            {getOtherLabelsBox(project, reference)}
+              <div className="pl-2 pr-2">
+                {getDueDateBox(dueDate)}
+                <h6 className="mt-1 mb-1">{title}</h6>
+                {getOtherLabelsBox(project, reference)}
 
-            <Footer className="row mt-1">
-              {getNotesCounterBox(userNotesCount)}
-              {getGitlabLogoBox(webUrl)}
-              {getPriorityBox(priority)}
-            </Footer>
-          </div>
-        </div>
-        <div></div>
-      </Container>
+                <Footer className="row mt-1">
+                  {getNotesCounterBox(userNotesCount)}
+                  {getGitlabLogoBox(webUrl)}
+                  {getPriorityBox(priority)}
+                </Footer>
+              </div>
+            </div>
+          </Container>
+        )}
+      </Draggable>
     </React.Fragment>
   );
 }

@@ -3,6 +3,7 @@ import useApiCall from "../hooks/useApiCall";
 import styled from "styled-components";
 import Card from "./Card";
 import { CircleButton, CircleImg } from "./Circle";
+import { Droppable, DragDropContext } from "react-beautiful-dnd";
 
 const Center = styled.th`
   position: relative;
@@ -20,20 +21,27 @@ const getAlphaNumeric = (str) => {
   return str.replace(/[\W_]+/g, "");
 };
 
-const getCard = (issue, status) => {
+const getCard = (issue, status, index) => {
   if (issue.status.title === status) {
-    return <Card key={issue.id} issue={issue} />;
+    return <Card key={issue.id} issue={issue} index={index} />;
   }
 };
 
 const renderRow = (statuses, issues, swimlaneClassName) => {
   return statuses.map((status, index) => (
-    <td
-      key={index}
-      className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
-    >
-      {issues.map((issue) => getCard(issue, status))}
-    </td>
+    <Droppable droppableId={`${swimlaneClassName}-${getAlphaNumeric(status)}`}>
+      {(provided) => (
+        <td
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          key={index}
+          className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
+        >
+          {issues.map((issue, index) => getCard(issue, status, index))}
+          {provided.placeholder}
+        </td>
+      )}
+    </Droppable>
   ));
 };
 
@@ -88,6 +96,17 @@ const renderContentOfTBody = (issues, statuses, swimlane) => {
   ));
 };
 
+const handleOnDragEnd = (result) => {
+  const { destination, source, draggableId } = result;
+  if (!destination) return;
+  if (
+    destination.droppableId === source.droppableId &&
+    destination.index === source.index
+  ) {
+    return;
+  }
+};
+
 function RenderIssues(props) {
   let urlGetIssues =
     props.swimlane === "STORY"
@@ -114,7 +133,11 @@ function RenderIssues(props) {
       (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
       (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
     ) {
-      tableBody = renderContentOfTBody(issues, props.statuses, props.swimlane);
+      tableBody = (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          {renderContentOfTBody(issues, props.statuses, props.swimlane)}
+        </DragDropContext>
+      );
     }
   }
 
