@@ -30,7 +30,6 @@ const getCard = (issue, status, index) => {
 };
 
 const renderRow = (statuses, issues, swimlaneClassName, isDropDisabled) => {
-  console.log("object");
   return statuses.map((status, index) => (
     <Droppable
       droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}
@@ -71,7 +70,7 @@ const getAssigneeBox = (assignee, defaultImg) => {
   return (
     <div className="text-secondary font-weight-bold">
       <div className="row d-flex justify-content-center">{assigneeCircle}</div>
-      <div className="text-center p-2">{assignee.name}</div>
+      <div className="text-center p-2 assigneeName">{assignee.name}</div>
     </div>
   );
 };
@@ -113,6 +112,7 @@ const renderContentOfTBody = (
 
 const updateStatus = (sourceCell, destinationCell, card, id) => {
   // Compare index of source and destination cell to find out has status changed or not
+  // If status has not changed no need to update the status
   let indexOfSourceCell = Array.prototype.indexOf.call(
     sourceCell.parentNode.children,
     sourceCell
@@ -121,10 +121,6 @@ const updateStatus = (sourceCell, destinationCell, card, id) => {
     destinationCell.parentNode.children,
     destinationCell
   );
-
-  console.log(indexOfSourceCell);
-  console.log(indexOfDestinationCell);
-  // If status has not changed no need to update the status
   if (indexOfSourceCell === indexOfDestinationCell) return;
 
   // Get new status
@@ -144,9 +140,27 @@ const updateStatus = (sourceCell, destinationCell, card, id) => {
     withCredentials: true,
     url: `${process.env["REACT_APP_SERVER"]}/update`,
     data: { projectID, id, newLabel },
-  }).then((response) => {
-    console.log(response.data);
-  });
+  }).then((response) => {});
+};
+
+const updateAssignee = (sourceCell, destinationCell, issueID) => {
+  // Compare old and new assignee
+  // If assignee has not changed no need to update the assignee
+  let oldAssignee = sourceCell.parentNode.querySelector(".assigneeName")
+    .innerHTML;
+  let newAssignee = destinationCell.parentNode.querySelector(".assigneeName")
+    .innerHTML;
+  if (oldAssignee === newAssignee) return;
+
+  // Update assignee
+  let assignee = newAssignee;
+
+  axios({
+    method: "POST",
+    withCredentials: true,
+    url: `${process.env["REACT_APP_SERVER"]}/newAssignee`,
+    data: { assignee, issueID },
+  }).then((response) => {});
 };
 
 function RenderIssues(props) {
@@ -168,12 +182,12 @@ function RenderIssues(props) {
   const handleOnDragStart = (start) => {
     let card = document.getElementById(start.draggableId);
     let ribbon = card.querySelector(".storyRibbon");
-    if (ribbon !== undefined && ribbon !== null)
+    if (ribbon !== undefined && ribbon !== null) {
       setStoryOfDraggedIssue(ribbon.innerHTML);
+    }
   };
 
   const handleOnDragEnd = (result) => {
-    console.log(result);
     const { destination, source, draggableId } = result;
     if (!destination) return;
     if (
@@ -187,9 +201,11 @@ function RenderIssues(props) {
     let destinationCell = document.getElementById(destination.droppableId);
     let card = document.getElementById(draggableId);
 
-    // Append destination cell with the dragged issue card if the destination is valid
-    if (updateStatus(sourceCell, destinationCell, card, draggableId)) {
-      destinationCell.appendChild(card);
+    // Append destination cell with the dragged issue card
+    destinationCell.appendChild(card);
+    updateStatus(sourceCell, destinationCell, card, draggableId);
+    if (props.swimlane === "ASSIGNEE") {
+      updateAssignee(sourceCell, destinationCell, draggableId);
     }
 
     setStoryOfDraggedIssue("");
@@ -207,7 +223,6 @@ function RenderIssues(props) {
       (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
       (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
     ) {
-      console.log(issues);
       tableBody = (
         <DragDropContext
           onDragEnd={handleOnDragEnd}
