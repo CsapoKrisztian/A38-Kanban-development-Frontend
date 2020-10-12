@@ -5,6 +5,7 @@ const Container = styled.div`
   font-size: 12px;
   white-space: normal !important;
   text-align: left;
+  background-color: white;
 `;
 
 export default Container;

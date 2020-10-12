@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getAuthorizationCodeUrl } from "../context/Urls";
 
 const NavLinks = styled.div`
   width: 100px;

@@ -56,10 +56,20 @@ function KanbanTable(props) {
 
   return (
     <React.Fragment>
+      <div className="w-100 d-flex justify-content-center mb-5">
+        <button
+          type="button"
+          disabled={disabled}
+          className="btn btn-success"
+          onClick={() => getIssues()}
+        >
+          Get issues
+        </button>
+      </div>
       <ScrollWrapper>
         <div className="container-fluid pt-9 pl-3 pr-3 pb-3">
           <div className="table-responsive-sm">
-            <table className="table table-sm">
+            <table className="table table-sm" id="board">
               <thead>
                 <tr>
                   <th className="col"></th>
@@ -75,16 +85,6 @@ function KanbanTable(props) {
           </div>
         </div>
       </ScrollWrapper>
-      <div className="w-100 d-flex justify-content-center mb-5">
-        <button
-          type="button"
-          disabled={disabled}
-          className="btn btn-success"
-          onClick={() => getIssues()}
-        >
-          Get issues
-        </button>
-      </div>
     </React.Fragment>
   );
 }

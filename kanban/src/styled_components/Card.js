@@ -5,6 +5,7 @@ import { CircleButton, CircleImg } from "./Circle";
 import { Link } from "react-router-dom";
 import defaultImg from "../images/user_image.png";
 import Container from "./Container";
+import { Draggable } from "react-beautiful-dnd";
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -81,7 +82,7 @@ function Card(props) {
     if (story != null) {
       return (
         <div className="pr-3">
-          <Ribbon>{story.title}</Ribbon>
+          <Ribbon className="storyRibbon">{story.title}</Ribbon>
         </div>
       );
     }
@@ -102,12 +103,15 @@ function Card(props) {
   title = title != null ? title : "No title";
 
   const getOtherLabelsBox = (project, reference) => {
-    project = project != null ? project.name : "";
+    let projectName = project != null ? project.name : "";
     reference = reference != null ? reference : "";
-    if (project !== "" || reference !== "") {
+    if (projectName !== "" || reference !== "") {
       return (
         <Information>
-          {project} {reference}
+          <span className="projectname" data-project-id={project.id}>
+            {projectName}
+          </span>{" "}
+          {reference}
         </Information>
       );
     }
@@ -172,29 +176,42 @@ function Card(props) {
 
   return (
     <React.Fragment>
-      <Container className="card">
-        <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
-          <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-          {getAssigneeBox(assignee, defaultImg)}
-        </div>
+      <Draggable
+        draggableId={props.issue.id}
+        key={props.issue.id}
+        index={props.index}
+      >
+        {(provided) => (
+          <Container
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            className="card"
+            id={props.issue.id}
+          >
+            <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
+              <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
+              {getAssigneeBox(assignee, defaultImg)}
+            </div>
 
-        <div className="body">
-          {getStoryRibbon(story)}
+            <div>
+              {getStoryRibbon(story)}
 
-          <div className="pl-2 pr-2">
-            {getDueDateBox(dueDate)}
-            <h6 className="mt-1 mb-1">{title}</h6>
-            {getOtherLabelsBox(project, reference)}
+              <div className="pl-2 pr-2">
+                {getDueDateBox(dueDate)}
+                <h6 className="mt-1 mb-1">{title}</h6>
+                {getOtherLabelsBox(project, reference)}
 
-            <Footer className="row mt-1">
-              {getNotesCounterBox(userNotesCount)}
-              {getGitlabLogoBox(webUrl)}
-              {getPriorityBox(priority)}
-            </Footer>
-          </div>
-        </div>
-        <div></div>
-      </Container>
+                <Footer className="row mt-1">
+                  {getNotesCounterBox(userNotesCount)}
+                  {getGitlabLogoBox(webUrl)}
+                  {getPriorityBox(priority)}
+                </Footer>
+              </div>
+            </div>
+          </Container>
+        )}
+      </Draggable>
     </React.Fragment>
   );
 }
