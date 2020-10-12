@@ -184,6 +184,7 @@ function Card(props) {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             className="card"
+            id={props.issue.id}
           >
             <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
               <MilestoneBox className="p-2">{mileStone}</MilestoneBox>

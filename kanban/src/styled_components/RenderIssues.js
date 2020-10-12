@@ -29,9 +29,10 @@ const getCard = (issue, status, index) => {
 
 const renderRow = (statuses, issues, swimlaneClassName) => {
   return statuses.map((status, index) => (
-    <Droppable droppableId={`${swimlaneClassName}-${getAlphaNumeric(status)}`}>
+    <Droppable droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}>
       {(provided) => (
         <td
+          id={`${swimlaneClassName}${getAlphaNumeric(status)}`}
           ref={provided.innerRef}
           {...provided.droppableProps}
           key={index}
@@ -104,6 +105,14 @@ const handleOnDragEnd = (result) => {
     destination.index === source.index
   ) {
     return;
+  }
+
+  console.log(destination.droppableId);
+  console.log(destination);
+  let destinationCell = document.getElementById(destination.droppableId);
+  console.log(destinationCell);
+  if (destinationCell !== null) {
+    destinationCell.appendChild(document.getElementById(draggableId));
   }
 };
 
