@@ -138,7 +138,7 @@ const renderContentOfTBody = (
             ? item.assignee.name
             : "Unassigned"
         ),
-        swimlane === "STORY" && storyOfDraggedIssue === item.story.title
+        swimlane === "STORY" && storyOfDraggedIssue !== item.story.title
           ? true
           : false
       )}
@@ -170,6 +170,9 @@ const updateStatus = (sourceCell, destinationCell, card, id) => {
     .getAttribute("data-project-id");
   let projectID = getLastPartAfterSlash(longProjectId);
 
+  console.log(projectID);
+  console.log(id);
+  console.log(newLabel);
   // Update status
   axios({
     method: "POST",
@@ -188,7 +191,10 @@ const updateAssignee = (sourceCell, destinationCell, issueID) => {
   if (oldAssigneeId === newAssigneeId) return;
 
   // Update assignee
-  let assignee = newAssigneeId;
+  let assignee =
+    newAssigneeId === undefined || newAssigneeId === null
+      ? "unassigned"
+      : newAssigneeId;
   axios({
     method: "POST",
     withCredentials: true,
@@ -219,6 +225,8 @@ function RenderIssues(props) {
     if (ribbon !== undefined && ribbon !== null) {
       setStoryOfDraggedIssue(ribbon.innerHTML);
     }
+
+    console.log(storyOfDraggedIssue);
   };
 
   const handleOnDragEnd = (result) => {
