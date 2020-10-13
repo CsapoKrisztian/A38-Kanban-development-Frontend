@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import Ribbon from './Ribbon';
-import { CircleButton, CircleImg } from './Circle';
-import { Link } from 'react-router-dom';
-import defaultImg from '../images/user_image.png';
-import Container from './Container';
+import React from "react";
+import styled from "styled-components";
+import Ribbon from "./Ribbon";
+import { CircleButton, CircleImg } from "./Circle";
+import { Link } from "react-router-dom";
+import Container from "./Container";
+import { Draggable } from "react-beautiful-dnd";
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -28,9 +28,15 @@ const Gray = styled.span`
   }
 `;
 
+const PriorityBadge = styled.span`
+  background-color: ${(props) =>
+    props.color ? props.color : "#6c757d"} !important;
+`;
+
 const Footer = styled.div`
   font-size: 14px;
   color: gray;
+  height: 36px;
 `;
 
 function Card(props) {
@@ -47,7 +53,7 @@ function Card(props) {
     userNotesCount,
   } = props.issue;
 
-  mileStone = mileStone != null ? mileStone.title : ' ';
+  mileStone = mileStone != null ? mileStone.title : " ";
 
   const getPriorityBox = (priority) => {
     let badge = (
@@ -56,9 +62,12 @@ function Card(props) {
 
     if (priority != null) {
       badge = (
-        <span className="badge badge-danger p-2">
+        <PriorityBadge
+          className="badge badge-danger p-2"
+          color={priority.color}
+        >
           {priority.title.slice(-2)}
-        </span>
+        </PriorityBadge>
       );
     }
 
@@ -73,11 +82,11 @@ function Card(props) {
     if (story != null) {
       return (
         <div className="pr-3">
-          <Ribbon>{story.title}</Ribbon>
+          <Ribbon className="storyRibbon">{story.title}</Ribbon>
         </div>
       );
     }
-    return '';
+    return "";
   };
 
   const getDueDateBox = (dueDate) => {
@@ -88,22 +97,25 @@ function Card(props) {
         </Information>
       );
     }
-    return '';
+    return "";
   };
 
-  title = title != null ? title : 'No title';
+  title = title != null ? title : "No title";
 
   const getOtherLabelsBox = (project, reference) => {
-    project = project != null ? project.name : '';
-    reference = reference != null ? reference : '';
-    if (project !== '' || reference !== '') {
+    let projectName = project != null ? project.name : "";
+    reference = reference != null ? reference : "";
+    if (projectName !== "" || reference !== "") {
       return (
         <Information>
-          {project} {reference}
+          <span className="projectname" data-project-id={project.id}>
+            {projectName}
+          </span>{" "}
+          {reference}
         </Information>
       );
     }
-    return '';
+    return "";
   };
 
   const getNotesCounterBox = (userNotesCount) => {
@@ -117,7 +129,7 @@ function Card(props) {
   };
 
   const getGitlabLogoBox = (webUrl) => {
-    webUrl = webUrl != null ? webUrl : '/';
+    webUrl = webUrl != null ? webUrl : "/";
     const openTab = (webUrl) => {
       window.open(webUrl);
     };
@@ -133,52 +145,73 @@ function Card(props) {
     );
   };
 
-  const getAssigneeBox = (assignee, defaultImg) => {
+  const getAssigneeBox = (assignee) => {
+    if (assignee === null) return;
+    const defaultSrc = `${process.env["REACT_APP_DEFAULT_IMG"]}`;
     const addDefaultSrc = (ev) => {
-      ev.target.src =
-        'https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
+      ev.target.src = defaultSrc;
     };
 
-    let assigneeCircle = '';
+    let avatarSrc = defaultSrc;
+    if (assignee.avatarUrl !== null) {
+      avatarSrc =
+        assignee.avatarUrl.indexOf("https") !== -1
+          ? assignee.avatarUrl
+          : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
+    }
+    let assigneeCircle = "";
     if (assignee != null) {
       assigneeCircle = (
         <CircleButton>
           <CircleImg
             onError={addDefaultSrc}
-            src={assignee.avatarUrl}
+            src={avatarSrc}
             alt={assignee.name}
           />
         </CircleButton>
       );
-    } // TODO img validation
+    }
     return <div className="text-center pb-1 pt-1 pr-2">{assigneeCircle}</div>;
   };
 
   return (
     <React.Fragment>
-      <Container className="card">
-        <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
-          <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-          {getAssigneeBox(assignee, defaultImg)}
-        </div>
+      <Draggable
+        draggableId={props.issue.id}
+        key={props.issue.id}
+        index={props.index}
+      >
+        {(provided) => (
+          <Container
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            className="card"
+            id={props.issue.id}
+          >
+            <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
+              <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
+              {getAssigneeBox(assignee)}
+            </div>
 
-        <div className="body">
-          {getStoryRibbon(story)}
+            <div>
+              {getStoryRibbon(story)}
 
-          <div className="pl-2 pr-2">
-            {getDueDateBox(dueDate)}
-            <h6 className="mt-1 mb-1">{title}</h6>
-            {getOtherLabelsBox(project, reference)}
+              <div className="pl-2 pr-2">
+                {getDueDateBox(dueDate)}
+                <h6 className="mt-1 mb-1">{title}</h6>
+                {getOtherLabelsBox(project, reference)}
 
-            <Footer className="row mt-1">
-              {getNotesCounterBox(userNotesCount)}
-              {getGitlabLogoBox(webUrl)}
-              {getPriorityBox(priority)}
-            </Footer>
-          </div>
-        </div>
-        <div></div>
-      </Container>
+                <Footer className="row mt-1">
+                  {getNotesCounterBox(userNotesCount)}
+                  {getGitlabLogoBox(webUrl)}
+                  {getPriorityBox(priority)}
+                </Footer>
+              </div>
+            </div>
+          </Container>
+        )}
+      </Draggable>
     </React.Fragment>
   );
 }

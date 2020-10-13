@@ -1,21 +1,26 @@
-import React from 'react';
-import axios from 'axios';
-
-import { serverUrl } from '../context/Urls';
-import { Redirect } from 'react-router-dom';
+import React, { useContext } from "react";
+import { serverUrl } from "../context/Urls";
+import Loading from "../styled_components/Loading";
+import useToken from "../hooks/useToken";
+import { AccessContext } from "../context/AccessContext";
+import { Redirect } from "react-router-dom";
 
 const GetToken = () => {
   let search = window.location.search;
   let params = new URLSearchParams(search);
-  let code = params.get('code');
+  let code = params.get("code");
 
   const getTokenUrl = `${serverUrl}/getToken?code=${code}`;
+  const [gotToken, setGotToken] = useContext(AccessContext);
+  const [isToken, tokenIsLoading] = useToken(getTokenUrl);
 
-  axios.get(getTokenUrl, { withCredentials: true }).then((response) => {
-    console.log(response.data);
-  });
+  let content = <Loading />;
 
-  return <Redirect to="/" />;
+  if (!tokenIsLoading && isToken) {
+    setGotToken(true);
+    content = <Redirect to="/" />;
+  }
+  return content;
 };
 
 export default GetToken;

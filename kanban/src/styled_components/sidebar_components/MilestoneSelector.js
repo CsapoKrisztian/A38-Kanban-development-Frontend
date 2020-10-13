@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { FilterContext } from "../../context/FilterContext";
-import StoryLabels from "./StoryLabels";
+import MilestoneOptions from "./MilestoneOptions";
 
-function StorySelector() {
+function MilestoneSelector() {
   const [
     swimlane,
     setSwimlane,
@@ -13,17 +13,18 @@ function StorySelector() {
     storyTitles,
     setStoryTitles,
   ] = useContext(FilterContext);
-  let storyLabels = <p>No selected projects</p>;
+
+  let milestoneOptions = <p>No selected projects</p>;
 
   if (
     projectIds !== undefined &&
     projectIds !== null &&
-    projectIds.length > 0
+    projectIds.length != 0
   ) {
-    storyLabels = <StoryLabels projectIds={projectIds} />;
+    milestoneOptions = <MilestoneOptions projectIds={projectIds} />;
   }
 
-  return storyLabels;
+  return milestoneOptions;
 }
 
-export default StorySelector;
+export default MilestoneSelector;

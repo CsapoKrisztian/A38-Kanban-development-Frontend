@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getAuthorizationCodeUrl } from "../context/Urls";
 
 const NavLinks = styled.div`
   width: 100px;
@@ -18,9 +17,7 @@ function Header(props) {
         <Link className="navbar-brand text-white" to="/">
           <b>Kanban</b>Sync
         </Link>
-        <button onClick={() => (window.location = getAuthorizationCodeUrl)}>
-          Login
-        </button>
+
         <ul className="navbar-nav mr-auto"></ul>
         <NavLinks className="row pr-1">
           <div className="text-white col p-2">
@@ -29,6 +26,7 @@ function Header(props) {
               <i className="fas fa-power-off"></i>
             </NavButton>
           </div>
+
           <div className="col p-2 text-white">
             <NavButton onClick={props.toggleOpened}>
               <i className="fas fa-cogs"></i>
