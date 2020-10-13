@@ -5,7 +5,9 @@ import Card from "./Card";
 import { CircleButton, CircleImg } from "./Circle";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
 import axios from "axios";
-import { getLastPartAfterSlash } from "../service/Util";
+import { getLastPartAfterSlash, openTab } from "../service/Util";
+import { Link } from "react-router-dom";
+import Gray from "./Gray";
 
 const Center = styled.th`
   position: relative;
@@ -57,7 +59,7 @@ const getAssigneeBox = (assignee) => {
   };
 
   let avatarSrc =
-    assignee.avatarUrl.indexOf("https") !== -1
+    assignee.avatarUrl.indexOf("http") !== -1
       ? assignee.avatarUrl
       : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
 
@@ -78,8 +80,33 @@ const getAssigneeBox = (assignee) => {
 
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
+    let description = "";
+    /*
+    if (
+      item.story.description !== undefined && // todo
+      item.story.description !== null
+    ) { */
+    // description = item.story.description;
+    //description = "https://miro.medium.com/max/3840/1*U-R58ahr5dtAvtSLGK2wXg.png";
+    description = "This is a story description";
+    if (description.indexOf("http") !== -1) {
+      let webUrl = description;
+      description = (
+        <Link onClick={() => openTab(webUrl)}>
+          <Gray>
+            <i className="fas fa-external-link-square-alt"></i>
+          </Gray>
+        </Link>
+      );
+    }
+
     return (
-      <h5 className="text-secondary font-weight-bold">{item.story.title}</h5>
+      <React.Fragment>
+        <h5 className="text-secondary font-weight-bold">{item.story.title}</h5>
+        <span>
+          <Gray className="font-weight-light">{description}</Gray>
+        </span>
+      </React.Fragment>
     );
   }
 
@@ -159,15 +186,8 @@ const updateAssignee = (sourceCell, destinationCell, issueID) => {
   let oldAssigneeId = sourceCell.parentNode.querySelector(".assigneeName").id;
   let newAssigneeId = destinationCell.parentNode.querySelector(".assigneeName")
     .id;
-  console.log(oldAssigneeId);
-  console.log(newAssigneeId);
-  if (
-    oldAssigneeId === newAssigneeId ||
-    newAssigneeId === undefined ||
-    newAssigneeId === null
-  )
-    return;
-  console.log("result");
+  if (oldAssigneeId === newAssigneeId) return;
+
   // Update assignee
   let assignee = newAssigneeId;
   axios({

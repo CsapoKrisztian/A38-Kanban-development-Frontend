@@ -5,3 +5,7 @@ export const getLastPartAfterSlash = (str) => {
   }
   return str.substring(i, str.length);
 };
+
+export const openTab = (webUrl) => {
+  window.open(webUrl);
+};
