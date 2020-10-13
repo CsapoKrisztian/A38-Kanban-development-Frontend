@@ -81,23 +81,22 @@ const getAssigneeBox = (assignee) => {
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
     let description = "";
-    /*
+
     if (
-      item.story.description !== undefined && // todo
+      item.story.description !== undefined &&
       item.story.description !== null
-    ) { */
-    // description = item.story.description;
-    //description = "https://miro.medium.com/max/3840/1*U-R58ahr5dtAvtSLGK2wXg.png";
-    description = "This is a story description";
-    if (description.indexOf("http") !== -1) {
-      let webUrl = description;
-      description = (
-        <Link onClick={() => openTab(webUrl)}>
-          <Gray>
-            <i className="fas fa-external-link-square-alt"></i>
-          </Gray>
-        </Link>
-      );
+    ) {
+      description = item.story.description;
+      if (description.indexOf("http") !== -1) {
+        let webUrl = description;
+        description = (
+          <Link onClick={() => openTab(webUrl)}>
+            <Gray>
+              <i className="fas fa-external-link-square-alt"></i>
+            </Gray>
+          </Link>
+        );
+      }
     }
 
     return (
