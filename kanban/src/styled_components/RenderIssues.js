@@ -51,10 +51,9 @@ const renderRow = (statuses, issues, swimlaneClassName, isDropDisabled) => {
   ));
 };
 
-const getAssigneeBox = (assignee, defaultImg) => {
+const getAssigneeBox = (assignee) => {
   const addDefaultSrc = (ev) => {
-    ev.target.src =
-      "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+    ev.target.src = `${process.env["REACT_APP_DEFAULT_IMG"]}`;
   };
 
   let avatarSrc =
@@ -70,7 +69,9 @@ const getAssigneeBox = (assignee, defaultImg) => {
   return (
     <div className="text-secondary font-weight-bold">
       <div className="row d-flex justify-content-center">{assigneeCircle}</div>
-      <div className="text-center p-2 assigneeName">{assignee.name}</div>
+      <div className="text-center p-2 assigneeName" id={assignee.id}>
+        {assignee.name}
+      </div>
     </div>
   );
 };
@@ -82,6 +83,11 @@ const getContentOfFirstCellInRow = (item, swimlane) => {
     );
   }
 
+  let unassigned = {
+    name: "Unassigned",
+    avatarUrl: `${process.env["REACT_APP_DEFAULT_IMG"]}`,
+  };
+  if (item.assignee === null) return getAssigneeBox(unassigned);
   return getAssigneeBox(item.assignee);
 };
 
@@ -100,7 +106,11 @@ const renderContentOfTBody = (
         statuses,
         item.issues,
         getAlphaNumeric(
-          swimlane === "STORY" ? item.story.title : item.assignee.name
+          swimlane === "STORY"
+            ? item.story.title
+            : item.assignee !== null
+            ? item.assignee.name
+            : "Unassigned"
         ),
         swimlane === "STORY" && storyOfDraggedIssue === item.story.title
           ? true
@@ -146,15 +156,20 @@ const updateStatus = (sourceCell, destinationCell, card, id) => {
 const updateAssignee = (sourceCell, destinationCell, issueID) => {
   // Compare old and new assignee
   // If assignee has not changed no need to update the assignee
-  let oldAssignee = sourceCell.parentNode.querySelector(".assigneeName")
-    .innerHTML;
-  let newAssignee = destinationCell.parentNode.querySelector(".assigneeName")
-    .innerHTML;
-  if (oldAssignee === newAssignee) return;
-
+  let oldAssigneeId = sourceCell.parentNode.querySelector(".assigneeName").id;
+  let newAssigneeId = destinationCell.parentNode.querySelector(".assigneeName")
+    .id;
+  console.log(oldAssigneeId);
+  console.log(newAssigneeId);
+  if (
+    oldAssigneeId === newAssigneeId ||
+    newAssigneeId === undefined ||
+    newAssigneeId === null
+  )
+    return;
+  console.log("result");
   // Update assignee
-  let assignee = newAssignee;
-
+  let assignee = newAssigneeId;
   axios({
     method: "POST",
     withCredentials: true,
@@ -223,6 +238,7 @@ function RenderIssues(props) {
       (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
       (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
     ) {
+      console.log(issues);
       tableBody = (
         <DragDropContext
           onDragEnd={handleOnDragEnd}

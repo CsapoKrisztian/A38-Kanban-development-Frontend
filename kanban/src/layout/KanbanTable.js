@@ -56,7 +56,7 @@ function KanbanTable(props) {
 
   return (
     <React.Fragment>
-      <div className="w-100 d-flex justify-content-center mb-5">
+      <div className="w-100 d-flex justify-content-center mb-4 mt-4">
         <button
           type="button"
           disabled={disabled}

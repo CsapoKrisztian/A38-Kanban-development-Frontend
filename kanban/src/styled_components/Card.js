@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Ribbon from "./Ribbon";
 import { CircleButton, CircleImg } from "./Circle";
 import { Link } from "react-router-dom";
-import defaultImg from "../images/user_image.png";
 import Container from "./Container";
 import { Draggable } from "react-beautiful-dnd";
 
@@ -37,6 +36,7 @@ const PriorityBadge = styled.span`
 const Footer = styled.div`
   font-size: 14px;
   color: gray;
+  height: 36px;
 `;
 
 function Card(props) {
@@ -145,9 +145,9 @@ function Card(props) {
     );
   };
 
-  const getAssigneeBox = (assignee, defaultImg) => {
-    const defaultSrc =
-      "https://www.xovi.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+  const getAssigneeBox = (assignee) => {
+    if (assignee === null) return;
+    const defaultSrc = `${process.env["REACT_APP_DEFAULT_IMG"]}`;
     const addDefaultSrc = (ev) => {
       ev.target.src = defaultSrc;
     };
@@ -191,7 +191,7 @@ function Card(props) {
           >
             <div className="card-header p-0 text-left d-flex justify-content-end align-items-center">
               <MilestoneBox className="p-2">{mileStone}</MilestoneBox>
-              {getAssigneeBox(assignee, defaultImg)}
+              {getAssigneeBox(assignee)}
             </div>
 
             <div>
