@@ -9,15 +9,8 @@ import { getLastPartAfterSlash, openTab } from "../service/Util";
 import { Link } from "react-router-dom";
 import Gray from "./Gray";
 
-const Center = styled.th`
-  position: relative;
-`;
-
-const Inner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const FirstCell = styled.td`
+  min-height: 100px !important;
 `;
 
 const getAlphaNumeric = (str) => {
@@ -54,6 +47,7 @@ const renderRow = (statuses, issues, swimlaneClassName, isDropDisabled) => {
 };
 
 const getAssigneeBox = (assignee) => {
+  if (assignee === undefined || assignee === null) return;
   const addDefaultSrc = (ev) => {
     ev.target.src = `${process.env["REACT_APP_DEFAULT_IMG"]}`;
   };
@@ -78,36 +72,38 @@ const getAssigneeBox = (assignee) => {
   );
 };
 
+const getStoryBox = (story) => {
+  let description = "";
+
+  if (story.description !== undefined && story.description !== null) {
+    description = story.description;
+    if (description.indexOf("http") !== -1) {
+      let webUrl = description;
+      description = (
+        <Link onClick={() => openTab(webUrl)}>
+          <Gray>
+            <i className="fas fa-external-link-square-alt"></i>
+          </Gray>
+        </Link>
+      );
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <h5 className="text-secondary font-weight-bold m-3">{story.title}</h5>
+      <span>
+        <Gray className="font-weight-light">{description}</Gray>
+      </span>
+    </React.Fragment>
+  );
+};
+
 const getContentOfFirstCellInRow = (item, swimlane) => {
   if (swimlane === "STORY") {
-    let description = "";
-
-    if (
-      item.story.description !== undefined &&
-      item.story.description !== null
-    ) {
-      description = item.story.description;
-      if (description.indexOf("http") !== -1) {
-        let webUrl = description;
-        description = (
-          <Link onClick={() => openTab(webUrl)}>
-            <Gray>
-              <i className="fas fa-external-link-square-alt"></i>
-            </Gray>
-          </Link>
-        );
-      }
-    }
-
-    return (
-      <React.Fragment>
-        <h5 className="text-secondary font-weight-bold">{item.story.title}</h5>
-        <span>
-          <Gray className="font-weight-light">{description}</Gray>
-        </span>
-      </React.Fragment>
-    );
+    return getStoryBox(item.story);
   }
+  console.log(swimlane);
 
   let unassigned = {
     name: "Unassigned",
@@ -125,9 +121,11 @@ const renderContentOfTBody = (
 ) => {
   return issues.map((item, index) => (
     <tr key={index}>
-      <Center className="col">
-        <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
-      </Center>
+      <FirstCell>
+        <div className="mt-4 pt-2 mb-4 pb-2 text-center">
+          {getContentOfFirstCellInRow(item, swimlane)}
+        </div>
+      </FirstCell>
       {renderRow(
         statuses,
         item.issues,
