@@ -8,6 +8,7 @@ import axios from "axios";
 import { getLastPartAfterSlash, openTab } from "../service/Util";
 import { Link } from "react-router-dom";
 import Gray from "./Gray";
+import Loading from "./Loading";
 
 const FirstCell = styled.td`
   min-height: 100px !important;
@@ -252,6 +253,14 @@ function RenderIssues(props) {
   };
 
   let tableBody = <tr></tr>;
+  if (issuesAreLoading)
+    tableBody = (
+      <tr className="border-0">
+        <td className="border-0" colSpan={props.statuses.length + 1}>
+          <Loading />
+        </td>
+      </tr>
+    );
 
   if (
     !issuesAreLoading &&
