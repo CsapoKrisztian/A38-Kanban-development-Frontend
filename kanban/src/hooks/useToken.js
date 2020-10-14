@@ -12,7 +12,14 @@ const useToken = (getTokenUrl) => {
 
   useEffect(() => {
     setTokenIsLoading(true);
-    axios.get(getTokenUrl, { withCredentials: true }).then((response) => {
+    axios.post(getTokenUrl, 
+      {
+        appId: `${process.env["REACT_APP_GITLAB_APP_ID"]}`,
+        appSecret: `${process.env["REACT_APP_GITLAB_APP_SECRET"]}`,
+        redirectUri: `${process.env["REACT_APP_APPLICATION"]}${process.env["REACT_APP_SERVER_TOKEN"]}`
+      },
+      { withCredentials: true })
+      .then((response) => {
       /**
        * Set isToken true if authentication was successful
        */
