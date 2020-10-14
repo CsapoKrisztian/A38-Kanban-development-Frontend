@@ -26,5 +26,6 @@ export const updateAssignee = (sourceCell, destinationCell, issueId) => {
     withCredentials: true,
     url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_UPDATE_ASSIGNEE"]}`,
     data: { issueId, newAssigneeId },
-  }).then((response) => console.log(response.data));
+  }).then((response) => console.log(response.data))
+  .catch(error => console.log(error));
 };
