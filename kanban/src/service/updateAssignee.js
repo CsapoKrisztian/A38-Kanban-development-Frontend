@@ -24,7 +24,7 @@ export const updateAssignee = (sourceCell, destinationCell, issueId) => {
   axios({
     method: "POST",
     withCredentials: true,
-    url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_CHANGE_ASSIGNEE"]}`,
-    data: { issueID: issueId, newAssigneeId },
-  }).then((response) => {});
+    url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_UPDATE_ASSIGNEE"]}`,
+    data: { issueId, newAssigneeId },
+  }).then((response) => console.log(response.data));
 };
