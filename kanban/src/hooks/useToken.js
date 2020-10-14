@@ -25,7 +25,8 @@ const useToken = (getTokenUrl) => {
        */
       if (response.data.indexOf("accessToken") !== -1) setIsToken(true);
       setTokenIsLoading(false);
-    });
+    })
+    .catch(error => console.log(error));;
   }, [getTokenUrl]);
 
   return [isToken, tokenIsLoading];
