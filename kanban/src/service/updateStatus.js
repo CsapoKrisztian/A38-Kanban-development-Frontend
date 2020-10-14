@@ -6,9 +6,9 @@ import { getLastPartAfterSlash } from "../util/getLastPartAfterSlash";
  * @param {*} sourceCell
  * @param {*} destinationCell
  * @param {*} card
- * @param {string} id
+ * @param {string} issueId
  */
-export const updateStatus = (sourceCell, destinationCell, card, id) => {
+export const updateStatus = (sourceCell, destinationCell, card, issueId) => {
   // Compare index of source and destination cell to find out has status changed or not
   // If status has not changed no need to update the status
   let indexOfSourceCell = Array.prototype.indexOf.call(
@@ -23,7 +23,7 @@ export const updateStatus = (sourceCell, destinationCell, card, id) => {
   if (indexOfSourceCell === indexOfDestinationCell) return;
 
   // Get new status
-  let newLabel = document.querySelector(
+  let newStatusTitle = document.querySelector(
     "#board th:nth-child(" + (indexOfDestinationCell + 1) + ")"
   ).innerHTML;
 
@@ -38,6 +38,6 @@ export const updateStatus = (sourceCell, destinationCell, card, id) => {
     method: "POST",
     withCredentials: true,
     url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_UPDATE"]}`,
-    data: { projectID, id, newLabel },
+    data: { projectID, issueId, newStatusTitle },
   }).then((response) => {});
 };
