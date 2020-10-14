@@ -3,7 +3,7 @@ import "./App.css";
 import { Router, Route, Switch } from "react-router-dom";
 import ErrorMessage from "./service/ErrorMessage";
 import GetToken from "./service/GetToken";
-import history from "./context/history";
+import history from "./util/history";
 import Auth from "./service/Auth";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route
-            // Kanban Table and selected filters
+            // Authentication checker
             exact
             path="/"
             component={Auth}
@@ -23,7 +23,7 @@ function App() {
             component={ErrorMessage}
           />
           <Route
-            // Get access token of the user
+            // Get access token
             path="/getToken"
             component={GetToken}
           />

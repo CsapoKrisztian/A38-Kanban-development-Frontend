@@ -19,6 +19,10 @@ const expandedStyle = {
   marginRight: 0,
 };
 
+/**
+ * Responsible for pushing Board (the main part with the
+ * Get issues button and the table) when Settings (sidebar) is opened
+ */
 function Main() {
   const [opened, setOpened] = useState(false);
 

@@ -20,6 +20,9 @@ const Container = styled.div`
   margin: -100px 0 0 -150px;
 `;
 
+/**
+ * Display error message
+ */
 function ErrorMessage() {
   let { message } = useParams();
   return (

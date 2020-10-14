@@ -1,12 +1,23 @@
 import React, { useContext } from "react";
 import { AccessContext } from "../context/AccessContext";
-import Loading from "../styled_components/Loading";
+import Loading from "../components/reuseables/Loading";
 import Main from "../layout/Main";
-import { getAuthorizationCodeUrl } from "../context/Urls";
 
+/**
+ * If user is authenticated renders Main component
+ * else redirects to Gitlab server to get code parameter
+ * which is required for requesting access token
+ */
 function Auth() {
   const [gotToken, setGotToken] = useContext(AccessContext);
+  /**
+   * Gitlab will redirect to /getToken Route
+   */
+  const redirectUri = `${process.env["REACT_APP_APPLICATION"]}${process.env["REACT_APP_TOKEN"]}`;
+  const getAuthorizationCodeUrl = `${process.env["REACT_APP_GITLAB_SERVER"]}/oauth/authorize?client_id=${process.env["REACT_APP_GITLAB_APP_ID"]}&redirect_uri=${redirectUri}&response_type=code&scope=api`;
+
   let content = <Loading />;
+
   if (gotToken) {
     content = <Main />;
   } else {

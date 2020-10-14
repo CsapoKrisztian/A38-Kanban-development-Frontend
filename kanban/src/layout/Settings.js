@@ -1,16 +1,20 @@
 import React from "react";
-import ToggleSwitch from "../styled_components/ToggleSwitch";
+import ToggleSwitch from "../components/sidebar_components/ToggleSwitch";
 import {
   SideMenu,
   Subtitle,
   FilterBox,
   ScrollableBox,
   Wrapper,
-} from "../styled_components/SidebarStyle";
-import ProjectLabels from "../styled_components/sidebar_components/ProjectLabels";
-import StorySelector from "../styled_components/sidebar_components/StorySelector";
-import MilestoneSelector from "../styled_components/sidebar_components/MilestoneSelector";
+} from "../components/sidebar_components/SidebarStyle";
+import ProjectLabels from "../components/sidebar_components/ProjectLabels";
+import StorySelector from "../components/sidebar_components/StorySelector";
+import MilestoneSelector from "../components/sidebar_components/MilestoneSelector";
 
+/**
+ * Renders the sidebar for filter settings
+ * @param {*} props: currentStyle - the sidebar is opened or closed
+ */
 function Settings(props) {
   return (
     <React.Fragment>

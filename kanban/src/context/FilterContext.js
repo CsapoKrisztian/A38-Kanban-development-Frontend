@@ -1,5 +1,9 @@
 import React, { createContext, useState } from "react";
 
+/**
+ * Selected filters are stored in this context, so all of the
+ * components are have access to them
+ */
 export const FilterContext = createContext();
 
 export const FilterProvider = (props) => {
@@ -7,7 +11,6 @@ export const FilterProvider = (props) => {
   const [projectIds, setProjectIds] = useState([]);
   const [storyTitles, setStoryTitles] = useState([]);
   const [milestoneTitles, setMilestoneTitles] = useState([]);
-  const [requestIssues, setRequestIssues] = useState(false);
 
   return (
     <FilterContext.Provider
@@ -20,8 +23,6 @@ export const FilterProvider = (props) => {
         setMilestoneTitles,
         storyTitles,
         setStoryTitles,
-        requestIssues,
-        setRequestIssues,
       ]}
     >
       {props.children}
