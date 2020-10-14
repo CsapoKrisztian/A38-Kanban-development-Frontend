@@ -8,7 +8,7 @@ import { getLastPartAfterSlash } from "../util/getLastPartAfterSlash";
  * @param {*} card
  * @param {string} issueId
  */
-export const updateStatus = (sourceCell, destinationCell, card, issueId) => {
+export const updateStatus = (sourceCell, destinationCell, issueId) => {
   // Compare index of source and destination cell to find out has status changed or not
   // If status has not changed no need to update the status
   let indexOfSourceCell = Array.prototype.indexOf.call(
@@ -27,17 +27,12 @@ export const updateStatus = (sourceCell, destinationCell, card, issueId) => {
     "#board th:nth-child(" + (indexOfDestinationCell + 1) + ")"
   ).innerHTML;
 
-  // Get projectID
-  let longProjectId = card
-    .querySelector(".projectname")
-    .getAttribute("data-project-id");
-  let projectID = getLastPartAfterSlash(longProjectId);
-
   // Update status
   axios({
     method: "POST",
     withCredentials: true,
-    url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_UPDATE"]}`,
-    data: { projectID, issueId, newStatusTitle },
-  }).then((response) => {});
+    url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_CHANGE_STATUS"]}`,
+    data: { issueId, newStatusTitle },
+  }).then((response) => {console.log(response.data)})
+  .catch(error => console.log(error));
 };

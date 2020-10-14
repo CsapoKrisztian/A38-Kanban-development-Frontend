@@ -56,7 +56,7 @@ function RenderIssues(props) {
 
     // Append destination cell with the dragged issue card
     destinationCell.appendChild(card);
-    updateStatus(sourceCell, destinationCell, card, draggableId);
+    updateStatus(sourceCell, destinationCell, draggableId);
     if (props.swimlane === "ASSIGNEE") {
       updateAssignee(sourceCell, destinationCell, draggableId);
     }
