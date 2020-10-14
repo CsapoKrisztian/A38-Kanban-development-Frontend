@@ -1,15 +1,20 @@
 import React from "react";
-import ToggleSwitch from "../styled_components/ToggleSwitch";
+import ToggleSwitch from "../components/sidebar_components/ToggleSwitch";
 import {
   SideMenu,
   Subtitle,
   FilterBox,
   ScrollableBox,
   Wrapper,
-} from "../styled_components/SidebarStyle";
-import ProjectLabels from "../styled_components/sidebar_components/ProjectLabels";
-import StorySelector from "../styled_components/sidebar_components/StorySelector";
+} from "../components/sidebar_components/SidebarStyle";
+import ProjectLabels from "../components/sidebar_components/ProjectLabels";
+import StorySelector from "../components/sidebar_components/StorySelector";
+import MilestoneSelector from "../components/sidebar_components/MilestoneSelector";
 
+/**
+ * Renders the sidebar for filter settings
+ * @param {*} props: currentStyle - the sidebar is opened or closed
+ */
 function Settings(props) {
   return (
     <React.Fragment>
@@ -25,27 +30,22 @@ function Settings(props) {
           </FilterBox>
 
           <Subtitle>PROJECTS</Subtitle>
-          <FilterBox className="">
+          <FilterBox>
             <ScrollableBox>
               <ProjectLabels />
             </ScrollableBox>
           </FilterBox>
 
           <Subtitle>STORIES</Subtitle>
-          <FilterBox className="">
+          <FilterBox>
             <ScrollableBox>
               <StorySelector />
             </ScrollableBox>
           </FilterBox>
 
           <Subtitle>MILESTONE</Subtitle>
-          <FilterBox className="">
-            <select className="custom-select">
-              <option defaultValue>Select milestone</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <FilterBox>
+            <MilestoneSelector />
           </FilterBox>
         </Wrapper>
       </SideMenu>

@@ -1,76 +1,88 @@
-import React from 'react';
-import Card from '../styled_components/Card';
-import styled from 'styled-components';
-
-const Center = styled.th`
-  position: relative;
-`;
-
-const Inner = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+import React, { useContext, useState } from "react";
+import styled from "styled-components";
+import { FilterContext } from "../context/FilterContext";
+import RenderIssues from "../rendering_issues/RenderIssues";
 
 const ScrollWrapper = styled.div`
   white-space: nowrap;
   overflow-x: auto;
 `;
 
-const getAlphaNumeric = (str) => {
-  if (str === '' || str === undefined) return '';
-  return str.replace(/[\W_]+/g, '');
-};
-
-const getCard = (issue, status) => {
-  if (issue.status.title === status) {
-    return <Card key={issue.id} issue={issue} />;
-  }
-};
-
-const renderRow = (statuses, issues, swimlaneClassName) => {
-  return statuses.map((status) => (
-    <td
-      key={status.title}
-      className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
-    >
-      {issues.map((issue) => getCard(issue, status))}
-    </td>
-  ));
-};
-
-const getContentOfFirstCellInRow = (item, swimlane) => {
-  if (swimlane === 'STORY') {
-    return item.story.title;
-  }
-
-  let user = ''; //TODO
-  return user;
-};
-
-const renderContentOfTBody = (issues, statuses, swimlane) => {
-  return issues.map((item, index) => (
-    <tr key={index}>
-      <Center className="col">
-        <Inner>{getContentOfFirstCellInRow(item, swimlane)}</Inner>
-      </Center>
-      {renderRow(statuses, item.issues, getAlphaNumeric(item.story.title))}
-    </tr>
-  ));
-};
-
+/**
+ * Renders Get issues button and the table
+ * At least one project should be selected to request the issues
+ * @param {string[]} props: statuses - array of statuses
+ */
 function KanbanTable(props) {
-  let { statuses, issues } = props;
-  let swimlane = 'STORY';
+  let { statuses } = props;
+  const [
+    swimlane,
+    setSwimlane,
+    projectIds,
+    setProjectIds,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+    setStoryTitles,
+  ] = useContext(FilterContext);
+  const [tableBody, setTableBody] = useState(<tr></tr>);
+
+  /**
+   * While no project is selected button is disabled
+   */
+  let disabled = true;
+  if (
+    projectIds !== undefined &&
+    projectIds !== null &&
+    projectIds.length > 0
+  ) {
+    disabled = false;
+  }
+
+  /**
+   * When Get issues is clicked the table rows are rendered
+   */
+  const getIssues = () => {
+    if (
+      projectIds !== undefined &&
+      projectIds !== null &&
+      projectIds.length > 0 &&
+      milestoneTitles &&
+      storyTitles
+    ) {
+      let issuesInTable = (
+        <RenderIssues
+          statuses={[...statuses]}
+          swimlane={swimlane}
+          projectIds={[...projectIds]}
+          milestoneTitles={[...milestoneTitles]}
+          storyTitles={[...storyTitles]}
+        />
+      );
+
+      setTableBody(issuesInTable);
+    }
+  };
 
   return (
     <React.Fragment>
+      <div className="w-100 d-flex justify-content-center mb-4 mt-4">
+        <button // Get issues button
+          type="button"
+          disabled={disabled}
+          className="btn btn-success"
+          onClick={() => getIssues()}
+        >
+          Get issues
+        </button>
+      </div>
       <ScrollWrapper>
         <div className="container-fluid pt-9 pl-3 pr-3 pb-3">
           <div className="table-responsive-sm">
-            <table className="table table-sm">
-              <thead>
+            <table className="table table-sm" id="board">
+              <thead
+              // Table header with the statuses
+              >
                 <tr>
                   <th className="col"></th>
                   {statuses.map((status, index) => (
@@ -80,7 +92,11 @@ function KanbanTable(props) {
                   ))}
                 </tr>
               </thead>
-              <tbody>{renderContentOfTBody(issues, statuses, swimlane)}</tbody>
+              <tbody
+              // Table body is returned by RenderIssues
+              >
+                {tableBody}
+              </tbody>
             </table>
           </div>
         </div>

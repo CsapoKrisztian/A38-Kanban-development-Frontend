@@ -28,6 +28,10 @@ table {
   word-wrap: break-word;
 }
 
+tr {
+  min-height: 200px !important;
+}
+
 th {
   font-size: 14px;
   text-align: center;
@@ -43,6 +47,7 @@ td {
   padding-bottom: 0px !important;
   min-width: 170px !important;
   max-width: 15vw !important;
+  min-height: 200px !important;
 }
 
 .spinner-container {
