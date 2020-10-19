@@ -157,3 +157,6 @@ fabric.properties
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,linux
+
+#Config file
+/.env
