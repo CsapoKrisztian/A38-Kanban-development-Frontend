@@ -1,7 +1,5 @@
 # A38-Kanban-development-Frontend
 
-# A38-Kanban-development-Frontend
-
 ## Short description
 This application is a kanban board. In the board you can see, filter and manipulate your gitlab issues. The columns of the board are the statuses of the issues. The swimlanes are optionally assignees or stories of the issues.  
 
