@@ -12,6 +12,5 @@ export const getStoryRibbon = (story) => {
         <Ribbon className="storyRibbon">{story.title}</Ribbon>
       </div>
     );
-  }
-  return "";
+  } else return <div className="storyRibbon"></div>;
 };
