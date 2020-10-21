@@ -38,15 +38,19 @@ export const renderContentOfTBody = (
         statuses,
         item.issues,
         getAlphaNumeric(
-          swimlane === "STORY"
-            ? item.story.title
-            : item.assignee !== null
-            ? item.assignee.name
-            : "Unassigned"
+          swimlane === "STORY" ?
+            item.story !== null ?
+              item.story.title : "Without story"
+          : item.assignee !== null ?
+            item.assignee.name : "Unassigned"
         ),
-        swimlane === "STORY" && storyOfDraggedIssue !== item.story.title
-          ? true
-          : false
+        swimlane === "STORY" ?
+          item.story !== null ?
+            storyOfDraggedIssue !== item.story.title ?
+              true : false
+          : storyOfDraggedIssue === null ?
+              true : false
+        : false
       )}
     </tr>
   ));

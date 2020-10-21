@@ -10,13 +10,18 @@ import { renderAssigneeBox } from "./renderAssigneeBox";
  */
 export const renderFirstCellOfRow = (item, swimlane) => {
   if (swimlane === "STORY") {
-    return renderStoryBox(item.story);
+    let withoutStory = {
+      title: "Without story",
+      description: ""
+    }
+    return item.story !== null ? renderStoryBox(item.story) : renderStoryBox(withoutStory);
+    
+  } else {
+    let unassigned = {
+      name: "Unassigned",
+      avatarUrl: `${process.env["REACT_APP_DEFAULT_AVATAR_IMG"]}`,
+    };
+    return item.assignee !== null ? renderAssigneeBox(item.assignee) : renderAssigneeBox(unassigned);
   }
 
-  let unassigned = {
-    name: "Unassigned",
-    avatarUrl: `${process.env["REACT_APP_DEFAULT_AVATAR_IMG"]}`,
-  };
-  if (item.assignee === null) return renderAssigneeBox(unassigned);
-  return renderAssigneeBox(item.assignee);
 };
