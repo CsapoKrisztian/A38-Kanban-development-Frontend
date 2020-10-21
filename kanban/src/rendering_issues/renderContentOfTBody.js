@@ -48,7 +48,7 @@ export const renderContentOfTBody = (
           item.story !== null ?
             storyOfDraggedIssue !== item.story.title ?
               true : false
-          : storyOfDraggedIssue === null ?
+          : storyOfDraggedIssue !== '' ?
               true : false
         : false
       )}
