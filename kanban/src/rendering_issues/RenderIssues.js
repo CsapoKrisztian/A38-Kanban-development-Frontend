@@ -28,14 +28,14 @@ function RenderIssues(props) {
   // Value of storyOfDraggedIssue will be the story of the dragged issue.
   // The story of the destination cell should be the same, because the story
   // shouldn't change
-  const [storyOfDraggedIssue, setStoryOfDraggedIssue] = useState("");
+  const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState("");
 
   // On the beginning of the drag story is stored in the state
   const handleOnDragStart = (start) => {
     let card = document.getElementById(start.draggableId);
     let ribbon = card.querySelector(".storyRibbon");
     if (ribbon !== undefined && ribbon !== null) {
-      setStoryOfDraggedIssue(ribbon.innerHTML);
+      setStoryIdOfDraggedIssue(ribbon.id);
     }
   };
 
@@ -62,7 +62,7 @@ function RenderIssues(props) {
     }
 
     // Remove story of the dragged issue from the state
-    setStoryOfDraggedIssue("");
+    setStoryIdOfDraggedIssue("");
   };
 
   // Showing spinner while loading issues
@@ -97,7 +97,7 @@ function RenderIssues(props) {
             issues,
             props.statuses,
             props.swimlane,
-            storyOfDraggedIssue
+            storyIdOfDraggedIssue
           )}
         </DragDropContext>
       );

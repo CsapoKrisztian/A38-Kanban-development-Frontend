@@ -16,10 +16,10 @@ function StoryLabels(props) {
   );
 
   const [
-    swimlane,
-    setSwimlane,
     projectIds,
     setProjectIds,
+    swimlane,
+    setSwimlane,
     milestoneTitles,
     setMilestoneTitles,
     storyTitles,
@@ -27,9 +27,7 @@ function StoryLabels(props) {
   ] = useContext(FilterContext);
 
   const addFilter = (storyTitle) => {
-    let newStoryTitles = storyTitles;
-    newStoryTitles.push(storyTitle);
-    setStoryTitles(newStoryTitles);
+    setStoryTitles([...storyTitles, storyTitle]);
   };
 
   const deleteFilter = (storyTitle) => {

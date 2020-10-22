@@ -7,16 +7,7 @@ import StoryLabels from "./StoryLabels";
  * appears instead of the scrollable div.
  */
 function StorySelector() {
-  const [
-    swimlane,
-    setSwimlane,
-    projectIds,
-    setProjectIds,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
-  ] = useContext(FilterContext);
+  const [projectIds] = useContext(FilterContext);
   let storyLabels = <p>No selected projects</p>;
 
   if (

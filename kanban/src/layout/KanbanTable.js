@@ -16,10 +16,10 @@ const ScrollWrapper = styled.div`
 function KanbanTable(props) {
   let { statuses } = props;
   const [
-    swimlane,
-    setSwimlane,
     projectIds,
     setProjectIds,
+    swimlane,
+    setSwimlane,
     milestoneTitles,
     setMilestoneTitles,
     storyTitles,

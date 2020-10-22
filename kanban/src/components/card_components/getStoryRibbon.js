@@ -9,8 +9,8 @@ export const getStoryRibbon = (story) => {
   if (story != null) {
     return (
       <div className="pr-3">
-        <Ribbon className="storyRibbon">{story.title}</Ribbon>
+        <Ribbon className="storyRibbon" id={story.id}>{story.title}</Ribbon>
       </div>
     );
-  } else return <div className="storyRibbon"></div>;
+  } else return <div className="storyRibbon" id={null}/>;
 };

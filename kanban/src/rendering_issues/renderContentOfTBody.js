@@ -18,13 +18,13 @@ const FirstCell = styled.td`
  * @param {*} issues
  * @param {string[]} statuses
  * @param {string} swimlane
- * @param {string} storyOfDraggedIssue
+ * @param {string} storyIdOfDraggedIssue
  */
 export const renderContentOfTBody = (
   issues,
   statuses,
   swimlane,
-  storyOfDraggedIssue
+  storyIdOfDraggedIssue
 ) => {
   return issues.map((item, index) => (
     <tr key={index}>
@@ -46,9 +46,9 @@ export const renderContentOfTBody = (
         ),
         swimlane === "STORY" ?
           item.story !== null ?
-            storyOfDraggedIssue !== item.story.title ?
+            storyIdOfDraggedIssue !== item.story.id ?
               true : false
-          : storyOfDraggedIssue !== '' ?
+          : storyIdOfDraggedIssue !== '' ?
               true : false
         : false
       )}
