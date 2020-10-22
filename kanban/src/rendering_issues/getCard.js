@@ -11,7 +11,7 @@ export const getCard = (issue, status, index) => {
   if (issue.status.title === status) {
     return (
       <React.Fragment key={issue.id}>
-        <Card issue={issue} />
+        <Card issue={issue} index={index} />
       </React.Fragment>
     );
   }
