@@ -22,6 +22,7 @@ export const renderRow = (
 ) => {
   return statuses.map((status, index) => (
     <Droppable
+      key={index}
       droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}
       isDropDisabled={isDropDisabled}
     >

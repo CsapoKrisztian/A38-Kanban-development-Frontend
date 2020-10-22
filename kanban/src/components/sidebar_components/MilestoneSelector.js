@@ -7,23 +7,14 @@ import MilestoneOptions from "./MilestoneOptions";
  * appears instead of the dropdown.
  */
 function MilestoneSelector() {
-  const [
-    swimlane,
-    setSwimlane,
-    projectIds,
-    setProjectIds,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
-  ] = useContext(FilterContext);
+  const [projectIds] = useContext(FilterContext);
 
   let milestoneOptions = <p>No selected projects</p>;
 
   if (
     projectIds !== undefined &&
     projectIds !== null &&
-    projectIds.length != 0
+    projectIds.length !== 0
   ) {
     milestoneOptions = <MilestoneOptions projectIds={projectIds} />;
   }

@@ -16,10 +16,10 @@ function MilestoneOptions(props) {
   );
 
   const [
-    swimlane,
-    setSwimlane,
     projectIds,
     setProjectIds,
+    swimlane,
+    setSwimlane,
     milestoneTitles,
     setMilestoneTitles,
     storyTitles,
@@ -42,7 +42,7 @@ function MilestoneOptions(props) {
     !milestonesAreLoading &&
     milestones !== undefined &&
     milestones !== null &&
-    milestones.length != 0
+    milestones.length !== 0
   ) {
     milestoneOptions = milestones.map((milestone, index) => (
       <option key={index} value={milestone}>

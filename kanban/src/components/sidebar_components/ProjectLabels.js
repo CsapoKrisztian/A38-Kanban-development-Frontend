@@ -8,16 +8,7 @@ import { FilterContext } from "../../context/FilterContext";
  */
 function ProjectLabels() {
   let projectLabels = "";
-  const [
-    swimlane,
-    setSwimlane,
-    projectIds,
-    setProjectIds,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
-  ] = useContext(FilterContext);
+  const [projectIds, setProjectIds] = useContext(FilterContext);
 
   const [projects, projectsAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/projects`,
@@ -25,9 +16,7 @@ function ProjectLabels() {
   );
 
   const addFilter = (projectId) => {
-    let newProjectIds = JSON.parse(JSON.stringify(projectIds));
-    newProjectIds.push(projectId);
-    setProjectIds(newProjectIds);
+    setProjectIds([...JSON.parse(JSON.stringify(projectIds)), projectId]);
   };
 
   const deleteFilter = (projectId) => {

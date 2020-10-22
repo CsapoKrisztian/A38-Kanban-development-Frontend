@@ -9,7 +9,7 @@ import Main from "../layout/Main";
  * which is required for requesting access token
  */
 function Auth() {
-  const [gotToken, setGotToken] = useContext(AccessContext);
+  const [gotToken] = useContext(AccessContext);
   /**
    * Gitlab will redirect to /getToken Route
    */
