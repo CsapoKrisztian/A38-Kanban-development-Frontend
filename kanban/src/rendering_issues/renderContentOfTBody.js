@@ -40,7 +40,7 @@ export const renderContentOfTBody = (
         getAlphaNumeric(
           swimlane === "STORY" ?
             item.story !== null ?
-              item.story.title : "Without story"
+              item.story.id : "Without story"
           : item.assignee !== null ?
             item.assignee.name : "Unassigned"
         ),

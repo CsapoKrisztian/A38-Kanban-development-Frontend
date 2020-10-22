@@ -62,7 +62,7 @@ function RenderIssues(props) {
     }
 
     // Remove story of the dragged issue from the state
-    setStoryIdOfDraggedIssue("");
+    setStoryIdOfDraggedIssue(null);
   };
 
   // Showing spinner while loading issues
