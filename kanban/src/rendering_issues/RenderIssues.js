@@ -52,11 +52,15 @@ function RenderIssues(props) {
     let sourceCell = document.getElementById(source.droppableId);
     let destinationCell = document.getElementById(destination.droppableId);
     let card = document.getElementById(draggableId);
+    card.onUpdateStatus('new');
 
     // Append destination cell with the dragged issue card
     destinationCell.appendChild(card);
     
     updateStatus(sourceCell, destinationCell, draggableId);
+
+    // source.droppableId = destination.droppableId;
+
     if (props.swimlane === "ASSIGNEE") {
       updateAssignee(sourceCell, destinationCell, draggableId);
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Container from "./Container";
 import { Draggable } from "react-beautiful-dnd";
@@ -9,6 +9,8 @@ import { getAssigneeBox } from "./getAssigneeBox";
 import { getDueDateBox } from "./getDueDateBox";
 import { getNotesCounterBox } from "./getNotesCounterBox";
 import { getOtherLabelsBox } from "./getOtherLabelsBox";
+import { updateAssignee } from "../../service/updateAssignee";
+import { updateStatus } from "../../service/updateStatus";
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -27,7 +29,7 @@ const Footer = styled.div`
  * Renders a card
  * @param {*} props
  */
-function Card(props) {
+const Card = (props) => {
   let {
     assignee,
     dueDate,
@@ -45,7 +47,6 @@ function Card(props) {
   title = title != null ? title : "No title";
 
   return (
-    <React.Fragment>
       <Draggable
         draggableId={props.issue.id}
         key={props.issue.id}
@@ -82,7 +83,6 @@ function Card(props) {
           </Container>
         )}
       </Draggable>
-    </React.Fragment>
   );
 }
 
