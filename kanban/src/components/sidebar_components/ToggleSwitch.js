@@ -51,14 +51,10 @@ const SwitchSlider = styled.span`
  */
 function ToggleSwitch() {
   const [
-    swimlane,
-    setSwimlane,
     projectIds,
     setProjectIds,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
+    swimlane,
+    setSwimlane
   ] = useContext(FilterContext);
 
   const toggleSwimlane = () => {

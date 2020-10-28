@@ -32,14 +32,13 @@ const LabelStyle = styled.button`
 function Label(props) {
   const offBgColor = "#6c757d";
   const [
-    swimlane,
-    setSwimlane,
     projectIds,
     setProjectIds,
+    swimlane,
+    setSwimlane,
     milestoneTitles,
     setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
+    storyTitles
   ] = useContext(FilterContext);
 
   const [bgColor, setBgColor] = useState(offBgColor);

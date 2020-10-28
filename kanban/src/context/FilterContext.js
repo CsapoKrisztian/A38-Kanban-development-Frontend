@@ -15,10 +15,10 @@ export const FilterProvider = (props) => {
   return (
     <FilterContext.Provider
       value={[
-        swimlane,
-        setSwimlane,
         projectIds,
         setProjectIds,
+        swimlane,
+        setSwimlane,
         milestoneTitles,
         setMilestoneTitles,
         storyTitles,
