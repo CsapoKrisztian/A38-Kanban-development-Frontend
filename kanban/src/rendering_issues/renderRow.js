@@ -34,7 +34,7 @@ export const renderRow = (
           key={index}
           className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
         >
-          {issues.map((issue, index) => getCard(issue, status, index))}
+          {issues.map((issue) => getCard(issue, status))}
           {provided.placeholder}
         </td>
       )}

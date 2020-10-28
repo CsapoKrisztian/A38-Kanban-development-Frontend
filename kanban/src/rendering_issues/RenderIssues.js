@@ -17,7 +17,7 @@ function RenderIssues(props) {
       ? process.env["REACT_APP_SERVER_ISSUES_BY_STORY"]
       : process.env["REACT_APP_SERVER_ISSUES_BY_ASSIGNEE"];
 
-  const [issues, issuesAreLoading] = useApiCall(
+  const [objectIssuesList, objectIssuesListIsLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}${urlGetIssues}`,
     "POST",
     props.projectIds,
@@ -25,9 +25,8 @@ function RenderIssues(props) {
     props.storyTitles
   );
 
-  // Value of storyOfDraggedIssue will be the story of the dragged issue.
-  // The story of the destination cell should be the same, because the story
-  // shouldn't change
+  // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
+  // The story id of the destination cell should be the same, because the story shouldn't change
   const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState("");
 
   // On the beginning of the drag story is stored in the state
@@ -56,6 +55,7 @@ function RenderIssues(props) {
 
     // Append destination cell with the dragged issue card
     destinationCell.appendChild(card);
+    
     updateStatus(sourceCell, destinationCell, draggableId);
     if (props.swimlane === "ASSIGNEE") {
       updateAssignee(sourceCell, destinationCell, draggableId);
@@ -67,7 +67,7 @@ function RenderIssues(props) {
 
   // Showing spinner while loading issues
   let tableBody = <tr></tr>;
-  if (issuesAreLoading)
+  if (objectIssuesListIsLoading)
     tableBody = (
       <tr className="border-0">
         <td className="border-0" colSpan={props.statuses.length + 1}>
@@ -79,14 +79,14 @@ function RenderIssues(props) {
   // Render table body after fetching is finished
   // DragDropContext is available only this entity
   if (
-    !issuesAreLoading &&
-    issues !== undefined &&
-    issues !== null &&
-    issues.length > 0
+    !objectIssuesListIsLoading &&
+    objectIssuesList !== undefined &&
+    objectIssuesList !== null &&
+    objectIssuesList.length > 0
   ) {
     if (
-      (props.swimlane === "STORY" && issues[0].hasOwnProperty("story")) ||
-      (props.swimlane === "ASSIGNEE" && issues[0].hasOwnProperty("assignee"))
+      (props.swimlane === "STORY" && objectIssuesList[0].hasOwnProperty("story")) ||
+      (props.swimlane === "ASSIGNEE" && objectIssuesList[0].hasOwnProperty("assignee"))
     ) {
       tableBody = (
         <DragDropContext
@@ -94,7 +94,7 @@ function RenderIssues(props) {
           onDragStart={handleOnDragStart}
         >
           {renderContentOfTBody(
-            issues,
+            objectIssuesList,
             props.statuses,
             props.swimlane,
             storyIdOfDraggedIssue

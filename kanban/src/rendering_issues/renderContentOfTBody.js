@@ -15,38 +15,38 @@ const FirstCell = styled.td`
  * is different than the destination cell then dropping will be
  * disabled.
  * @see renderRow
- * @param {*} issues
+ * @param {*} objectIssuesList
  * @param {string[]} statuses
  * @param {string} swimlane
  * @param {string} storyIdOfDraggedIssue
  */
 export const renderContentOfTBody = (
-  issues,
+  objectIssuesList,
   statuses,
   swimlane,
   storyIdOfDraggedIssue
 ) => {
-  return issues.map((item, index) => (
+  return objectIssuesList.map((objectIssues, index) => (
     <tr key={index}>
       <FirstCell>
         <div className="mt-4 pt-2 mb-4 pb-2 text-center">
-          {renderFirstCellOfRow(item, swimlane)}
+          {renderFirstCellOfRow(objectIssues, swimlane)}
         </div>
       </FirstCell>
 
       {renderRow(
         statuses,
-        item.issues,
+        objectIssues.issues,
         getAlphaNumeric(
           swimlane === "STORY" ?
-            item.story !== null ?
-              item.story.id : "Without story"
-          : item.assignee !== null ?
-            item.assignee.name : "Unassigned"
+            objectIssues.story !== null ?
+              objectIssues.story.id : "Without story"
+          : objectIssues.assignee !== null ?
+            objectIssues.assignee.name : "Unassigned"
         ),
         swimlane === "STORY" ?
-          item.story !== null ?
-            storyIdOfDraggedIssue !== item.story.id ?
+          objectIssues.story !== null ?
+            storyIdOfDraggedIssue !== objectIssues.story.id ?
               true : false
           : storyIdOfDraggedIssue !== '' ?
               true : false
