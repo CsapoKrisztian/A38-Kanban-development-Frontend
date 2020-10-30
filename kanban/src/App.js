@@ -6,7 +6,7 @@ import GetToken from "./service/GetToken";
 import history from "./util/history";
 import Auth from "./service/Auth";
 
-function App() {
+const App = () => {
   return (
     <React.Fragment>
       <Router history={history}>
