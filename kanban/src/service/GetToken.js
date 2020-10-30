@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Loading from "../components/reuseables/Loading";
 import useToken from "../hooks/useToken";
 import { AccessContext } from "../context/AccessContext";
@@ -18,13 +18,18 @@ const GetToken = () => {
   const [gotToken, setGotToken] = useContext(AccessContext);
   const [isToken, tokenIsLoading] = useToken(getTokenUrl);
 
-  let content = <Loading />;
+  useEffect(() => {
+    if (!tokenIsLoading && isToken) {
+      setGotToken(true);
+    }
+  }, [isToken, setGotToken, tokenIsLoading]);
 
-  if (!tokenIsLoading && isToken) {
-    setGotToken(true);
-    content = <Redirect to="/" />;
+  if (gotToken) {
+    return <Redirect to="/" />;
+  } else {
+    return <Loading />;
   }
-  return content;
+  
 };
 
 export default GetToken;
