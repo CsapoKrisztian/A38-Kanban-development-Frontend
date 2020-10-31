@@ -20,6 +20,14 @@ export const renderRow = (
   swimlaneClassName,
   isDropDisabled
 ) => {
+const compareByPriority = (issue1, issue2) => {
+  if (issue1.priority === null) return 1;
+  if (issue2.priority === null) return -1;
+  if (issue1.priority.priorityNum > issue2.priority.priorityNum) return 1;
+  if (issue1.priority.priorityNum < issue2.priority.priorityNum) return -1;
+  return 0;
+}
+
   return statuses.map((status, index) => (
     <Droppable
       key={index}
@@ -34,7 +42,10 @@ export const renderRow = (
           key={index}
           className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
         >
-          {issues.map((issue, index) => getCard(issue, status, index))}
+          {issues
+            .filter(issue => issue.status.title === status)
+            .sort(compareByPriority)
+            .map((issue, index) => getCard(issue, status, index))}
           {provided.placeholder}
         </td>
       )}
