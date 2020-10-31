@@ -8,11 +8,9 @@ import Card from "../components/card_components/Card";
  * @param {*} index
  */
 export const getCard = (issue, status, index) => {
-  if (issue.status.title === status) {
     return (
       <React.Fragment key={issue.id}>
         <Card issue={issue} index={index} />
       </React.Fragment>
     );
-  }
 };
