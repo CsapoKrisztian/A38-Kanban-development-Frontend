@@ -27,13 +27,15 @@ function StoryLabels(props) {
   ] = useContext(FilterContext);
 
   const addFilter = (storyTitle) => {
-    let newStoryTitles = [...allStoryTitles, storyTitle];
+    console.log("add filter");
+    let newStoryTitles = [...storyTitles, storyTitle];
     setStoryTitles(newStoryTitles);
     localStorage.setItem("storyTitles", newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = allStoryTitles;
+    console.log("delete story filter");
+    let newStoryTitles = storyTitles;
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
     setStoryTitles(newStoryTitles);
     localStorage.setItem("storyTitles", newStoryTitles);
@@ -45,16 +47,16 @@ function StoryLabels(props) {
     allStoryTitles !== null &&
     allStoryTitles.length > 0
   ) {
-    storyLabels = allStoryTitles.map((story, index) => (
+    storyLabels = allStoryTitles.map((storyTitle, index) => (
       <Label
         key={index}
         addFilter={() => {
-          addFilter(story);
+          addFilter(storyTitle);
         }}
         deleteFilter={() => {
-          deleteFilter(story);
+          deleteFilter(storyTitle);
         }}
-        title={story}
+        title={storyTitle}
         color="#8e44ad"
       />
     ));

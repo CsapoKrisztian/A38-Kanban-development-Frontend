@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 /**
  * Selected filters are stored in this context, so all of the
- * components are have access to them
+ * components have access to them
  */
 export const FilterContext = createContext();
 
@@ -14,7 +14,7 @@ export const FilterProvider = (props) => {
     if (filterString === null) {
       return [];
     } else {
-      return getSavedFilters.split(',');
+      return filterString.split(',');
     }
   }
 

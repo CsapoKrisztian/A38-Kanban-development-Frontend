@@ -54,25 +54,29 @@ function Label(props) {
   };
 
   useEffect(() => {
-    if (props.projectId !== null) {
-      if (localStorage.getItem("projectIds").includes(props.projectId)) {
+    if (props.projectId !== null && props.projectId !== undefined) {
+      let savedProjectIdsString = localStorage.getItem("projectIds");
+      if (savedProjectIdsString !== null && savedProjectIdsString.includes(props.projectId)) {
         setBgColor(props.color);
       }
-    } else if (localStorage.getItem("storyTitles").includes(props.title)) {
-      setBgColor(props.color);
+    } else  {
+      let savedStoryTitlesString = localStorage.getItem("storyTitles");
+      if (savedStoryTitlesString !== null && savedStoryTitlesString.includes(props.title)) {
+        setBgColor(props.color);
+      }
     }
   }, [props.color, props.projectId, props.title]);
   
 
   const handleClick = () => {
-    if (props.projectId === null) {
-      if (storyTitles.indexOf(props.title) < 0) {
-        selectLabel();
-      } else {
-        deselectLabel();
-      }
-    } else {
+    if (props.projectId !== null && props.projectId !== undefined) {
       if (projectIds.indexOf(props.projectId) < 0) {
+        selectLabel();
+        } else {
+          deselectLabel();
+        }
+    } else {
+      if (storyTitles.indexOf(props.title) < 0) {
         selectLabel();
       } else {
         deselectLabel();
