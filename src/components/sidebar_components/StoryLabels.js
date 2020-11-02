@@ -27,14 +27,12 @@ function StoryLabels(props) {
   ] = useContext(FilterContext);
 
   const addFilter = (storyTitle) => {
-    console.log("add filter");
     let newStoryTitles = [...storyTitles, storyTitle];
     setStoryTitles(newStoryTitles);
     localStorage.setItem("storyTitles", newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    console.log("delete story filter");
     let newStoryTitles = storyTitles;
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
     setStoryTitles(newStoryTitles);
