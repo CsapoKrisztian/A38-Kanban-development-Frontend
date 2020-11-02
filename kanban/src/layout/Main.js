@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Header from "./Header";
 import Board from "./Board";
 import Settings from "./Settings";
+import { FilterContext } from "../context/FilterContext";
+import {StatusContext} from "../context/StatusContext";
+import RenderIssues from "../rendering_issues/RenderIssues";
+import useApiCall from "../hooks/useApiCall";
 
 const openedStyle = {
   width: "250px",
@@ -31,6 +35,40 @@ function Main() {
     setOpened((opened) => !opened);
   };
 
+  const [statuses, statusesAreLoading] = useContext(StatusContext);
+
+  const [
+    projectIds,
+    setProjectIds,
+    swimlane,
+    setSwimlane,
+    milestoneTitles,
+    setMilestoneTitles,
+    storyTitles,
+  ] = useContext(FilterContext);
+
+  const [tableBody, setTableBody] = useState(<tr></tr>);
+
+  const getIssues = () => {
+    if (
+      !statusesAreLoading && statuses 
+      && projectIds !== undefined && projectIds !== null && projectIds.length > 0
+      && milestoneTitles
+      && storyTitles
+    ) {
+      let issuesInTable = (
+        <RenderIssues
+          statuses={[...statuses]}
+          swimlane={swimlane}
+          projectIds={[...projectIds]}
+          milestoneTitles={[...milestoneTitles]}
+          storyTitles={[...storyTitles]}
+        />
+      );
+      setTableBody(issuesInTable);
+    }
+  };
+
   return (
     <React.Fragment>
       <Header toggleOpened={toggleOpened} />
@@ -40,13 +78,14 @@ function Main() {
         // and 'expandedStyle' if it is closed.
         style={opened ? pushedStyle : expandedStyle}
       >
-        <Board />
+        <Board tableBody={tableBody}/>
       </div>
       <Settings
         // Apply 'openedStyle' CSS class if the sidebar is opened,
         // and 'closedStyle' if it is closed.
         currentStyle={opened ? openedStyle : closedStyle}
         toggleOpened={toggleOpened}
+        getIssues={getIssues}
       />
     </React.Fragment>
   );

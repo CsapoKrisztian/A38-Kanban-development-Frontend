@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import ToggleSwitch from "../components/sidebar_components/ToggleSwitch";
 import {
   SideMenu,
@@ -10,14 +10,21 @@ import {
 import ProjectLabels from "../components/sidebar_components/ProjectLabels";
 import StorySelector from "../components/sidebar_components/StorySelector";
 import MilestoneSelector from "../components/sidebar_components/MilestoneSelector";
+import { FilterContext } from "../context/FilterContext";
 
 /**
  * Renders the sidebar for filter settings
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
 function Settings(props) {
+  const [projectIds] = useContext(FilterContext);
+
+  /**
+   * While no project is selected "Get issues" button is disabled
+   */
+  let disabled = projectIds === undefined || projectIds === null || projectIds.length === 0;
+
   return (
-    <React.Fragment>
       <SideMenu style={props.currentStyle} className="sidenav">
         <Wrapper>
           <Subtitle>SWIMLANES</Subtitle>
@@ -47,9 +54,20 @@ function Settings(props) {
           <FilterBox>
             <MilestoneSelector />
           </FilterBox>
+
+          <div className="w-100 d-flex justify-content-center mb-4 mt-4">
+        <button // Get issues button
+          type="button"
+          disabled={disabled}
+          className="btn btn-success"
+          onClick={props.getIssues}
+        >
+          Get issues
+        </button>
+      </div>
+
         </Wrapper>
       </SideMenu>
-    </React.Fragment>
   );
 }
 
