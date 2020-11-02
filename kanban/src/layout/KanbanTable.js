@@ -1,7 +1,5 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { FilterContext } from "../context/FilterContext";
-import RenderIssues from "../rendering_issues/RenderIssues";
 
 const ScrollWrapper = styled.div`
   white-space: nowrap;
@@ -14,61 +12,9 @@ const ScrollWrapper = styled.div`
  * @param {string[]} props: statuses - array of statuses
  */
 function KanbanTable(props) {
-  let { statuses } = props;
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
-  ] = useContext(FilterContext);
-  const [tableBody, setTableBody] = useState(<tr></tr>);
-
-  /**
-   * While no project is selected button is disabled
-   */
-  let disabled = projectIds === undefined || projectIds === null || projectIds.length === 0;
-
-  /**
-   * When Get issues is clicked the table rows are rendered
-   */
-  const getIssues = () => {
-    if (
-      projectIds !== undefined &&
-      projectIds !== null &&
-      projectIds.length > 0 &&
-      milestoneTitles &&
-      storyTitles
-    ) {
-      let issuesInTable = (
-        <RenderIssues
-          statuses={[...statuses]}
-          swimlane={swimlane}
-          projectIds={[...projectIds]}
-          milestoneTitles={[...milestoneTitles]}
-          storyTitles={[...storyTitles]}
-        />
-      );
-
-      setTableBody(issuesInTable);
-    }
-  };
+  let { statuses } = props;  
 
   return (
-    <React.Fragment>
-      <div className="w-100 d-flex justify-content-center mb-4 mt-4">
-        <button // Get issues button
-          type="button"
-          disabled={disabled}
-          className="btn btn-success"
-          onClick={() => getIssues()}
-        >
-          Get issues
-        </button>
-      </div>
       <ScrollWrapper>
         <div className="container-fluid pt-9 pl-3 pr-3 pb-3">
           <div className="table-responsive-sm">
@@ -94,7 +40,6 @@ function KanbanTable(props) {
           </div>
         </div>
       </ScrollWrapper>
-    </React.Fragment>
   );
 }
 

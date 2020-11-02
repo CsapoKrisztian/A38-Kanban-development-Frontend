@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import Loading from "../components/reuseables/Loading";
 import KanbanTable from "./KanbanTable";
-import useApiCall from "../hooks/useApiCall";
+import { StatusContext } from "../context/StatusContext";
 
 /**
  * Fetches statuses and renders KanbanTable
@@ -9,10 +9,7 @@ import useApiCall from "../hooks/useApiCall";
 function Board(props) {
   let content = <Loading />;
 
-  const [statuses, statusesAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_STATUSES"]}`,
-    "GET"
-  );
+  const [statuses, statusesAreLoading] = useContext(StatusContext);
 
   /**
    * While statuses are loading a spinner is rendered

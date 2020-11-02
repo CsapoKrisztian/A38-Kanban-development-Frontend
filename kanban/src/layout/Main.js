@@ -3,6 +3,7 @@ import Header from "./Header";
 import Board from "./Board";
 import Settings from "./Settings";
 import { FilterContext } from "../context/FilterContext";
+import {StatusContext} from "../context/StatusContext";
 import RenderIssues from "../rendering_issues/RenderIssues";
 import useApiCall from "../hooks/useApiCall";
 
@@ -34,10 +35,7 @@ function Main() {
     setOpened((opened) => !opened);
   };
 
-  const [statuses, statusesAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_STATUSES"]}`,
-    "GET"
-  );
+  const [statuses, statusesAreLoading] = useContext(StatusContext);
 
   const [
     projectIds,
@@ -47,18 +45,16 @@ function Main() {
     milestoneTitles,
     setMilestoneTitles,
     storyTitles,
-    setStoryTitles,
   ] = useContext(FilterContext);
 
   const [tableBody, setTableBody] = useState(<tr></tr>);
 
   const getIssues = () => {
     if (
-      projectIds !== undefined &&
-      projectIds !== null &&
-      projectIds.length > 0 &&
-      milestoneTitles &&
-      storyTitles
+      !statusesAreLoading && statuses 
+      && projectIds !== undefined && projectIds !== null && projectIds.length > 0
+      && milestoneTitles
+      && storyTitles
     ) {
       let issuesInTable = (
         <RenderIssues
@@ -72,8 +68,6 @@ function Main() {
       setTableBody(issuesInTable);
     }
   };
-
-  
 
   return (
     <React.Fragment>

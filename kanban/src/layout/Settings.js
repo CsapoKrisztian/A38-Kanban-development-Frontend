@@ -18,6 +18,10 @@ import { FilterContext } from "../context/FilterContext";
  */
 function Settings(props) {
   const [projectIds] = useContext(FilterContext);
+
+  /**
+   * While no project is selected "Get issues" button is disabled
+   */
   let disabled = projectIds === undefined || projectIds === null || projectIds.length === 0;
 
   return (
