@@ -9,7 +9,7 @@ import useApiCall from "../../hooks/useApiCall";
 function MilestoneOptions(props) {
   let milestoneDropdown = <p>No milestones in the selected projects.</p>;
 
-  const [milestones, milestonesAreLoading] = useApiCall(
+  const [allMilestoneTitles, allMilestoneTitlesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/milestones`,
     "POST",
     props.projectIds
@@ -29,8 +29,8 @@ function MilestoneOptions(props) {
       setMilestoneTitles([]);
       localStorage.setItem("milestoneTitles", []);
     } else if (e.target.value === "allmilestones") {
-      setMilestoneTitles(milestones);
-      localStorage.setItem("milestoneTitles", milestones);
+      setMilestoneTitles(allMilestoneTitles);
+      localStorage.setItem("milestoneTitles", allMilestoneTitles);
     } else {
       let newMilestone = [e.target.value];
       setMilestoneTitles(newMilestone);
@@ -41,12 +41,12 @@ function MilestoneOptions(props) {
   let milestoneOptions = "";
 
   if (
-    !milestonesAreLoading &&
-    milestones !== undefined &&
-    milestones !== null &&
-    milestones.length !== 0
+    !allMilestoneTitlesAreLoading &&
+    allMilestoneTitles !== undefined &&
+    allMilestoneTitles !== null &&
+    allMilestoneTitles.length !== 0
   ) {
-    milestoneOptions = milestones.map((milestone, index) => (
+    milestoneOptions = allMilestoneTitles.map((milestone, index) => (
       <option key={index} value={milestone}>
         {milestone}
       </option>
@@ -54,7 +54,7 @@ function MilestoneOptions(props) {
 
     milestoneDropdown = (
         <select className="custom-select" onChange={(e) => handleChange(e)}>
-          <option defaultValue="0">Select milestone</option>
+          <option>Select milestone</option>
           <option value="allmilestones">Select all</option>
           {milestoneOptions}
         </select>

@@ -11,7 +11,7 @@ export const FilterProvider = (props) => {
 
   const getSavedFilters = (localStorageKey) => {
     let filterString = localStorage.getItem(localStorageKey);
-    if (filterString === null) {
+    if (filterString === null || filterString === '') {
       return [];
     } else {
       return filterString.split(',');
