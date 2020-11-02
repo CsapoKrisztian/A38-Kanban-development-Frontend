@@ -52,9 +52,18 @@ function MilestoneOptions(props) {
       </option>
     ));
 
+    const getSavedMilestonesValue = () => {
+      let savedMilestoneTitlesString = localStorage.getItem('milestoneTitles');
+      if (savedMilestoneTitlesString === null || savedMilestoneTitlesString === '') {
+        return 'Select milestone';
+      } else if (savedMilestoneTitlesString.split(',').length === 1) {
+        return savedMilestoneTitlesString;
+      } else return 'allmilestones';
+    }
+
     milestoneDropdown = (
-        <select className="custom-select" onChange={(e) => handleChange(e)}>
-          <option>Select milestone</option>
+        <select className="custom-select" value={getSavedMilestonesValue} onChange={(e) => handleChange(e)}>
+          <option value='Select milestone'>Select milestone</option>
           <option value="allmilestones">Select all</option>
           {milestoneOptions}
         </select>
