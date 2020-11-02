@@ -6,7 +6,7 @@ import useApiCall from "../hooks/useApiCall";
 /**
  * Fetches statuses and renders KanbanTable
  */
-function Board() {
+function Board(props) {
   let content = <Loading />;
 
   const [statuses, statusesAreLoading] = useApiCall(
@@ -20,7 +20,7 @@ function Board() {
   if (!statusesAreLoading && statuses) {
     content = (
       <React.Fragment>
-        <KanbanTable statuses={statuses} />
+        <KanbanTable statuses={statuses} tableBody={props.tableBody}/>
       </React.Fragment>
     );
   }

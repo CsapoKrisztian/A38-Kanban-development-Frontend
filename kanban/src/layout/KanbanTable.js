@@ -88,7 +88,7 @@ function KanbanTable(props) {
               <tbody
               // Table body is returned by RenderIssues
               >
-                {tableBody}
+                {props.tableBody}
               </tbody>
             </table>
           </div>
