@@ -30,14 +30,7 @@ function KanbanTable(props) {
   /**
    * While no project is selected button is disabled
    */
-  let disabled = true;
-  if (
-    projectIds !== undefined &&
-    projectIds !== null &&
-    projectIds.length > 0
-  ) {
-    disabled = false;
-  }
+  let disabled = projectIds === undefined || projectIds === null || projectIds.length === 0;
 
   /**
    * When Get issues is clicked the table rows are rendered
