@@ -10,7 +10,7 @@ export const StatusProvider = (props) => {
       );
 
     return (
-        <StatusContext.Provider value={statuses, statusesAreLoading}>
+        <StatusContext.Provider value={[statuses, statusesAreLoading]}>
             {props.children}
         </StatusContext.Provider>
     )
