@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { FilterContext } from "../../context/FilterContext";
 
@@ -53,8 +53,19 @@ function Label(props) {
     props.deleteFilter();
   };
 
+  useEffect(() => {
+    if (props.projectId !== null) {
+      if (localStorage.getItem("projectIds").includes(props.projectId)) {
+        setBgColor(props.color);
+      }
+    } else if (localStorage.getItem("storyTitles").includes(props.title)) {
+      setBgColor(props.color);
+    }
+  }, [props.color, props.projectId, props.title]);
+  
+
   const handleClick = () => {
-    if (props.projectId == null) {
+    if (props.projectId === null) {
       if (storyTitles.indexOf(props.title) < 0) {
         selectLabel();
       } else {
@@ -69,11 +80,9 @@ function Label(props) {
     }
   };
   return (
-    <React.Fragment>
       <LabelStyle bg={bgColor} type="button" onClick={() => handleClick()}>
         {props.title}
       </LabelStyle>
-    </React.Fragment>
   );
 }
 

@@ -9,7 +9,7 @@ import { FilterContext } from "../../context/FilterContext";
 function StoryLabels(props) {
   let storyLabels = <p>No stories in the selected projects.</p>;
 
-  const [stories, storiesAreLoading] = useApiCall(
+  const [allStoryTitles, allStoryTitlesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_STORIES"]}`,
     "POST",
     props.projectIds
@@ -27,22 +27,25 @@ function StoryLabels(props) {
   ] = useContext(FilterContext);
 
   const addFilter = (storyTitle) => {
-    setStoryTitles([...storyTitles, storyTitle]);
+    let newStoryTitles = [...allStoryTitles, storyTitle];
+    setStoryTitles(newStoryTitles);
+    localStorage.setItem("storyTitles", newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = storyTitles;
+    let newStoryTitles = allStoryTitles;
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
     setStoryTitles(newStoryTitles);
+    localStorage.setItem("storyTitles", newStoryTitles);
   };
 
   if (
-    !storiesAreLoading &&
-    stories !== undefined &&
-    stories !== null &&
-    stories.length > 0
+    !allStoryTitlesAreLoading &&
+    allStoryTitles !== undefined &&
+    allStoryTitles !== null &&
+    allStoryTitles.length > 0
   ) {
-    storyLabels = stories.map((story, index) => (
+    storyLabels = allStoryTitles.map((story, index) => (
       <Label
         key={index}
         addFilter={() => {

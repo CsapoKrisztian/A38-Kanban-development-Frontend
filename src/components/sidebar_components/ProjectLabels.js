@@ -16,13 +16,16 @@ function ProjectLabels() {
   );
 
   const addFilter = (projectId) => {
-    setProjectIds([...JSON.parse(JSON.stringify(projectIds)), projectId]);
+    let newProjectIds = [...JSON.parse(JSON.stringify(projectIds)), projectId];
+    setProjectIds(newProjectIds);
+    localStorage.setItem("projectIds", newProjectIds);
   };
 
   const deleteFilter = (projectId) => {
     let newProjectIds = JSON.parse(JSON.stringify(projectIds));
     newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
     setProjectIds(newProjectIds);
+    localStorage.setItem("projectIds", newProjectIds);
   };
 
   if (
@@ -31,9 +34,9 @@ function ProjectLabels() {
     projects !== null &&
     projects.length > 0
   ) {
-    projectLabels = projects.map((project, index) => (
+    projectLabels = projects.map((project) => (
       <Label
-        key={index}
+        key={project.id}
         projectId={project.id}
         addFilter={() => {
           addFilter(project.id);

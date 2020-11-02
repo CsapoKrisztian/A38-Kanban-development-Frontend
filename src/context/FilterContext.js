@@ -8,9 +8,19 @@ export const FilterContext = createContext();
 
 export const FilterProvider = (props) => {
   const [swimlane, setSwimlane] = useState("ASSIGNEE");
-  const [projectIds, setProjectIds] = useState([]);
-  const [storyTitles, setStoryTitles] = useState([]);
-  const [milestoneTitles, setMilestoneTitles] = useState([]);
+
+  const getSavedFilters = (localStorageKey) => {
+    let filterString = localStorage.getItem(localStorageKey);
+    if (filterString === null) {
+      return [];
+    } else {
+      return getSavedFilters.split(',');
+    }
+  }
+
+  const [projectIds, setProjectIds] = useState(getSavedFilters('projectIds'));
+  const [storyTitles, setStoryTitles] = useState(getSavedFilters('storyTitles'));
+  const [milestoneTitles, setMilestoneTitles] = useState(getSavedFilters("milestoneTitles"));
 
   return (
     <FilterContext.Provider

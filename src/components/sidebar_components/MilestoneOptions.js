@@ -22,17 +22,19 @@ function MilestoneOptions(props) {
     setSwimlane,
     milestoneTitles,
     setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
   ] = useContext(FilterContext);
 
   const handleChange = (e) => {
     if (e.target.value === "0") {
       setMilestoneTitles([]);
+      localStorage.setItem("milestoneTitles", []);
     } else if (e.target.value === "allmilestones") {
       setMilestoneTitles(milestones);
+      localStorage.setItem("milestoneTitles", milestones);
     } else {
-      setMilestoneTitles([e.target.value]);
+      let newMilestone = [e.target.value];
+      setMilestoneTitles(newMilestone);
+      localStorage.setItem("milestoneTitles", newMilestone);
     }
   };
 
@@ -51,13 +53,11 @@ function MilestoneOptions(props) {
     ));
 
     milestoneDropdown = (
-      <React.Fragment>
         <select className="custom-select" onChange={(e) => handleChange(e)}>
           <option defaultValue="0">Select milestone</option>
           <option value="allmilestones">Select all</option>
           {milestoneOptions}
         </select>
-      </React.Fragment>
     );
   }
 
