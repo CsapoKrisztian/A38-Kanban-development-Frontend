@@ -24,20 +24,6 @@ function MilestoneOptions(props) {
     setMilestoneTitles,
   ] = useContext(FilterContext);
 
-  const handleChange = (e) => {
-    if (e.target.value === "0") {
-      setMilestoneTitles([]);
-      localStorage.setItem("milestoneTitles", []);
-    } else if (e.target.value === "allmilestones") {
-      setMilestoneTitles(allMilestoneTitles);
-      localStorage.setItem("milestoneTitles", allMilestoneTitles);
-    } else {
-      let newMilestone = [e.target.value];
-      setMilestoneTitles(newMilestone);
-      localStorage.setItem("milestoneTitles", newMilestone);
-    }
-  };
-
   let milestoneOptions = "";
 
   if (
@@ -52,9 +38,28 @@ function MilestoneOptions(props) {
       </option>
     ));
 
+    const handleChange = (e) => {
+      if (e.target.value === "Select milestone") {
+        setMilestoneTitles([]);
+        localStorage.setItem("milestoneTitles", []);
+      } else if (e.target.value === "allmilestones") {
+        setMilestoneTitles(allMilestoneTitles);
+        localStorage.setItem("milestoneTitles", allMilestoneTitles);
+      } else {
+        let newMilestoneTitle = [e.target.value];
+        setMilestoneTitles(newMilestoneTitle);
+        localStorage.setItem("milestoneTitles", newMilestoneTitle);
+      }
+    };
+
     const getSavedMilestonesValue = () => {
       let savedMilestoneTitlesString = localStorage.getItem('milestoneTitles');
-      if (savedMilestoneTitlesString === null || savedMilestoneTitlesString === '') {
+      if (
+        savedMilestoneTitlesString === null 
+        || savedMilestoneTitlesString === undefined 
+        || savedMilestoneTitlesString === '' 
+        || savedMilestoneTitlesString === 'Select milestone'
+        ) {
         return 'Select milestone';
       } else if (savedMilestoneTitlesString.split(',').length === 1) {
         return savedMilestoneTitlesString;
@@ -62,7 +67,7 @@ function MilestoneOptions(props) {
     }
 
     milestoneDropdown = (
-        <select className="custom-select" value={getSavedMilestonesValue} onChange={(e) => handleChange(e)}>
+        <select className="custom-select" value={getSavedMilestonesValue()} onChange={(e) => handleChange(e)}>
           <option value='Select milestone'>Select milestone</option>
           <option value="allmilestones">Select all</option>
           {milestoneOptions}
