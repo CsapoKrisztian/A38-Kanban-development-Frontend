@@ -28,11 +28,17 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 function Main() {
-  const [opened, setOpened] = useState(false);
+const getSavedOpened = () => {
+  let savedSettingsOpen = localStorage.getItem("settingsOpen");
+  return savedSettingsOpen === 'true' ? true : false;
+}
+
+  const [settingsOpen, setSettingsOpen] = useState(getSavedOpened());
 
   // Toggle opening of the sidebar
   const toggleOpened = () => {
-    setOpened((opened) => !opened);
+    setSettingsOpen((settingsOpen) => !settingsOpen);
+    localStorage.setItem("settingsOpen", !settingsOpen);
   };
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
@@ -76,14 +82,14 @@ function Main() {
         id="main"
         // Apply 'pushedStyle' CSS class if the sidebar is opened,
         // and 'expandedStyle' if it is closed.
-        style={opened ? pushedStyle : expandedStyle}
+        style={settingsOpen ? pushedStyle : expandedStyle}
       >
         <Board tableBody={tableBody}/>
       </div>
       <Settings
         // Apply 'openedStyle' CSS class if the sidebar is opened,
         // and 'closedStyle' if it is closed.
-        currentStyle={opened ? openedStyle : closedStyle}
+        currentStyle={settingsOpen ? openedStyle : closedStyle}
         toggleOpened={toggleOpened}
         getIssues={getIssues}
       />
