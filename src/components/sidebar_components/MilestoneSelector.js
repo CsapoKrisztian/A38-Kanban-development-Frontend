@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
 import MilestoneOptions from "./MilestoneOptions";
 
 /**
@@ -7,16 +7,16 @@ import MilestoneOptions from "./MilestoneOptions";
  * appears instead of the dropdown.
  */
 function MilestoneSelector() {
-  const [projectIds] = useContext(FilterContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
 
   let milestoneOptions = <p>No selected projects</p>;
 
   if (
-    projectIds !== undefined &&
-    projectIds !== null &&
-    projectIds.length !== 0
+    filterProjectIds !== undefined &&
+    filterProjectIds !== null &&
+    filterProjectIds.length !== 0
   ) {
-    milestoneOptions = <MilestoneOptions projectIds={projectIds} />;
+    milestoneOptions = <MilestoneOptions projectIds={filterProjectIds} />;
   }
 
   return milestoneOptions;

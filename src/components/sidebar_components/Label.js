@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
+import { FilterStoryTitlesContext } from "../../context/FilterStoryTitlesContext";
 
 const LabelStyle = styled.button`
   background-color: ${(props) => (props.bg ? props.bg : "#17a2b8")};
@@ -31,15 +32,9 @@ const LabelStyle = styled.button`
  */
 function Label(props) {
   const offBgColor = "#6c757d";
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles
-  ] = useContext(FilterContext);
+
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
 
   const [bgColor, setBgColor] = useState(offBgColor);
 
@@ -53,15 +48,30 @@ function Label(props) {
     props.deleteFilter();
   };
 
-  const handleClick = () => {
-    if (props.projectId == null) {
-      if (storyTitles.indexOf(props.title) < 0) {
-        selectLabel();
-      } else {
-        deselectLabel();
+  useEffect(() => {
+    if (props.projectId !== null && props.projectId !== undefined) {
+      let savedProjectIdsString = localStorage.getItem("projectIds");
+      if (savedProjectIdsString !== null && savedProjectIdsString.includes(props.projectId)) {
+        setBgColor(props.color);
       }
+    } else  {
+      let savedStoryTitlesString = localStorage.getItem("storyTitles");
+      if (savedStoryTitlesString !== null && savedStoryTitlesString.includes(props.title)) {
+        setBgColor(props.color);
+      }
+    }
+  }, [props.color, props.projectId, props.title]);
+  
+
+  const handleClick = () => {
+    if (props.projectId !== null && props.projectId !== undefined) {
+      if (filterProjectIds.indexOf(props.projectId) < 0) {
+        selectLabel();
+        } else {
+          deselectLabel();
+        }
     } else {
-      if (projectIds.indexOf(props.projectId) < 0) {
+      if (filterStoryTitles.indexOf(props.title) < 0) {
         selectLabel();
       } else {
         deselectLabel();
@@ -69,11 +79,9 @@ function Label(props) {
     }
   };
   return (
-    <React.Fragment>
       <LabelStyle bg={bgColor} type="button" onClick={() => handleClick()}>
         {props.title}
       </LabelStyle>
-    </React.Fragment>
   );
 }
 
