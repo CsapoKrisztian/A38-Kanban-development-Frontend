@@ -2,10 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const NavButtons = styled.div`
-  width: 100px;
-`;
-
 const NavButton = styled.div`
   cursor: pointer;
 `;
@@ -25,7 +21,6 @@ function Header(props) {
         >
           <b>Kanban</b>Sync
         </Link>
-
 
           <div className="col p-1 text-white">
             <NavButton
