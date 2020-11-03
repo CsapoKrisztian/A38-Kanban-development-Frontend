@@ -5,7 +5,6 @@ import Settings from "./Settings";
 import { FilterContext } from "../context/FilterContext";
 import {StatusContext} from "../context/StatusContext";
 import RenderIssues from "../rendering_issues/RenderIssues";
-import useApiCall from "../hooks/useApiCall";
 
 const openedStyle = {
   width: "250px",
