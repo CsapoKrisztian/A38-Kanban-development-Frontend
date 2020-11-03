@@ -2,8 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { FilterProvider } from "./context/FilterContext";
+
 import { AccessProvider } from "./context/AccessContext";
+import { SwimlaneProvider } from "./context/SwimlaneContext";
+import { FilterProjectIdsProvider } from "./context/FilterProjectIdsContext";
+import { FilterMilestoneTitlesProvider } from "./context/FilterMilestoneTitlesContext";
+import { FilterStoryTitlesProvider } from "./context/FilterStoryTitlesContext";
 import { StatusProvider } from "./context/StatusContext";
 
 /**
@@ -14,11 +18,17 @@ import { StatusProvider } from "./context/StatusContext";
 ReactDOM.render(
   <React.StrictMode>
     <AccessProvider>
-      <FilterProvider>
-        <StatusProvider>
-          <App />
-        </StatusProvider>
-      </FilterProvider>
+      <SwimlaneProvider>
+        <FilterProjectIdsProvider>
+          <FilterMilestoneTitlesProvider>
+            <FilterStoryTitlesProvider>
+              <StatusProvider>
+                <App />
+              </StatusProvider>
+            </FilterStoryTitlesProvider>
+          </FilterMilestoneTitlesProvider>
+        </FilterProjectIdsProvider>
+      </SwimlaneProvider>
     </AccessProvider>
   </React.StrictMode>,
   document.getElementById("root")
