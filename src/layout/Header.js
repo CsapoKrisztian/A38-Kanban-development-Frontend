@@ -26,25 +26,16 @@ function Header(props) {
           <b>Kanban</b>Sync
         </Link>
 
-        <ul className="navbar-nav mr-auto"></ul>
-        <NavButtons className="row pr-1">
-          <div className="text-white col p-2">
-            <NavButton // Logout button
-            // TODO onClick={logout}
-            >
-              <i className="fas fa-power-off"></i>
-            </NavButton>
-          </div>
 
-          <div className="col p-2 text-white">
+          <div className="col p-1 text-white">
             <NavButton
               onClick={props.toggleOpened}
               // Opens the sidebar with filter settings
             >
-              <i className="fas fa-cogs"></i>
+              <i className="fas fa-cogs" style={{float: "right", paddingRight: "1%"}}></i>
             </NavButton>
           </div>
-        </NavButtons>
+
       </nav>
     </React.Fragment>
   );
