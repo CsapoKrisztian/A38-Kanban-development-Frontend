@@ -1,18 +1,9 @@
 import React, { createContext, useState } from "react";
+import getSavedFilters from "./getSavedFilters";
 
 export const FilterProjectIdsContext = createContext();
 
 export const FilterProjectIdsProvider = (props) => {
-
-  const getSavedFilters = (localStorageKey) => {
-    let filterString = localStorage.getItem(localStorageKey);
-    if (filterString === null || filterString === '') {
-      return [];
-    } else {
-      return filterString.split(',');
-    }
-  }
-
   const [projectIds, setProjectIds] = useState(getSavedFilters('projectIds'));
 
   return (
