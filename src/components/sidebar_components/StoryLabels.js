@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Label from "./Label";
 import useApiCall from "../../hooks/useApiCall";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterStoryTitlesContext } from "../../context/FilterStoryTitlesContext";
 
 /**
  * Fetch and render story labels
@@ -15,27 +15,18 @@ function StoryLabels(props) {
     props.projectIds
   );
 
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-    setStoryTitles,
-  ] = useContext(FilterContext);
+  const [filterStoryTitles, setFilterStoryTitles] = useContext(FilterStoryTitlesContext);
 
   const addFilter = (storyTitle) => {
-    let newStoryTitles = [...storyTitles, storyTitle];
-    setStoryTitles(newStoryTitles);
+    let newStoryTitles = [...filterStoryTitles, storyTitle];
+    setFilterStoryTitles(newStoryTitles);
     localStorage.setItem("storyTitles", newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = storyTitles;
+    let newStoryTitles = filterStoryTitles;
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
-    setStoryTitles(newStoryTitles);
+    setFilterStoryTitles(newStoryTitles);
     localStorage.setItem("storyTitles", newStoryTitles);
   };
 

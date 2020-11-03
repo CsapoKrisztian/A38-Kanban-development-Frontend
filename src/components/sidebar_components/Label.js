@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
+import { FilterStoryTitlesContext } from "../../context/FilterStoryTitlesContext";
 
 const LabelStyle = styled.button`
   background-color: ${(props) => (props.bg ? props.bg : "#17a2b8")};
@@ -31,15 +32,9 @@ const LabelStyle = styled.button`
  */
 function Label(props) {
   const offBgColor = "#6c757d";
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles
-  ] = useContext(FilterContext);
+
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
 
   const [bgColor, setBgColor] = useState(offBgColor);
 
@@ -70,13 +65,13 @@ function Label(props) {
 
   const handleClick = () => {
     if (props.projectId !== null && props.projectId !== undefined) {
-      if (projectIds.indexOf(props.projectId) < 0) {
+      if (filterProjectIds.indexOf(props.projectId) < 0) {
         selectLabel();
         } else {
           deselectLabel();
         }
     } else {
-      if (storyTitles.indexOf(props.title) < 0) {
+      if (filterStoryTitles.indexOf(props.title) < 0) {
         selectLabel();
       } else {
         deselectLabel();

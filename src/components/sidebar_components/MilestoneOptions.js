@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterMilestoneTitlesContext } from "../../context/FilterMilestoneTitlesContext";
 import useApiCall from "../../hooks/useApiCall";
 
 /**
@@ -9,30 +9,23 @@ import useApiCall from "../../hooks/useApiCall";
 function MilestoneOptions(props) {
   let milestoneDropdown = <p>No milestones in the selected projects.</p>;
 
-  const [allMilestoneTitles, allMilestoneTitlesAreLoading] = useApiCall(
+  const [milestoneTitles, milestoneTitlesAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/milestones`,
     "POST",
     props.projectIds
   );
 
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-  ] = useContext(FilterContext);
+  const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
 
   let milestoneOptions = "";
 
   if (
-    !allMilestoneTitlesAreLoading &&
-    allMilestoneTitles !== undefined &&
-    allMilestoneTitles !== null &&
-    allMilestoneTitles.length !== 0
+    !milestoneTitlesAreLoading &&
+    milestoneTitles !== undefined &&
+    milestoneTitles !== null &&
+    milestoneTitles.length !== 0
   ) {
-    milestoneOptions = allMilestoneTitles.map((milestone, index) => (
+    milestoneOptions = milestoneTitles.map((milestone, index) => (
       <option key={index} value={milestone}>
         {milestone}
       </option>
@@ -40,14 +33,14 @@ function MilestoneOptions(props) {
 
     const handleChange = (e) => {
       if (e.target.value === "Select milestone") {
-        setMilestoneTitles([]);
+        setFilterMilestoneTitles([]);
         localStorage.setItem("milestoneTitles", []);
       } else if (e.target.value === "allmilestones") {
-        setMilestoneTitles(allMilestoneTitles);
-        localStorage.setItem("milestoneTitles", allMilestoneTitles);
+        setFilterMilestoneTitles(milestoneTitles);
+        localStorage.setItem("milestoneTitles", milestoneTitles);
       } else {
         let newMilestoneTitle = [e.target.value];
-        setMilestoneTitles(newMilestoneTitle);
+        setFilterMilestoneTitles(newMilestoneTitle);
         localStorage.setItem("milestoneTitles", newMilestoneTitle);
       }
     };

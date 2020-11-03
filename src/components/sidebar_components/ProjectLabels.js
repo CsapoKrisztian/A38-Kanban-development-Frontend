@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import useApiCall from "../../hooks/useApiCall";
 import Label from "./Label";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
 
 /**
  * Fetch and render project labels
  */
 function ProjectLabels() {
   let projectLabels = "";
-  const [projectIds, setProjectIds] = useContext(FilterContext);
+  const [filterProjectIds, setFilterProjectIds] = useContext(FilterProjectIdsContext);
 
   const [projects, projectsAreLoading] = useApiCall(
     `${process.env["REACT_APP_SERVER"]}/projects`,
@@ -16,16 +16,16 @@ function ProjectLabels() {
   );
 
   const addFilter = (projectId) => {
-    let newProjectIds = [...JSON.parse(JSON.stringify(projectIds)), projectId];
-    setProjectIds(newProjectIds);
-    localStorage.setItem("projectIds", newProjectIds);
+    let newFilterProjectIds = [...JSON.parse(JSON.stringify(filterProjectIds)), projectId];
+    setFilterProjectIds(newFilterProjectIds);
+    localStorage.setItem("projectIds", newFilterProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newProjectIds = JSON.parse(JSON.stringify(projectIds));
-    newProjectIds.splice(newProjectIds.indexOf(projectId), 1);
-    setProjectIds(newProjectIds);
-    localStorage.setItem("projectIds", newProjectIds);
+    let newFilterProjectIds = JSON.parse(JSON.stringify(filterProjectIds));
+    newFilterProjectIds.splice(newFilterProjectIds.indexOf(projectId), 1);
+    setFilterProjectIds(newFilterProjectIds);
+    localStorage.setItem("projectIds", newFilterProjectIds);
   };
 
   if (
