@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FilterContext } from "../../context/FilterContext";
+import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
 import StoryLabels from "./StoryLabels";
 
 /**
@@ -7,15 +7,15 @@ import StoryLabels from "./StoryLabels";
  * appears instead of the scrollable div.
  */
 function StorySelector() {
-  const [projectIds] = useContext(FilterContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
   let storyLabels = <p>No selected projects</p>;
 
   if (
-    projectIds !== undefined &&
-    projectIds !== null &&
-    projectIds.length > 0
+    filterProjectIds !== undefined &&
+    filterProjectIds !== null &&
+    filterProjectIds.length > 0
   ) {
-    storyLabels = <StoryLabels projectIds={projectIds} />;
+    storyLabels = <StoryLabels projectIds={filterProjectIds} />;
   }
 
   return storyLabels;

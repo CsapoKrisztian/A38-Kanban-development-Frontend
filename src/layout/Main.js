@@ -1,11 +1,15 @@
 import React, { useState, useContext } from "react";
+
 import Header from "./Header";
 import Board from "./Board";
 import Settings from "./Settings";
-import { FilterContext } from "../context/FilterContext";
-import {StatusContext} from "../context/StatusContext";
 import RenderIssues from "../rendering_issues/RenderIssues";
-import useApiCall from "../hooks/useApiCall";
+
+import { SwimlaneContext } from "../context/SwimlaneContext";
+import { FilterProjectIdsContext } from "../context/FilterProjectIdsContext";
+import { FilterMilestoneTitlesContext } from "../context/FilterMilestoneTitlesContext";
+import { FilterStoryTitlesContext } from "../context/FilterStoryTitlesContext";
+import { StatusContext } from "../context/StatusContext";
 
 const openedStyle = {
   width: "250px",
@@ -28,41 +32,42 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 function Main() {
-  const [opened, setOpened] = useState(false);
+const getSavedOpened = () => {
+  let savedSettingsOpen = localStorage.getItem("settingsOpen");
+  return savedSettingsOpen === 'true' ? true : false;
+}
+
+  const [settingsOpen, setSettingsOpen] = useState(getSavedOpened());
 
   // Toggle opening of the sidebar
   const toggleOpened = () => {
-    setOpened((opened) => !opened);
+    setSettingsOpen((settingsOpen) => !settingsOpen);
+    localStorage.setItem("settingsOpen", !settingsOpen);
   };
 
-  const [statuses, statusesAreLoading] = useContext(StatusContext);
+  const [swimlane] = useContext(SwimlaneContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
+  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
 
-  const [
-    projectIds,
-    setProjectIds,
-    swimlane,
-    setSwimlane,
-    milestoneTitles,
-    setMilestoneTitles,
-    storyTitles,
-  ] = useContext(FilterContext);
+  const [statuses, statusesAreLoading] = useContext(StatusContext);
 
   const [tableBody, setTableBody] = useState(<tr></tr>);
 
   const getIssues = () => {
     if (
       !statusesAreLoading && statuses 
-      && projectIds !== undefined && projectIds !== null && projectIds.length > 0
-      && milestoneTitles
-      && storyTitles
+      && filterProjectIds !== undefined && filterProjectIds !== null && filterProjectIds.length > 0
+      && filterMilestoneTitles
+      && filterStoryTitles
     ) {
       let issuesInTable = (
         <RenderIssues
           statuses={[...statuses]}
           swimlane={swimlane}
-          projectIds={[...projectIds]}
-          milestoneTitles={[...milestoneTitles]}
-          storyTitles={[...storyTitles]}
+          projectIds={[...filterProjectIds]}
+          milestoneTitles={[...filterMilestoneTitles]}
+          storyTitles={[...filterStoryTitles]}
         />
       );
       setTableBody(issuesInTable);
@@ -76,14 +81,14 @@ function Main() {
         id="main"
         // Apply 'pushedStyle' CSS class if the sidebar is opened,
         // and 'expandedStyle' if it is closed.
-        style={opened ? pushedStyle : expandedStyle}
+        style={settingsOpen ? pushedStyle : expandedStyle}
       >
         <Board tableBody={tableBody}/>
       </div>
       <Settings
         // Apply 'openedStyle' CSS class if the sidebar is opened,
         // and 'closedStyle' if it is closed.
-        currentStyle={opened ? openedStyle : closedStyle}
+        currentStyle={settingsOpen ? openedStyle : closedStyle}
         toggleOpened={toggleOpened}
         getIssues={getIssues}
       />

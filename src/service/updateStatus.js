@@ -31,6 +31,6 @@ export const updateStatus = (sourceCell, destinationCell, issueId) => {
     withCredentials: true,
     url: `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_UPDATE_STATUS"]}`,
     data: { issueId, newStatusTitle },
-  }).then((response) => console.log(response.data))
+  })
   .catch(error => console.log(error));
 };

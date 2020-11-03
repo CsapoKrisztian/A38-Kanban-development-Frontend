@@ -10,19 +10,19 @@ import {
 import ProjectLabels from "../components/sidebar_components/ProjectLabels";
 import StorySelector from "../components/sidebar_components/StorySelector";
 import MilestoneSelector from "../components/sidebar_components/MilestoneSelector";
-import { FilterContext } from "../context/FilterContext";
+import { FilterProjectIdsContext } from "../context/FilterProjectIdsContext";
 
 /**
  * Renders the sidebar for filter settings
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
 function Settings(props) {
-  const [projectIds] = useContext(FilterContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
 
   /**
    * While no project is selected "Get issues" button is disabled
    */
-  let disabled = projectIds === undefined || projectIds === null || projectIds.length === 0;
+  let disabled = filterProjectIds === undefined || filterProjectIds === null || filterProjectIds.length === 0;
 
   return (
       <SideMenu style={props.currentStyle} className="sidenav">
