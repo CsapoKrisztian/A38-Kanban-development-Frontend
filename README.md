@@ -3,13 +3,13 @@
 ## Contributors:
 ### Developer team:
 
-György Noémi
-Hegedüs Enikő 
+György Noémi,
+Hegedüs Enikő,
 Tóth Lajos Máté
 
 ### Project Management:
 
-Csapó Krisztián
+Csapó Krisztián,
 Csürke Gábor
 
 ### Short description
