@@ -2,11 +2,13 @@
 
 ![KanbanSync](public/board.jpg?raw=true "KanbanSync")
 
-This application is a kanban board. You can retrieve, filter and manipulate your gitlab issues. The columns of the board are the statuses of the issues. The swimlanes are optionally assignees or stories of the issues.
+**KanbanSync** was made for an IRL (In Real Life) coding challenge. The [A38](https://www.a38.hu) asked us to develop a special kanban board for their **Gitlab** issues.
 
-Our application uses OAuth to access the datas in gitlab. We use graphQL API to get the issues from gitlab, and then we show them on a kanban board.
+With KanbanSync you can retrieve, filter and manipulate your Gitlab issues. The columns of the board are the statuses of the issues. The swimlanes are optionally assignees or stories of the issues.
 
-This is the frontend of the application, which is written in React.
+Our application uses **OAuth** to access the datas in Gitlab. We are using **graphQL API** to get the issues from Gitlab, and then we show them on a kanban board.
+
+This is the frontend of the application, which is written in **React**.
 The backend is a Spring application (https://github.com/CsapoKrisztian/A38-Kanban-development).
 
 For configuration and deployment, please see the Readme file of the [backend repository](https://github.com/CsapoKrisztian/A38-Kanban-development).
@@ -15,7 +17,7 @@ For configuration and deployment, please see the Readme file of the [backend rep
 
 [http://a38-kanban.herokuapp.com](http://a38-kanban.herokuapp.com)
 
-After the auto-redirecting to Gitlab authentication platform give these credentials :
+After the auto-redirecting to Gitlab authentication platform give these credentials:
 
 e-mail: gitlab_guest@indamail.hu
 
