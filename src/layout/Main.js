@@ -52,7 +52,15 @@ const getSavedOpened = () => {
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
 
-  const [tableBody, setTableBody] = useState(<tr></tr>);
+  const [tableBody, setTableBody] = useState(
+    <RenderIssues
+          statuses={[...statuses]}
+          swimlane={swimlane}
+          projectIds={[...filterProjectIds]}
+          milestoneTitles={[...filterMilestoneTitles]}
+          storyTitles={[...filterStoryTitles]}
+        />
+  );
 
   const getIssues = () => {
     if (

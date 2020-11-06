@@ -53,7 +53,9 @@ function ToggleSwitch() {
   const [swimlane, setSwimlane] = useContext(SwimlaneContext);
 
   const toggleSwimlane = () => {
-    setSwimlane(swimlane === "STORY" ? "ASSIGNEE" : "STORY");
+    let newSwimlane = swimlane === "STORY" ? "ASSIGNEE" : "STORY";
+    setSwimlane(newSwimlane);
+    localStorage.setItem('swimlane', newSwimlane);
   };
 
   return (
