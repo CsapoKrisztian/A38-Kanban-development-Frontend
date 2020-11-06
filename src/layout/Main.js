@@ -52,15 +52,19 @@ const getSavedOpened = () => {
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
 
-  const [tableBody, setTableBody] = useState(
-    <RenderIssues
-          statuses={[...statuses]}
-          swimlane={swimlane}
-          projectIds={[...filterProjectIds]}
-          milestoneTitles={[...filterMilestoneTitles]}
-          storyTitles={[...filterStoryTitles]}
-        />
-  );
+  const getRenderedIssues = () => {
+    return (
+      <RenderIssues
+      statuses={[...statuses]}
+      swimlane={swimlane}
+      projectIds={[...filterProjectIds]}
+      milestoneTitles={[...filterMilestoneTitles]}
+      storyTitles={[...filterStoryTitles]}
+    />
+    );
+  }
+
+  const [tableBody, setTableBody] = useState(getRenderedIssues());
 
   const getIssues = () => {
     if (
@@ -69,16 +73,7 @@ const getSavedOpened = () => {
       && filterMilestoneTitles
       && filterStoryTitles
     ) {
-      let issuesInTable = (
-        <RenderIssues
-          statuses={[...statuses]}
-          swimlane={swimlane}
-          projectIds={[...filterProjectIds]}
-          milestoneTitles={[...filterMilestoneTitles]}
-          storyTitles={[...filterStoryTitles]}
-        />
-      );
-      setTableBody(issuesInTable);
+      setTableBody(getRenderedIssues);
     }
   };
 
