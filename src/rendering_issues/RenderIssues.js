@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useApiCall from '../hooks/useApiCall';
-import { DragDropContext } from 'react-beautiful-dnd';
 import Loading from '../components/reuseables/Loading';
-import { renderContentOfTable } from './renderContentOfTable';
-import { updateStatus } from '../service/updateStatus';
-import { updateAssignee } from '../service/updateAssignee';
+import { ContentOfTable } from './ContentOfTable';
 
 /**
  * Renders content of tbody
@@ -24,45 +21,6 @@ function RenderIssues(props) {
     props.milestoneTitles,
     props.storyTitles
   );
-
-  // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
-  // The story id of the destination cell should be the same, because the story shouldn't change
-  const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState('');
-
-  // On the beginning of the drag story is stored in the state
-  const handleOnDragStart = (start) => {
-    let card = document.getElementById(start.draggableId);
-    let ribbon = card.querySelector('.storyRibbon');
-    if (ribbon !== undefined && ribbon !== null) {
-      setStoryIdOfDraggedIssue(ribbon.id);
-    }
-  };
-
-  // Validation of dragging and finalization of dropping
-  const handleOnDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    let sourceCell = document.getElementById(source.droppableId);
-    let destinationCell = document.getElementById(destination.droppableId);
-    let card = document.getElementById(draggableId);
-
-    // Append destination cell with the dragged issue card
-    destinationCell.appendChild(card);
-    updateStatus(sourceCell, destinationCell, draggableId);
-    if (props.swimlane === 'ASSIGNEE') {
-      updateAssignee(sourceCell, destinationCell, draggableId);
-    }
-
-    // Remove story of the dragged issue from the state
-    setStoryIdOfDraggedIssue(null);
-  };
 
   // Showing spinner while loading issues
   let tableBody = <tr></tr>;
@@ -90,22 +48,15 @@ function RenderIssues(props) {
         objectIssuesList[0].hasOwnProperty('assignee'))
     ) {
       tableBody = (
-        <DragDropContext
-          onDragEnd={handleOnDragEnd}
-          onDragStart={handleOnDragStart}
-        >
-          {renderContentOfTable(
-            objectIssuesList,
-            props.statuses,
-            props.swimlane,
-            storyIdOfDraggedIssue
-          )}
-        </DragDropContext>
+        <ContentOfTable
+          objectIssuesList={objectIssuesList}
+          swimlane={props.swimlane}
+        />
       );
     }
-  }
 
-  return <React.Fragment>{tableBody}</React.Fragment>;
+    return <React.Fragment>{tableBody}</React.Fragment>;
+  }
 }
 
 export default RenderIssues;
