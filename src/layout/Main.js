@@ -1,18 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import Header from "./Header";
-import Board from "./Board";
-import Settings from "./Settings";
-import RenderIssues from "../rendering_issues/RenderIssues";
+import Header from './Header';
+import Board from './Board';
+import Settings from './Settings';
+import RenderIssues from '../rendering_issues/RenderIssues';
 
-import { SwimlaneContext } from "../context/SwimlaneContext";
-import { FilterProjectIdsContext } from "../context/FilterProjectIdsContext";
-import { FilterMilestoneTitlesContext } from "../context/FilterMilestoneTitlesContext";
-import { FilterStoryTitlesContext } from "../context/FilterStoryTitlesContext";
-import { StatusContext } from "../context/StatusContext";
+import { SwimlaneContext } from '../context/SwimlaneContext';
+import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
+import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesContext';
+import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
+import { StatusContext } from '../context/StatusContext';
 
 const openedStyle = {
-  width: "250px",
+  width: '250px',
 };
 
 const closedStyle = {
@@ -20,7 +20,7 @@ const closedStyle = {
 };
 
 const pushedStyle = {
-  marginRight: "250px",
+  marginRight: '250px',
 };
 
 const expandedStyle = {
@@ -32,17 +32,17 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 function Main() {
-const getSavedOpened = () => {
-  let savedSettingsOpen = localStorage.getItem("settingsOpen");
-  return savedSettingsOpen === 'true' ? true : false;
-}
+  const getSavedOpened = () => {
+    let savedSettingsOpen = localStorage.getItem('settingsOpen');
+    return savedSettingsOpen === 'true' ? true : false;
+  };
 
   const [settingsOpen, setSettingsOpen] = useState(getSavedOpened());
 
   // Toggle opening of the sidebar
   const toggleOpened = () => {
     setSettingsOpen((settingsOpen) => !settingsOpen);
-    localStorage.setItem("settingsOpen", !settingsOpen);
+    localStorage.setItem('settingsOpen', !settingsOpen);
   };
 
   const [swimlane] = useContext(SwimlaneContext);
@@ -55,23 +55,26 @@ const getSavedOpened = () => {
   const getRenderedIssues = () => {
     return (
       <RenderIssues
-      statuses={[...statuses]}
-      swimlane={swimlane}
-      projectIds={[...filterProjectIds]}
-      milestoneTitles={[...filterMilestoneTitles]}
-      storyTitles={[...filterStoryTitles]}
-    />
+        statuses={[...statuses]}
+        swimlane={swimlane}
+        projectIds={[...filterProjectIds]}
+        milestoneTitles={[...filterMilestoneTitles]}
+        storyTitles={[...filterStoryTitles]}
+      />
     );
-  }
+  };
 
   const [tableBody, setTableBody] = useState(getRenderedIssues());
 
   const getIssues = () => {
     if (
-      !statusesAreLoading && statuses 
-      && filterProjectIds !== undefined && filterProjectIds !== null && filterProjectIds.length > 0
-      && filterMilestoneTitles
-      && filterStoryTitles
+      !statusesAreLoading &&
+      statuses &&
+      filterProjectIds !== undefined &&
+      filterProjectIds !== null &&
+      filterProjectIds.length > 0 &&
+      filterMilestoneTitles &&
+      filterStoryTitles
     ) {
       setTableBody(getRenderedIssues);
     }
@@ -86,7 +89,7 @@ const getSavedOpened = () => {
         // and 'expandedStyle' if it is closed.
         style={settingsOpen ? pushedStyle : expandedStyle}
       >
-        <Board tableBody={tableBody}/>
+        <Board tableBody={tableBody} />
       </div>
       <Settings
         // Apply 'openedStyle' CSS class if the sidebar is opened,

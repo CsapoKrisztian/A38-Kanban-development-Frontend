@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import history from "../util/history";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import history from '../util/history';
 
 /**
  * Fetches data
@@ -11,7 +11,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
    * isLoading is true while fetches the data
    */
   const [isLoading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("No errors");
+  const [errorMessage, setErrorMessage] = useState('No errors');
 
   useEffect(() => {
     setLoading(true);
@@ -33,7 +33,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
   /**
    * Redirects to error page when axios catches an error
    */
-  if (errorMessage !== "No errors") {
+  if (errorMessage !== 'No errors') {
     history.push(`/error/${errorMessage}`);
   }
 

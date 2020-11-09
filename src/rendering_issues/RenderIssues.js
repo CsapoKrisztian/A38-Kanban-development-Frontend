@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import useApiCall from "../hooks/useApiCall";
-import { DragDropContext } from "react-beautiful-dnd";
-import Loading from "../components/reuseables/Loading";
-import { renderContentOfTableBody } from "./renderContentOfTableBody";
-import { updateStatus } from "../service/updateStatus";
-import { updateAssignee } from "../service/updateAssignee";
+import React, { useState } from 'react';
+import useApiCall from '../hooks/useApiCall';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Loading from '../components/reuseables/Loading';
+import { renderContentOfTable } from './renderContentOfTable';
+import { updateStatus } from '../service/updateStatus';
+import { updateAssignee } from '../service/updateAssignee';
 
 /**
  * Renders content of tbody
@@ -13,13 +13,13 @@ import { updateAssignee } from "../service/updateAssignee";
 function RenderIssues(props) {
   // Get issues ordering by swimlane
   let urlGetIssues =
-    props.swimlane === "STORY"
-      ? process.env["REACT_APP_SERVER_ISSUES_BY_STORY"]
-      : process.env["REACT_APP_SERVER_ISSUES_BY_ASSIGNEE"];
+    props.swimlane === 'STORY'
+      ? process.env['REACT_APP_SERVER_ISSUES_BY_STORY']
+      : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
 
   const [objectIssuesList, objectIssuesListIsLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}${urlGetIssues}`,
-    "POST",
+    `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
+    'POST',
     props.projectIds,
     props.milestoneTitles,
     props.storyTitles
@@ -27,12 +27,12 @@ function RenderIssues(props) {
 
   // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
   // The story id of the destination cell should be the same, because the story shouldn't change
-  const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState("");
+  const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState('');
 
   // On the beginning of the drag story is stored in the state
   const handleOnDragStart = (start) => {
     let card = document.getElementById(start.draggableId);
-    let ribbon = card.querySelector(".storyRibbon");
+    let ribbon = card.querySelector('.storyRibbon');
     if (ribbon !== undefined && ribbon !== null) {
       setStoryIdOfDraggedIssue(ribbon.id);
     }
@@ -56,7 +56,7 @@ function RenderIssues(props) {
     // Append destination cell with the dragged issue card
     destinationCell.appendChild(card);
     updateStatus(sourceCell, destinationCell, draggableId);
-    if (props.swimlane === "ASSIGNEE") {
+    if (props.swimlane === 'ASSIGNEE') {
       updateAssignee(sourceCell, destinationCell, draggableId);
     }
 
@@ -84,15 +84,17 @@ function RenderIssues(props) {
     objectIssuesList.length > 0
   ) {
     if (
-      (props.swimlane === "STORY" && objectIssuesList[0].hasOwnProperty("story")) ||
-      (props.swimlane === "ASSIGNEE" && objectIssuesList[0].hasOwnProperty("assignee"))
+      (props.swimlane === 'STORY' &&
+        objectIssuesList[0].hasOwnProperty('story')) ||
+      (props.swimlane === 'ASSIGNEE' &&
+        objectIssuesList[0].hasOwnProperty('assignee'))
     ) {
       tableBody = (
         <DragDropContext
           onDragEnd={handleOnDragEnd}
           onDragStart={handleOnDragStart}
         >
-          {renderContentOfTableBody(
+          {renderContentOfTable(
             objectIssuesList,
             props.statuses,
             props.swimlane,

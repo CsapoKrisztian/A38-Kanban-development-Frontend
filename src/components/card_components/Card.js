@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import Container from "./Container";
-import { Draggable } from "react-beautiful-dnd";
-import { getPriorityBox } from "./getPriorityBox";
-import { getStoryRibbon } from "./getStoryRibbon";
-import { getGitlabLogoBox } from "./getGitlabLogoBox";
-import { getAssigneeBox } from "./getAssigneeBox";
-import { getDueDateBox } from "./getDueDateBox";
-import { getNotesCounterBox } from "./getNotesCounterBox";
-import { getOtherLabelsBox } from "./getOtherLabelsBox";
+import React from 'react';
+import styled from 'styled-components';
+import Container from './Container';
+import { Draggable } from 'react-beautiful-dnd';
+import { getPriorityBox } from './getPriorityBox';
+import { getStoryRibbon } from './getStoryRibbon';
+import { getGitlabLogoBox } from './getGitlabLogoBox';
+import { getAssigneeBox } from './getAssigneeBox';
+import { getDueDateBox } from './getDueDateBox';
+import { getNotesCounterBox } from './getNotesCounterBox';
+import { getOtherLabelsBox } from './getOtherLabelsBox';
 
 const MilestoneBox = styled.div`
   text-align: left;
@@ -41,8 +41,8 @@ function Card(props) {
     userNotesCount,
   } = props.issue;
 
-  mileStone = mileStone != null ? mileStone.title : " ";
-  title = title != null ? title : "No title";
+  mileStone = mileStone != null ? mileStone.title : ' ';
+  title = title != null ? title : 'No title';
 
   return (
     <React.Fragment>

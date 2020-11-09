@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { getAlphaNumeric } from "../util/getAlphaNumeric";
-import { renderRow } from "./renderRow";
-import { renderFirstCellOfRow } from "./renderFirstCellOfRow";
+import React from 'react';
+import styled from 'styled-components';
+import { getAlphaNumeric } from '../util/getAlphaNumeric';
+import { RenderRow } from './RenderRow';
+import { renderFirstCellOfRow } from './renderFirstCellOfRow';
 
 const FirstCell = styled.td`
   min-height: 100px !important;
@@ -20,7 +20,7 @@ const FirstCell = styled.td`
  * @param {string} swimlane
  * @param {string} storyIdOfDraggedIssue
  */
-export const renderContentOfTableBody = (
+export const renderContentOfTable = (
   objectIssuesList,
   statuses,
   swimlane,
@@ -34,23 +34,27 @@ export const renderContentOfTableBody = (
         </div>
       </FirstCell>
 
-      {renderRow(
+      {RenderRow(
         statuses,
         objectIssues.issues,
         getAlphaNumeric(
-          swimlane === "STORY" ?
-            objectIssues.story !== null ?
-              objectIssues.story.id : "Without story"
-          : objectIssues.assignee !== null ?
-            objectIssues.assignee.name : "Unassigned"
+          swimlane === 'STORY'
+            ? objectIssues.story !== null
+              ? objectIssues.story.id
+              : 'Without story'
+            : objectIssues.assignee !== null
+            ? objectIssues.assignee.name
+            : 'Unassigned'
         ),
-        swimlane === "STORY" ?
-          objectIssues.story !== null ?
-            storyIdOfDraggedIssue !== objectIssues.story.id ?
-              true : false
-          : storyIdOfDraggedIssue !== '' ?
-              true : false
-        : false
+        swimlane === 'STORY'
+          ? objectIssues.story !== null
+            ? storyIdOfDraggedIssue !== objectIssues.story.id
+              ? true
+              : false
+            : storyIdOfDraggedIssue !== ''
+            ? true
+            : false
+          : false
       )}
     </tr>
   ));

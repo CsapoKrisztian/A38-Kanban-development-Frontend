@@ -1,5 +1,5 @@
-import React from "react";
-import { CircleButton, CircleImg } from "../components/reuseables/Circle";
+import React from 'react';
+import { CircleButton, CircleImg } from '../components/reuseables/Circle';
 
 /**
  * Renders a circle with the picture of the assignee and under the circle
@@ -9,16 +9,16 @@ import { CircleButton, CircleImg } from "../components/reuseables/Circle";
 export const renderAssigneeBox = (assignee) => {
   if (assignee === undefined || assignee === null) return;
   const addDefaultSrc = (ev) => {
-    ev.target.src = `${process.env["REACT_APP_DEFAULT_AVATAR_IMG"]}`;
+    ev.target.src = `${process.env['REACT_APP_DEFAULT_AVATAR_IMG']}`;
   };
 
   let avatarSrc =
-    assignee.avatarUrl.indexOf("http") !== -1
+    assignee.avatarUrl.indexOf('http') !== -1
       ? assignee.avatarUrl
-      : `${process.env["REACT_APP_GITLAB_SERVER"]}${assignee.avatarUrl}`;
+      : `${process.env['REACT_APP_GITLAB_SERVER']}${assignee.avatarUrl}`;
 
   let assigneeCircle = (
-    <CircleButton size={"60px"}>
+    <CircleButton size={'60px'}>
       <CircleImg onError={addDefaultSrc} src={avatarSrc} alt={assignee.name} />
     </CircleButton>
   );

@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
-import MilestoneOptions from "./MilestoneOptions";
+import React, { useContext } from 'react';
+import { FilterProjectIdsContext } from '../../context/FilterProjectIdsContext';
+import MilestoneOptions from './MilestoneOptions';
 
 /**
  * If the selected projects don't have any milestone a message

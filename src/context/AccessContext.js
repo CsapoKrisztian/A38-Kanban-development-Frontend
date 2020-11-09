@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 /**
  * If authentication is successful the Gitlab provides a token
