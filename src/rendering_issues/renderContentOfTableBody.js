@@ -20,7 +20,7 @@ const FirstCell = styled.td`
  * @param {string} swimlane
  * @param {string} storyIdOfDraggedIssue
  */
-export const renderContentOfTBody = (
+export const renderContentOfTableBody = (
   objectIssuesList,
   statuses,
   swimlane,

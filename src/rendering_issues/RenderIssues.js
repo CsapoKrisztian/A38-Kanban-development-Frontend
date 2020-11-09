@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useApiCall from "../hooks/useApiCall";
 import { DragDropContext } from "react-beautiful-dnd";
 import Loading from "../components/reuseables/Loading";
-import { renderContentOfTBody } from "./renderContentOfTBody";
+import { renderContentOfTableBody } from "./renderContentOfTableBody";
 import { updateStatus } from "../service/updateStatus";
 import { updateAssignee } from "../service/updateAssignee";
 
@@ -92,7 +92,7 @@ function RenderIssues(props) {
           onDragEnd={handleOnDragEnd}
           onDragStart={handleOnDragStart}
         >
-          {renderContentOfTBody(
+          {renderContentOfTableBody(
             objectIssuesList,
             props.statuses,
             props.swimlane,
