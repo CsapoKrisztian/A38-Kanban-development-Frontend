@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Droppable } from 'react-beautiful-dnd';
 import { getAlphaNumeric } from '../util/getAlphaNumeric';
@@ -14,7 +14,16 @@ const compareByPriority = (issue1, issue2) => {
   return 0;
 };
 
-const Field = ({ issues, status, swimlaneClassName, isDropDisabled }) => {
+const Field = ({
+  issuesFilteredByStatus,
+  status,
+  swimlaneClassName,
+  isDropDisabled,
+}) => {
+  const [fieldIssues] = useState(
+    issuesFilteredByStatus.sort(compareByPriority)
+  );
+
   return (
     <Droppable
       droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}
@@ -27,7 +36,7 @@ const Field = ({ issues, status, swimlaneClassName, isDropDisabled }) => {
           {...provided.droppableProps}
           className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
         >
-          {issues.sort(compareByPriority).map((issue, index) => (
+          {fieldIssues.map((issue, index) => (
             <IssueCard key={issue.id} issue={issue} index={index} />
           ))}
           {provided.placeholder}

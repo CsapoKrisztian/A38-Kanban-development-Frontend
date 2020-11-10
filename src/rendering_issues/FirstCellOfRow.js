@@ -1,5 +1,5 @@
-import { StoryBox } from './StoryBox';
-import { AssigneeBox } from './AssigneeBox';
+import StoryBox from './StoryBox';
+import AssigneeBox from './AssigneeBox';
 
 /**
  * Content of first cell changes depending on the swimlane filter
@@ -8,7 +8,7 @@ import { AssigneeBox } from './AssigneeBox';
  * @param {*} objectIssues
  * @param {string} swimlane
  */
-export const FirstCellOfRow = (objectIssues, swimlane) => {
+const FirstCellOfRow = (objectIssues, swimlane) => {
   if (swimlane === 'STORY') {
     let withoutStory = {
       title: 'Without story',
@@ -27,3 +27,5 @@ export const FirstCellOfRow = (objectIssues, swimlane) => {
       : AssigneeBox(unassigned);
   }
 };
+
+export default FirstCellOfRow;

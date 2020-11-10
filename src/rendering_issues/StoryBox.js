@@ -9,10 +9,15 @@ import TextAsButton from '../components/reuseables/TextAsButton';
  * text description.
  * @param {*} story
  */
-export const StoryBox = (story) => {
+const StoryBox = (story) => {
   let description = '';
 
-  if (story.description !== undefined && story.description !== null) {
+  if (
+    story !== null &&
+    story !== undefined &&
+    story.description !== undefined &&
+    story.description !== null
+  ) {
     description = story.description;
     if (description.indexOf('http') !== -1) {
       let webUrl = description;
@@ -28,10 +33,14 @@ export const StoryBox = (story) => {
 
   return (
     <React.Fragment>
-      <h5 className="text-secondary font-weight-bold m-3">{story.title}</h5>
+      <h5 className="text-secondary font-weight-bold m-3">
+        {story !== null && story !== undefined ? story.title : ''}
+      </h5>
       <span>
         <Gray className="font-weight-light">{description}</Gray>
       </span>
     </React.Fragment>
   );
 };
+
+export default StoryBox;

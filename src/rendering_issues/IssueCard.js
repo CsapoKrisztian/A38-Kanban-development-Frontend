@@ -49,7 +49,7 @@ export const IssueCard = ({ issue, index }) => {
   title = title != null ? title : 'No title';
 
   return (
-    <Draggable draggableId={id} key={id} index={index}>
+    <Draggable draggableId={id} index={index}>
       {(provided) => (
         <Container
           {...provided.draggableProps}
