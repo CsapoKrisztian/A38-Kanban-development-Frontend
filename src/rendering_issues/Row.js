@@ -24,17 +24,17 @@ export const Row = ({ objectIssues }) => {
 
   const swimlaneClassName = getAlphaNumeric(
     swimlane === 'STORY'
-      ? objectIssues.story !== null
+      ? objectIssues.story !== null && objectIssues.story !== undefined
         ? objectIssues.story.id
         : 'Without story'
-      : objectIssues.assignee !== null
+      : objectIssues.assignee !== null && objectIssues.assignee !== undefined
       ? objectIssues.assignee.name
       : 'Unassigned'
   );
 
   const isDropDisabled =
     swimlane === 'STORY'
-      ? objectIssues.story !== null
+      ? objectIssues.story !== null && objectIssues.story !== undefined
         ? storyIdOfDraggedIssue !== objectIssues.story.id
           ? true
           : false

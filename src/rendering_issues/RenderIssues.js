@@ -7,7 +7,7 @@ import { ContentOfTable } from './ContentOfTable';
  * Renders content of tbody
  * @param {*} props
  */
-function RenderIssues(props) {
+const RenderIssues = (props) => {
   // Get issues ordering by swimlane
   let urlGetIssues =
     props.swimlane === 'STORY'
@@ -54,9 +54,8 @@ function RenderIssues(props) {
         />
       );
     }
-
-    return <React.Fragment>{tableBody}</React.Fragment>;
   }
-}
+  return tableBody;
+};
 
 export default RenderIssues;
