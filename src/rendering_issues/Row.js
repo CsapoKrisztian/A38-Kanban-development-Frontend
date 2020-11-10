@@ -20,13 +20,13 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
   const [swimlane] = useContext(SwimlaneContext);
   const [statuses] = useContext(StatusContext);
 
-  const swimlaneClassName = getAlphaNumeric(
+  const swimlaneId = getAlphaNumeric(
     swimlane === 'STORY'
       ? objectIssues.story !== null && objectIssues.story !== undefined
         ? objectIssues.story.id
         : 'Without story'
       : objectIssues.assignee !== null && objectIssues.assignee !== undefined
-      ? objectIssues.assignee.name
+      ? objectIssues.assignee.id
       : 'Unassigned'
   );
 
@@ -48,7 +48,7 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
         (issue) => issue.status.title === status
       )}
       status={status}
-      swimlaneClassName={swimlaneClassName}
+      swimlaneId={swimlaneId}
       isDropDisabled={isDropDisabled}
     />
   ));

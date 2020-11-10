@@ -17,7 +17,7 @@ const compareByPriority = (issue1, issue2) => {
 const Field = ({
   issuesFilteredByStatus,
   status,
-  swimlaneClassName,
+  swimlaneId,
   isDropDisabled,
 }) => {
   const [fieldIssues] = useState(
@@ -26,15 +26,15 @@ const Field = ({
 
   return (
     <Droppable
-      droppableId={`${swimlaneClassName}${getAlphaNumeric(status)}`}
+      droppableId={`${swimlaneId}${getAlphaNumeric(status)}`}
       isDropDisabled={isDropDisabled}
     >
       {(provided) => (
         <td
-          id={`${swimlaneClassName}${getAlphaNumeric(status)}`}
+          id={`${swimlaneId}${getAlphaNumeric(status)}`}
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className={`col ${swimlaneClassName} ${getAlphaNumeric(status)}`}
+          className={`col ${swimlaneId} ${getAlphaNumeric(status)}`}
         >
           {fieldIssues.map((issue, index) => (
             <IssueCard key={issue.id} issue={issue} index={index} />
