@@ -1,5 +1,5 @@
-import { renderStoryBox } from './renderStoryBox';
-import { renderAssigneeBox } from './renderAssigneeBox';
+import { StoryBox } from './StoryBox';
+import { AssigneeBox } from './AssigneeBox';
 
 /**
  * Content of first cell changes depending on the swimlane filter
@@ -15,15 +15,15 @@ export const FirstCellOfRow = (objectIssues, swimlane) => {
       description: '',
     };
     return objectIssues.story !== null
-      ? renderStoryBox(objectIssues.story)
-      : renderStoryBox(withoutStory);
+      ? StoryBox(objectIssues.story)
+      : StoryBox(withoutStory);
   } else {
     let unassigned = {
       name: 'Unassigned',
       avatarUrl: `${process.env['REACT_APP_DEFAULT_AVATAR_IMG']}`,
     };
     return objectIssues.assignee !== null
-      ? renderAssigneeBox(objectIssues.assignee)
-      : renderAssigneeBox(unassigned);
+      ? AssigneeBox(objectIssues.assignee)
+      : AssigneeBox(unassigned);
   }
 };

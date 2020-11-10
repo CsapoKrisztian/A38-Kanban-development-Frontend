@@ -6,7 +6,7 @@ import { CircleButton, CircleImg } from '../components/reuseables/Circle';
  * the name of the assignee.
  * @param {*} assignee
  */
-export const renderAssigneeBox = (assignee) => {
+export const AssigneeBox = (assignee) => {
   if (assignee === undefined || assignee === null) return;
   const addDefaultSrc = (ev) => {
     ev.target.src = `${process.env['REACT_APP_DEFAULT_AVATAR_IMG']}`;

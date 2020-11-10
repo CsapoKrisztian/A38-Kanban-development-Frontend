@@ -20,7 +20,7 @@ const FirstCell = styled.td`
  * @param {string} swimlane
  * @param {string} storyIdOfDraggedIssue
  */
-export const ContentOfTable = ({ objectIssuesList, swimlane }) => {
+export const TableBody = ({ objectIssuesList, swimlane }) => {
   // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
   // The story id of the destination cell should be the same, because the story shouldn't change
 

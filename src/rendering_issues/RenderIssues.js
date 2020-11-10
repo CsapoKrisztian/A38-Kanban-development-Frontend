@@ -1,25 +1,31 @@
 import React from 'react';
 import useApiCall from '../hooks/useApiCall';
 import Loading from '../components/reuseables/Loading';
-import { ContentOfTable } from './ContentOfTable';
+import { TableBody } from './TableBody';
 
 /**
  * Renders content of tbody
  * @param {*} props
  */
-const RenderIssues = (props) => {
+const RenderIssues = ({
+  swimlane,
+  statuses,
+  projectIds,
+  milestoneTitles,
+  storyTitles,
+}) => {
   // Get issues ordering by swimlane
   let urlGetIssues =
-    props.swimlane === 'STORY'
+    swimlane === 'STORY'
       ? process.env['REACT_APP_SERVER_ISSUES_BY_STORY']
       : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
 
   const [objectIssuesList, objectIssuesListIsLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
     'POST',
-    props.projectIds,
-    props.milestoneTitles,
-    props.storyTitles
+    projectIds,
+    milestoneTitles,
+    storyTitles
   );
 
   // Showing spinner while loading issues
@@ -27,7 +33,7 @@ const RenderIssues = (props) => {
   if (objectIssuesListIsLoading)
     tableBody = (
       <tr className="border-0">
-        <td className="border-0" colSpan={props.statuses.length + 1}>
+        <td className="border-0" colSpan={statuses.length + 1}>
           <Loading />
         </td>
       </tr>
@@ -42,16 +48,12 @@ const RenderIssues = (props) => {
     objectIssuesList.length > 0
   ) {
     if (
-      (props.swimlane === 'STORY' &&
-        objectIssuesList[0].hasOwnProperty('story')) ||
-      (props.swimlane === 'ASSIGNEE' &&
+      (swimlane === 'STORY' && objectIssuesList[0].hasOwnProperty('story')) ||
+      (swimlane === 'ASSIGNEE' &&
         objectIssuesList[0].hasOwnProperty('assignee'))
     ) {
       tableBody = (
-        <ContentOfTable
-          objectIssuesList={objectIssuesList}
-          swimlane={props.swimlane}
-        />
+        <TableBody objectIssuesList={objectIssuesList} swimlane={swimlane} />
       );
     }
   }

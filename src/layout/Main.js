@@ -41,8 +41,9 @@ function Main() {
 
   // Toggle opening of the sidebar
   const toggleOpened = () => {
-    setSettingsOpen((settingsOpen) => !settingsOpen);
-    localStorage.setItem('settingsOpen', !settingsOpen);
+    const newSettingsOpen = !settingsOpen;
+    setSettingsOpen(newSettingsOpen);
+    localStorage.setItem('settingsOpen', newSettingsOpen);
   };
 
   const [swimlane] = useContext(SwimlaneContext);
