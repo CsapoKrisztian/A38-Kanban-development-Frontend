@@ -6,7 +6,7 @@ import Card from '../components/card_components/Card';
  * @param {*} issue
  * @param {*} status
  */
-export const IssueCard = (issue, index) => {
+export const IssueCard = ({ issue, index }) => {
   return (
     <React.Fragment key={issue.id}>
       <Card issue={issue} index={index} />
