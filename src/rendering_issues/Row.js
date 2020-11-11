@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import Field from './Field';
 import { StatusContext } from '../context/StatusContext';
 import { SwimlaneContext } from '../context/SwimlaneContext';
-import { getAlphaNumeric } from '../util/getAlphaNumeric';
 
 /**
  * Each cell in a row is Droppable, except the first one (story/assignee)
@@ -20,15 +19,14 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
   const [swimlane] = useContext(SwimlaneContext);
   const [statuses] = useContext(StatusContext);
 
-  const swimlaneId = getAlphaNumeric(
+  const swimlaneId =
     swimlane === 'STORY'
       ? objectIssues.story !== null && objectIssues.story !== undefined
         ? objectIssues.story.id
         : 'Without story'
       : objectIssues.assignee !== null && objectIssues.assignee !== undefined
       ? objectIssues.assignee.id
-      : 'Unassigned'
-  );
+      : 'Unassigned';
 
   const isDropDisabled =
     swimlane === 'STORY'

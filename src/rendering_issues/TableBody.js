@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -23,7 +23,11 @@ const FirstCell = styled.td`
  * @param {string} swimlane
  * @param {string} storyIdOfDraggedIssue
  */
-export const TableBody = ({ objectIssuesList, swimlane }) => {
+export const TableBody = ({
+  swimlane,
+  objectIssuesList,
+  setObjectIssuesList,
+}) => {
   // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
   // The story id of the destination cell should be the same, because the story shouldn't change
   const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState('');
@@ -47,19 +51,42 @@ export const TableBody = ({ objectIssuesList, swimlane }) => {
       return;
     }
 
-    let sourceCell = document.getElementById(source.droppableId);
-    let destinationCell = document.getElementById(destination.droppableId);
-    let card = document.getElementById(draggableId);
+    let sourceField = document.getElementById(source.droppableId);
+    let destinationField = document.getElementById(destination.droppableId);
+    let issueCard = document.getElementById(draggableId);
 
-    // Append destination cell with the dragged issue card
-    destinationCell.appendChild(card);
-    updateStatus(sourceCell, destinationCell, draggableId);
+    let sourceStatus = sourceField.getAttribute('status');
+    let sourceSwimlaneId = sourceField.getAttribute('swimlaneid');
+
+    let destinationStatus = destinationField.getAttribute('status');
+    let destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
+
     if (swimlane === 'ASSIGNEE') {
-      updateAssignee(sourceCell, destinationCell, draggableId);
+      let sourceSwimlaneIssues = objectIssuesList.find(
+        (objectIssues) =>
+          objectIssues.assignee !== null &&
+          objectIssues.assignee.id === sourceSwimlaneId
+      ).issues;
+
+      sourceSwimlaneIssues.find(
+        (issue) => issue.id === draggableId
+      ).status.title = destinationStatus;
+
+      setObjectIssuesList(...objectIssuesList);
+      console.log('set setObjectIssuesList: objectIssuesList ');
+      console.log(objectIssuesList);
     }
 
+    // Append destination cell with the dragged issue card
+    // destinationField.appendChild(issueCard);
+
+    // updateStatus(sourceField, destinationField, draggableId);
+    // if (swimlane === 'ASSIGNEE') {
+    //   updateAssignee(sourceField, destinationField, draggableId);
+    // }
+
     // Remove story of the dragged issue from the state
-    setStoryIdOfDraggedIssue(null);
+    // setStoryIdOfDraggedIssue(null);
   };
 
   return (

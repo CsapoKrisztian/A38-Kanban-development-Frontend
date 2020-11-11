@@ -6,14 +6,19 @@ import history from '../util/history';
  * Fetches data
  */
 const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
-  const [fetchedData, setFetchedData] = useState(null);
+  const [fetchedData, setFetchedData] = useState([]);
   /**
    * isLoading is true while fetches the data
    */
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('No errors');
 
+  console.log('useapi call fetchedData');
+  console.log(fetchedData);
+
   useEffect(() => {
+    console.log('useapi call useeffect');
+
     setLoading(true);
     axios({
       method: method,
@@ -37,7 +42,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
     history.push(`/error/${errorMessage}`);
   }
 
-  return [fetchedData, isLoading];
+  return [fetchedData, isLoading, setFetchedData];
 };
 
 export default useApiCall;

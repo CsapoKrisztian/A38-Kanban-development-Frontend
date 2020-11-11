@@ -53,17 +53,19 @@ function Main() {
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
 
-  const RenderedIssues = (
-    <RenderIssues
-      statuses={[...statuses]}
-      swimlane={swimlane}
-      projectIds={[...filterProjectIds]}
-      milestoneTitles={[...filterMilestoneTitles]}
-      storyTitles={[...filterStoryTitles]}
-    />
-  );
+  const getRenderedIssues = () => {
+    return (
+      <RenderIssues
+        statuses={[...statuses]}
+        swimlane={swimlane}
+        projectIds={[...filterProjectIds]}
+        milestoneTitles={[...filterMilestoneTitles]}
+        storyTitles={[...filterStoryTitles]}
+      />
+    );
+  };
 
-  const [tableBody, setTableBody] = useState(RenderedIssues);
+  const [tableBody, setTableBody] = useState(getRenderedIssues());
 
   const getIssues = () => {
     if (
@@ -75,7 +77,7 @@ function Main() {
       filterMilestoneTitles &&
       filterStoryTitles
     ) {
-      setTableBody(RenderedIssues);
+      setTableBody(getRenderedIssues());
     }
   };
 

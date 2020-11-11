@@ -20,7 +20,11 @@ const RenderIssues = ({
       ? process.env['REACT_APP_SERVER_ISSUES_BY_STORY']
       : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
 
-  const [objectIssuesList, objectIssuesListIsLoading] = useApiCall(
+  const [
+    objectIssuesList,
+    objectIssuesListIsLoading,
+    setObjectIssuesList,
+  ] = useApiCall(
     `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
     'POST',
     projectIds,
@@ -39,6 +43,9 @@ const RenderIssues = ({
       </tr>
     );
 
+  console.log('Render Issues before if, objectissueslist:');
+  console.log(objectIssuesList);
+
   // Render table body after fetching is finished
   // DragDropContext is available only this entity
   if (
@@ -53,7 +60,11 @@ const RenderIssues = ({
         objectIssuesList[0].hasOwnProperty('assignee'))
     ) {
       tableBody = (
-        <TableBody objectIssuesList={objectIssuesList} swimlane={swimlane} />
+        <TableBody
+          swimlane={swimlane}
+          objectIssuesList={objectIssuesList}
+          setObjectIssuesList={setObjectIssuesList}
+        />
       );
     }
   }

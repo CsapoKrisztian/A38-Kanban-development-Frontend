@@ -24,14 +24,15 @@ const Field = ({
     issuesFilteredByStatus.sort(compareByPriority)
   );
 
+  const droppableId = getAlphaNumeric(`${swimlaneId}${status}`);
+
   return (
-    <Droppable
-      droppableId={`${swimlaneId}${getAlphaNumeric(status)}`}
-      isDropDisabled={isDropDisabled}
-    >
+    <Droppable droppableId={droppableId} isDropDisabled={isDropDisabled}>
       {(provided) => (
         <td
-          id={`${swimlaneId}${getAlphaNumeric(status)}`}
+          id={droppableId}
+          status={status}
+          swimlaneid={swimlaneId}
           ref={provided.innerRef}
           {...provided.droppableProps}
           className={`col ${swimlaneId} ${getAlphaNumeric(status)}`}
