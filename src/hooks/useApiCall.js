@@ -30,6 +30,23 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
       });
   }, [milestoneTitles, projectIds, method, storyTitles, url]);
 
+  const loadDataFromBackend = () => {
+    setLoading(true);
+    axios({
+      method: method,
+      withCredentials: true,
+      url: url,
+      data: { projectIds, milestoneTitles, storyTitles },
+    })
+      .then((response) => {
+        setFetchedData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
+  };
+
   /**
    * Redirects to error page when axios catches an error
    */
@@ -37,7 +54,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
     history.push(`/error/${errorMessage}`);
   }
 
-  return [fetchedData, isLoading, setFetchedData];
+  return [fetchedData, isLoading, setFetchedData, loadDataFromBackend];
 };
 
 export default useApiCall;

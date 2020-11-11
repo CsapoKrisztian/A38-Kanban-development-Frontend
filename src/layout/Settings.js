@@ -16,7 +16,7 @@ import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
  * Renders the sidebar for filter settings
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
-function Settings(props) {
+const Settings = ({ currentStyle, toggleOpened, loadDataFromBackend }) => {
   const [filterProjectIds] = useContext(FilterProjectIdsContext);
 
   /**
@@ -28,7 +28,7 @@ function Settings(props) {
     filterProjectIds.length === 0;
 
   return (
-    <SideMenu style={props.currentStyle} className="sidenav">
+    <SideMenu style={currentStyle} className="sidenav">
       <Wrapper>
         <Subtitle>SWIMLANES</Subtitle>
         <FilterBox className="d-flex justify-content-between">
@@ -63,7 +63,7 @@ function Settings(props) {
             type="button"
             disabled={disabled}
             className="btn btn-success"
-            onClick={props.getIssues}
+            onClick={loadDataFromBackend}
           >
             Get issues
           </button>
@@ -71,6 +71,6 @@ function Settings(props) {
       </Wrapper>
     </SideMenu>
   );
-}
+};
 
 export default Settings;

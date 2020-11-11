@@ -1,36 +1,21 @@
-import React from 'react';
-import useApiCall from '../hooks/useApiCall';
+import React, { useContext } from 'react';
 import Loading from '../components/reuseables/Loading';
 import { TableBody } from './TableBody';
+
+import { StatusContext } from '../context/StatusContext';
+import { SwimlaneContext } from '../context/SwimlaneContext';
 
 /**
  * Renders content of tbody
  * @param {*} props
  */
 const RenderIssues = ({
-  swimlane,
-  statuses,
-  projectIds,
-  milestoneTitles,
-  storyTitles,
+  objectIssuesList,
+  objectIssuesListIsLoading,
+  setObjectIssuesList,
 }) => {
-  // Get issues ordering by swimlane
-  let urlGetIssues =
-    swimlane === 'STORY'
-      ? process.env['REACT_APP_SERVER_ISSUES_BY_STORY']
-      : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
-
-  const [
-    objectIssuesList,
-    objectIssuesListIsLoading,
-    setObjectIssuesList,
-  ] = useApiCall(
-    `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
-    'POST',
-    projectIds,
-    milestoneTitles,
-    storyTitles
-  );
+  const [statuses] = useContext(StatusContext);
+  const [swimlane] = useContext(SwimlaneContext);
 
   // Showing spinner while loading issues
   let tableBody = <tr></tr>;

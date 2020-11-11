@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import Loading from '../components/reuseables/Loading';
 import styled from 'styled-components';
+
 import { StatusContext } from '../context/StatusContext';
+import RenderIssues from '../rendering_issues/RenderIssues';
 
 const ScrollWrapper = styled.div`
   white-space: nowrap;
@@ -11,7 +13,11 @@ const ScrollWrapper = styled.div`
 /**
  * Fetches statuses and renders KanbanTable
  */
-function Board(props) {
+function Board({
+  objectIssuesList,
+  objectIssuesListIsLoading,
+  setObjectIssuesList,
+}) {
   let content = <Loading />;
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
@@ -25,9 +31,7 @@ function Board(props) {
         <div className="container-fluid pt-9 pl-3 pr-3 pb-3">
           <div className="table-responsive-sm">
             <table className="table table-sm" id="board">
-              <thead
-              // Table header with the statuses
-              >
+              <thead>
                 <tr>
                   <th className="col"></th>
                   {statuses.map((status, index) => (
@@ -37,10 +41,12 @@ function Board(props) {
                   ))}
                 </tr>
               </thead>
-              <tbody
-              // Table body is returned by RenderIssues
-              >
-                {props.tableBody}
+              <tbody>
+                <RenderIssues
+                  objectIssuesList={objectIssuesList}
+                  objectIssuesListIsLoading={objectIssuesListIsLoading}
+                  setObjectIssuesList={setObjectIssuesList}
+                />
               </tbody>
             </table>
           </div>
