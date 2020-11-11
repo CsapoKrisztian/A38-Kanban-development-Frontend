@@ -26,6 +26,10 @@ const Field = ({
 
   const droppableId = getAlphaNumeric(`${swimlaneId}${status}`);
 
+  console.log('\nField before return status issuesFiltered by status');
+  console.log(status);
+  console.log(issuesFilteredByStatus);
+
   return (
     <Droppable droppableId={droppableId} isDropDisabled={isDropDisabled}>
       {(provided) => (

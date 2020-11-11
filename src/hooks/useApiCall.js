@@ -13,12 +13,7 @@ const useApiCall = (url, method, projectIds, milestoneTitles, storyTitles) => {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('No errors');
 
-  console.log('useapi call fetchedData');
-  console.log(fetchedData);
-
   useEffect(() => {
-    console.log('useapi call useeffect');
-
     setLoading(true);
     axios({
       method: method,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -62,19 +62,17 @@ export const TableBody = ({
     let destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
 
     if (swimlane === 'ASSIGNEE') {
-      let sourceSwimlaneIssues = objectIssuesList.find(
+      let sourceSwimlane = objectIssuesList.find(
         (objectIssues) =>
           objectIssues.assignee !== null &&
           objectIssues.assignee.id === sourceSwimlaneId
-      ).issues;
+      );
 
-      sourceSwimlaneIssues.find(
+      sourceSwimlane.issues.find(
         (issue) => issue.id === draggableId
       ).status.title = destinationStatus;
 
-      setObjectIssuesList(...objectIssuesList);
-      console.log('set setObjectIssuesList: objectIssuesList ');
-      console.log(objectIssuesList);
+      setObjectIssuesList([...objectIssuesList]);
     }
 
     // Append destination cell with the dragged issue card
@@ -88,6 +86,9 @@ export const TableBody = ({
     // Remove story of the dragged issue from the state
     // setStoryIdOfDraggedIssue(null);
   };
+
+  console.log('Table body objectIssuesList before return');
+  console.log(objectIssuesList);
 
   return (
     <DragDropContext

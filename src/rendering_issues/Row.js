@@ -39,6 +39,9 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
         : false
       : false;
 
+  console.log('Row before return objectIssues');
+  console.log(objectIssues);
+
   return statuses.map((status) => (
     <Field
       key={status}
