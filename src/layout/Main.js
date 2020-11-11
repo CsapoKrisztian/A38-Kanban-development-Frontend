@@ -81,6 +81,8 @@ function Main() {
     }
   };
 
+  console.log('Main before return');
+
   return (
     <React.Fragment>
       <Header toggleOpened={toggleOpened} />
