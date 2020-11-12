@@ -42,9 +42,9 @@ const Main = () => {
       : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
 
   const [
-    objectIssuesList,
-    objectIssuesListIsLoading,
-    setObjectIssuesList,
+    objectIssuesMap,
+    objectIssuesMapIsLoading,
+    setObjectIssuesMap,
     loadDataFromBackend,
   ] = useApiCall(
     `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
@@ -80,9 +80,9 @@ const Main = () => {
         style={settingsOpen ? pushedStyle : expandedStyle}
       >
         <Board
-          objectIssuesList={objectIssuesList}
-          objectIssuesListIsLoading={objectIssuesListIsLoading}
-          setObjectIssuesList={setObjectIssuesList}
+          objectIssuesMap={objectIssuesMap}
+          objectIssuesMapIsLoading={objectIssuesMapIsLoading}
+          setObjectIssuesMap={setObjectIssuesMap}
         />
       </div>
       <Settings

@@ -25,8 +25,8 @@ const FirstCell = styled.td`
  */
 export const TableBody = ({
   swimlane,
-  objectIssuesList,
-  setObjectIssuesList,
+  objectIssuesMap,
+  setObjectIssuesMap,
 }) => {
   // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
   // The story id of the destination cell should be the same, because the story shouldn't change
@@ -62,7 +62,7 @@ export const TableBody = ({
     let destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
 
     if (swimlane === 'ASSIGNEE') {
-      let sourceSwimlane = objectIssuesList.find(
+      let sourceSwimlane = objectIssuesMap.find(
         (objectIssues) =>
           objectIssues.assignee !== null &&
           objectIssues.assignee.id === sourceSwimlaneId
@@ -72,7 +72,7 @@ export const TableBody = ({
         (issue) => issue.id === draggableId
       ).status.title = destinationStatus;
 
-      setObjectIssuesList([...objectIssuesList]);
+      setObjectIssuesMap([...objectIssuesMap]);
     }
 
     // Append destination cell with the dragged issue card
@@ -92,20 +92,22 @@ export const TableBody = ({
       onDragEnd={handleOnDragEnd}
       onDragStart={handleOnDragStart}
     >
-      {objectIssuesList.map((objectIssues, index) => (
-        <tr key={index}>
-          <FirstCell>
-            <div className="mt-4 pt-2 mb-4 pb-2 text-center">
-              {FirstCellOfRow(objectIssues, swimlane)}
-            </div>
-          </FirstCell>
+      {Object.entries(objectIssuesMap).map(([objectId, objectIssues]) => {
+        return (
+          <tr key={objectId}>
+            <FirstCell>
+              <div className="mt-4 pt-2 mb-4 pb-2 text-center">
+                {FirstCellOfRow(objectIssues, swimlane)}
+              </div>
+            </FirstCell>
 
-          <Row
-            objectIssues={objectIssues}
-            storyIdOfDraggedIssue={storyIdOfDraggedIssue}
-          />
-        </tr>
-      ))}
+            <Row
+              objectIssues={objectIssues}
+              storyIdOfDraggedIssue={storyIdOfDraggedIssue}
+            />
+          </tr>
+        );
+      })}
     </DragDropContext>
   );
 };

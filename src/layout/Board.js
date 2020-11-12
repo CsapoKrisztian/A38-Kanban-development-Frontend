@@ -14,9 +14,9 @@ const ScrollWrapper = styled.div`
  * Fetches statuses and renders KanbanTable
  */
 const Board = ({
-  objectIssuesList,
-  objectIssuesListIsLoading,
-  setObjectIssuesList,
+  objectIssuesMap,
+  objectIssuesMapIsLoading,
+  setObjectIssuesMap,
 }) => {
   let content = <Loading />;
 
@@ -40,9 +40,9 @@ const Board = ({
               </thead>
               <tbody>
                 <RenderIssues
-                  objectIssuesList={objectIssuesList}
-                  objectIssuesListIsLoading={objectIssuesListIsLoading}
-                  setObjectIssuesList={setObjectIssuesList}
+                  objectIssuesMap={objectIssuesMap}
+                  objectIssuesMapIsLoading={objectIssuesMapIsLoading}
+                  setObjectIssuesMap={setObjectIssuesMap}
                 />
               </tbody>
             </table>

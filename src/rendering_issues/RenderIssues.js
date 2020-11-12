@@ -10,16 +10,16 @@ import { SwimlaneContext } from '../context/SwimlaneContext';
  * @param {*} props
  */
 const RenderIssues = ({
-  objectIssuesList,
-  objectIssuesListIsLoading,
-  setObjectIssuesList,
+  objectIssuesMap,
+  objectIssuesMapIsLoading,
+  setObjectIssuesMap,
 }) => {
   const [statuses] = useContext(StatusContext);
   const [swimlane] = useContext(SwimlaneContext);
 
   // Showing spinner while loading issues
   let tableBody = <tr></tr>;
-  if (objectIssuesListIsLoading)
+  if (objectIssuesMapIsLoading)
     tableBody = (
       <tr className="border-0">
         <td className="border-0" colSpan={statuses.length + 1}>
@@ -29,25 +29,19 @@ const RenderIssues = ({
     );
 
   if (
-    !objectIssuesListIsLoading &&
-    objectIssuesList !== undefined &&
-    objectIssuesList !== null &&
-    objectIssuesList.length > 0
+    !objectIssuesMapIsLoading &&
+    objectIssuesMap !== undefined &&
+    objectIssuesMap !== null
   ) {
-    if (
-      (swimlane === 'STORY' && objectIssuesList[0].hasOwnProperty('story')) ||
-      (swimlane === 'ASSIGNEE' &&
-        objectIssuesList[0].hasOwnProperty('assignee'))
-    ) {
-      return (
-        <TableBody
-          swimlane={swimlane}
-          objectIssuesList={objectIssuesList}
-          setObjectIssuesList={setObjectIssuesList}
-        />
-      );
-    }
+    return (
+      <TableBody
+        swimlane={swimlane}
+        objectIssuesMap={objectIssuesMap}
+        setObjectIssuesMap={setObjectIssuesMap}
+      />
+    );
   }
+
   return tableBody;
 };
 

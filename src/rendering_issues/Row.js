@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 import Field from './Field';
-import { StatusContext } from '../context/StatusContext';
 import { SwimlaneContext } from '../context/SwimlaneContext';
 
 /**
@@ -17,7 +16,6 @@ import { SwimlaneContext } from '../context/SwimlaneContext';
  */
 const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
   const [swimlane] = useContext(SwimlaneContext);
-  const [statuses] = useContext(StatusContext);
 
   const swimlaneId =
     swimlane === 'STORY'
