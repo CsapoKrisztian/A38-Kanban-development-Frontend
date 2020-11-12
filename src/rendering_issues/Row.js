@@ -14,17 +14,8 @@ import { SwimlaneContext } from '../context/SwimlaneContext';
  * @param {string} swimlaneClassName
  * @param {boolean} isDropDisabled
  */
-const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
+const Row = ({ objectId, objectIssues, storyIdOfDraggedIssue }) => {
   const [swimlane] = useContext(SwimlaneContext);
-
-  const swimlaneId =
-    swimlane === 'STORY'
-      ? objectIssues.story !== null && objectIssues.story !== undefined
-        ? objectIssues.story.id
-        : 'Without story'
-      : objectIssues.assignee !== null && objectIssues.assignee !== undefined
-      ? objectIssues.assignee.id
-      : 'Unassigned';
 
   const isDropDisabled =
     swimlane === 'STORY'
@@ -44,7 +35,7 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
           key={status}
           issues={issues}
           status={status}
-          swimlaneId={swimlaneId}
+          swimlaneId={objectId}
           isDropDisabled={isDropDisabled}
         />
       );

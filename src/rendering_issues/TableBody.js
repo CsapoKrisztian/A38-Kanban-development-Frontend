@@ -51,29 +51,29 @@ export const TableBody = ({
       return;
     }
 
-    let sourceField = document.getElementById(source.droppableId);
-    let destinationField = document.getElementById(destination.droppableId);
-    let issueCard = document.getElementById(draggableId);
+    const sourceField = document.getElementById(source.droppableId);
 
-    let sourceStatus = sourceField.getAttribute('status');
-    let sourceSwimlaneId = sourceField.getAttribute('swimlaneid');
+    const sourceStatus = sourceField.getAttribute('status');
+    const sourceSwimlaneId = sourceField.getAttribute('swimlaneid');
 
-    let destinationStatus = destinationField.getAttribute('status');
-    let destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
+    const sourceSwimlaneIssues = objectIssuesMap[sourceSwimlaneId];
+    const sourceFieldIssues =
+      sourceSwimlaneIssues.statusIssuesMap[sourceStatus];
+    const [removed] = sourceFieldIssues.splice(source.index, 1);
 
-    if (swimlane === 'ASSIGNEE') {
-      let sourceSwimlane = objectIssuesMap.find(
-        (objectIssues) =>
-          objectIssues.assignee !== null &&
-          objectIssues.assignee.id === sourceSwimlaneId
-      );
+    const destinationField = document.getElementById(destination.droppableId);
 
-      sourceSwimlane.issues.find(
-        (issue) => issue.id === draggableId
-      ).status.title = destinationStatus;
+    const destinationStatus = destinationField.getAttribute('status');
+    const destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
 
-      setObjectIssuesMap([...objectIssuesMap]);
-    }
+    const destinationSwimlaneIssues = objectIssuesMap[destinationSwimlaneId];
+    const destinationFieldIssues =
+      destinationSwimlaneIssues.statusIssuesMap[destinationStatus];
+    destinationFieldIssues.splice(destination.index, 0, removed);
+
+    setObjectIssuesMap({
+      ...objectIssuesMap,
+    });
 
     // Append destination cell with the dragged issue card
     // destinationField.appendChild(issueCard);
@@ -102,6 +102,7 @@ export const TableBody = ({
             </FirstCell>
 
             <Row
+              objectId={objectId}
               objectIssues={objectIssues}
               storyIdOfDraggedIssue={storyIdOfDraggedIssue}
             />
@@ -111,3 +112,11 @@ export const TableBody = ({
     </DragDropContext>
   );
 };
+
+// [sourceSwimlaneId]: {
+//   ...sourceSwimlaneIssues,
+//   statusIssuesMap: {
+//     ...sourceSwimlaneIssues.statusIssuesMap,
+//     [sourceStatus]: [...sourceFieldIssues],
+//   },
+// },

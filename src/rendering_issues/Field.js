@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Droppable } from 'react-beautiful-dnd';
 import { getAlphaNumeric } from '../util/getAlphaNumeric';
