@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
+import axios from 'axios';
 
 import Row from './Row';
 import FirstCellOfRow from './FirstCellOfRow';
-import { updateStatus } from '../service/updateStatus';
-import { updateAssignee } from '../service/updateAssignee';
 
 const FirstCell = styled.td`
   min-height: 100px !important;
 `;
 
-/**
- * The first cell in the row is rendered depending on the swimlane
- * and after that the issues ordered in status columns.
- * Stories shouldn't change, so if the dragged issue's story
- * is different than the destination cell then dropping will be
- * disabled.
- * @see renderRow
- * @param {*} objectIssuesList
- * @param {string[]} statuses
- * @param {string} swimlane
- * @param {string} storyIdOfDraggedIssue
- */
+const updateStatusOnBackend = (newStatusTitle, issueId) => {
+  axios({
+    method: 'POST',
+    withCredentials: true,
+    url: `${process.env['REACT_APP_SERVER']}${process.env['REACT_APP_SERVER_UPDATE_STATUS']}`,
+    data: { issueId, newStatusTitle },
+  }).catch((error) => console.log(error));
+};
+
+const updateAssigneeOnBackend = (newAssigneeId, issueId) => {
+  axios({
+    method: 'POST',
+    withCredentials: true,
+    url: `${process.env['REACT_APP_SERVER']}${process.env['REACT_APP_SERVER_UPDATE_ASSIGNEE']}`,
+    data: { issueId, newAssigneeId },
+  }).catch((error) => console.log(error));
+};
+
 export const TableBody = ({
   swimlane,
   objectIssuesMap,
@@ -48,20 +53,20 @@ export const TableBody = ({
       return;
     }
 
+    // Collect necessary data
     const sourceField = document.getElementById(source.droppableId);
-
     const sourceStatus = sourceField.getAttribute('status');
     const sourceSwimlaneId = sourceField.getAttribute('swimlaneid');
 
+    const destinationField = document.getElementById(destination.droppableId);
+    const destinationStatus = destinationField.getAttribute('status');
+    const destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
+
+    // Update issues on frontend
     const sourceSwimlaneIssues = objectIssuesMap[sourceSwimlaneId];
     const sourceFieldIssues =
       sourceSwimlaneIssues.statusIssuesMap[sourceStatus];
     const [removed] = sourceFieldIssues.splice(source.index, 1);
-
-    const destinationField = document.getElementById(destination.droppableId);
-
-    const destinationStatus = destinationField.getAttribute('status');
-    const destinationSwimlaneId = destinationField.getAttribute('swimlaneid');
 
     const destinationSwimlaneIssues = objectIssuesMap[destinationSwimlaneId];
     const destinationFieldIssues =
@@ -72,9 +77,11 @@ export const TableBody = ({
       ...objectIssuesMap,
     });
 
-    updateStatus(destinationStatus, draggableId);
-    if (swimlane === 'ASSIGNEE') {
-      updateAssignee(sourceField, destinationField, draggableId);
+    // Update issues on backend
+    updateStatusOnBackend(destinationStatus, draggableId);
+
+    if (swimlane === 'ASSIGNEE' && sourceSwimlaneId !== destinationSwimlaneId) {
+      updateAssigneeOnBackend(destinationSwimlaneId, draggableId);
     }
 
     // Remove story of the dragged issue from the state
@@ -106,11 +113,3 @@ export const TableBody = ({
     </DragDropContext>
   );
 };
-
-// [sourceSwimlaneId]: {
-//   ...sourceSwimlaneIssues,
-//   statusIssuesMap: {
-//     ...sourceSwimlaneIssues.statusIssuesMap,
-//     [sourceStatus]: [...sourceFieldIssues],
-//   },
-// },

@@ -1,31 +1,33 @@
-import React, { useContext } from "react";
-import useApiCall from "../../hooks/useApiCall";
-import Label from "./Label";
-import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
+import React, { useContext } from 'react';
+import useApiCall from '../../hooks/useApiCall';
+import Label from './Label';
+import { FilterProjectIdsContext } from '../../context/FilterProjectIdsContext';
 
 /**
  * Fetch and render project labels
  */
 function ProjectLabels() {
-  let projectLabels = "";
-  const [filterProjectIds, setFilterProjectIds] = useContext(FilterProjectIdsContext);
+  let projectLabels = '';
+  const [filterProjectIds, setFilterProjectIds] = useContext(
+    FilterProjectIdsContext
+  );
 
   const [projects, projectsAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}/projects`,
-    "GET"
+    `${process.env['REACT_APP_SERVER']}/projects`,
+    'GET'
   );
 
   const addFilter = (projectId) => {
-    let newFilterProjectIds = [...JSON.parse(JSON.stringify(filterProjectIds)), projectId];
+    let newFilterProjectIds = [...filterProjectIds, projectId];
     setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem("projectIds", newFilterProjectIds);
+    localStorage.setItem('projectIds', newFilterProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newFilterProjectIds = JSON.parse(JSON.stringify(filterProjectIds));
+    let newFilterProjectIds = [...filterProjectIds];
     newFilterProjectIds.splice(newFilterProjectIds.indexOf(projectId), 1);
     setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem("projectIds", newFilterProjectIds);
+    localStorage.setItem('projectIds', newFilterProjectIds);
   };
 
   if (
@@ -47,7 +49,7 @@ function ProjectLabels() {
         title={
           project.group === null
             ? project.name
-            : project.group.name + "/" + project.name
+            : project.group.name + '/' + project.name
         }
       />
     ));

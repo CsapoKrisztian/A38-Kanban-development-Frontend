@@ -1,33 +1,35 @@
-import React, { useContext } from "react";
-import Label from "./Label";
-import useApiCall from "../../hooks/useApiCall";
-import { FilterStoryTitlesContext } from "../../context/FilterStoryTitlesContext";
+import React, { useContext } from 'react';
+import Label from './Label';
+import useApiCall from '../../hooks/useApiCall';
+import { FilterStoryTitlesContext } from '../../context/FilterStoryTitlesContext';
 
 /**
  * Fetch and render story labels
  */
-function StoryLabels(props) {
+function StoryLabels({ projectIds }) {
   let storyLabels = <p>No stories in the selected projects.</p>;
 
   const [allStoryTitles, allStoryTitlesAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}${process.env["REACT_APP_SERVER_STORIES"]}`,
-    "POST",
-    props.projectIds
+    `${process.env['REACT_APP_SERVER']}${process.env['REACT_APP_SERVER_STORIES']}`,
+    'POST',
+    projectIds
   );
 
-  const [filterStoryTitles, setFilterStoryTitles] = useContext(FilterStoryTitlesContext);
+  const [filterStoryTitles, setFilterStoryTitles] = useContext(
+    FilterStoryTitlesContext
+  );
 
   const addFilter = (storyTitle) => {
     let newStoryTitles = [...filterStoryTitles, storyTitle];
     setFilterStoryTitles(newStoryTitles);
-    localStorage.setItem("storyTitles", newStoryTitles);
+    localStorage.setItem('storyTitles', newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = filterStoryTitles;
+    let newStoryTitles = [...filterStoryTitles];
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
     setFilterStoryTitles(newStoryTitles);
-    localStorage.setItem("storyTitles", newStoryTitles);
+    localStorage.setItem('storyTitles', newStoryTitles);
   };
 
   if (

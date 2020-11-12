@@ -6,13 +6,13 @@ import useApiCall from '../../hooks/useApiCall';
  * Fetches milestones and by project ids and shows them in a dropdown
  * @param {*} props
  */
-function MilestoneOptions(props) {
+function MilestoneOptions({ projectIds }) {
   let milestoneDropdown = <p>No milestones in the selected projects.</p>;
 
   const [milestoneTitles, milestoneTitlesAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/milestones`,
     'POST',
-    props.projectIds
+    projectIds
   );
 
   const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(

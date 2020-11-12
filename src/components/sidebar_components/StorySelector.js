@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
-import StoryLabels from "./StoryLabels";
+import React, { useContext } from 'react';
+import { FilterProjectIdsContext } from '../../context/FilterProjectIdsContext';
+import StoryLabels from './StoryLabels';
 
 /**
  * If the selected projects don't have any story a message
