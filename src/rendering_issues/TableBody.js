@@ -44,10 +44,7 @@ export const TableBody = ({
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId) {
       return;
     }
 
@@ -75,13 +72,13 @@ export const TableBody = ({
       ...objectIssuesMap,
     });
 
-    // updateStatus(sourceField, destinationField, draggableId);
-    // if (swimlane === 'ASSIGNEE') {
-    //   updateAssignee(sourceField, destinationField, draggableId);
-    // }
+    updateStatus(destinationStatus, draggableId);
+    if (swimlane === 'ASSIGNEE') {
+      updateAssignee(sourceField, destinationField, draggableId);
+    }
 
     // Remove story of the dragged issue from the state
-    // setStoryIdOfDraggedIssue(null);
+    setStoryIdOfDraggedIssue(null);
   };
 
   return (

@@ -78,7 +78,6 @@ export const IssueCard = ({ issue, index }) => {
               </Footer>
             </div>
           </div>
-          {issue.status.title}
         </Container>
       )}
     </Draggable>
