@@ -75,9 +75,6 @@ export const TableBody = ({
       ...objectIssuesMap,
     });
 
-    // Append destination cell with the dragged issue card
-    // destinationField.appendChild(issueCard);
-
     // updateStatus(sourceField, destinationField, draggableId);
     // if (swimlane === 'ASSIGNEE') {
     //   updateAssignee(sourceField, destinationField, draggableId);
