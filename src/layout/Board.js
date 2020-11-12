@@ -13,18 +13,15 @@ const ScrollWrapper = styled.div`
 /**
  * Fetches statuses and renders KanbanTable
  */
-function Board({
+const Board = ({
   objectIssuesList,
   objectIssuesListIsLoading,
   setObjectIssuesList,
-}) {
+}) => {
   let content = <Loading />;
 
   const [statuses, statusesAreLoading] = useContext(StatusContext);
 
-  /**
-   * While statuses are loading a spinner is rendered
-   */
   if (!statusesAreLoading && statuses) {
     content = (
       <ScrollWrapper>
@@ -55,6 +52,6 @@ function Board({
     );
   }
   return content;
-}
+};
 
 export default Board;

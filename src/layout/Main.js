@@ -30,7 +30,7 @@ const expandedStyle = {
  * Responsible for pushing Board (the main part with the
  * Get issues button and the table) when Settings (sidebar) is opened
  */
-function Main() {
+const Main = () => {
   const [swimlane] = useContext(SwimlaneContext);
   const [filterProjectIds] = useContext(FilterProjectIdsContext);
   const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
@@ -94,6 +94,6 @@ function Main() {
       />
     </React.Fragment>
   );
-}
+};
 
 export default Main;

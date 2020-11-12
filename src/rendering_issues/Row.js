@@ -39,20 +39,19 @@ const Row = ({ objectIssues, storyIdOfDraggedIssue }) => {
         : false
       : false;
 
-  console.log('Row before return objectIssues');
-  console.log(objectIssues);
-
-  return statuses.map((status) => (
-    <Field
-      key={status}
-      issuesFilteredByStatus={objectIssues.issues.filter(
-        (issue) => issue.status.title === status
-      )}
-      status={status}
-      swimlaneId={swimlaneId}
-      isDropDisabled={isDropDisabled}
-    />
-  ));
+  return Object.entries(objectIssues.statusIssuesMap).map(
+    ([status, issues]) => {
+      return (
+        <Field
+          key={status}
+          issues={issues}
+          status={status}
+          swimlaneId={swimlaneId}
+          isDropDisabled={isDropDisabled}
+        />
+      );
+    }
+  );
 };
 
 export default Row;

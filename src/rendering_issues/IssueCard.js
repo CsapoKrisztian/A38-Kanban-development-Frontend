@@ -48,10 +48,6 @@ export const IssueCard = ({ issue, index }) => {
   mileStone = mileStone != null ? mileStone.title : ' ';
   title = title != null ? title : 'No title';
 
-  console.log('IssueCard title, status');
-  console.log(title);
-  console.log(issue.status.title);
-
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (

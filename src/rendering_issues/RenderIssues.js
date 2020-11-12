@@ -28,8 +28,6 @@ const RenderIssues = ({
       </tr>
     );
 
-  // Render table body after fetching is finished
-  // DragDropContext is available only this entity
   if (
     !objectIssuesListIsLoading &&
     objectIssuesList !== undefined &&
@@ -41,9 +39,6 @@ const RenderIssues = ({
       (swimlane === 'ASSIGNEE' &&
         objectIssuesList[0].hasOwnProperty('assignee'))
     ) {
-      console.log('Render Issues after if, objectissueslist:');
-      console.log(objectIssuesList);
-
       return (
         <TableBody
           swimlane={swimlane}

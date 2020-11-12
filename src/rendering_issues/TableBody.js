@@ -87,9 +87,6 @@ export const TableBody = ({
     // setStoryIdOfDraggedIssue(null);
   };
 
-  console.log('Table body objectIssuesList before return');
-  console.log(objectIssuesList);
-
   return (
     <DragDropContext
       onDragEnd={handleOnDragEnd}
