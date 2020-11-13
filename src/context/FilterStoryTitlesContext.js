@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import getSavedFilters from "./getSavedFilters";
+import React, { createContext, useState } from 'react';
+import getSavedFilters from './getSavedFilters';
 
 /**
  * Selected filters are stored in this context, so all of the
@@ -8,7 +8,9 @@ import getSavedFilters from "./getSavedFilters";
 export const FilterStoryTitlesContext = createContext();
 
 export const FilterStoryTitlesProvider = (props) => {
-  const [storyTitles, setStoryTitles] = useState(getSavedFilters('storyTitles'));
+  const [storyTitles, setStoryTitles] = useState(
+    getSavedFilters('storyTitles')
+  );
 
   return (
     <FilterStoryTitlesContext.Provider value={[storyTitles, setStoryTitles]}>

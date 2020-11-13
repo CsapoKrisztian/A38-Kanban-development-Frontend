@@ -1,11 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 export const SwimlaneContext = createContext();
 
 export const SwimlaneProvider = (props) => {
   const getSavedSwimlane = () => {
-    return localStorage.getItem('swimlane') === "STORY" ? 'STORY' : 'ASSIGNEE';
-}
+    return localStorage.getItem('swimlane') === 'STORY' ? 'STORY' : 'ASSIGNEE';
+  };
 
   const [swimlane, setSwimlane] = useState(getSavedSwimlane);
 

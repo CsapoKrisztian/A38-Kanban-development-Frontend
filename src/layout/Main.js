@@ -1,18 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from 'react';
 
-import Header from "./Header";
-import Board from "./Board";
-import Settings from "./Settings";
-import RenderIssues from "../rendering_issues/RenderIssues";
-
-import { SwimlaneContext } from "../context/SwimlaneContext";
-import { FilterProjectIdsContext } from "../context/FilterProjectIdsContext";
-import { FilterMilestoneTitlesContext } from "../context/FilterMilestoneTitlesContext";
-import { FilterStoryTitlesContext } from "../context/FilterStoryTitlesContext";
-import { StatusContext } from "../context/StatusContext";
+import Header from './Header';
+import Board from './Board';
+import Settings from './Settings';
 
 const openedStyle = {
-  width: "250px",
+  width: '250px',
 };
 
 const closedStyle = {
@@ -20,7 +13,7 @@ const closedStyle = {
 };
 
 const pushedStyle = {
-  marginRight: "250px",
+  marginRight: '250px',
 };
 
 const expandedStyle = {
@@ -31,50 +24,21 @@ const expandedStyle = {
  * Responsible for pushing Board (the main part with the
  * Get issues button and the table) when Settings (sidebar) is opened
  */
-function Main() {
-const getSavedOpened = () => {
-  let savedSettingsOpen = localStorage.getItem("settingsOpen");
-  return savedSettingsOpen === 'true' ? true : false;
-}
+const Main = () => {
+  const getSettingsOpenedFromLocalStorage = () => {
+    let savedSettingsOpen = localStorage.getItem('settingsOpen');
+    return savedSettingsOpen === 'true' ? true : false;
+  };
 
-  const [settingsOpen, setSettingsOpen] = useState(getSavedOpened());
+  const [settingsOpen, setSettingsOpen] = useState(
+    getSettingsOpenedFromLocalStorage()
+  );
 
   // Toggle opening of the sidebar
   const toggleOpened = () => {
-    setSettingsOpen((settingsOpen) => !settingsOpen);
-    localStorage.setItem("settingsOpen", !settingsOpen);
-  };
-
-  const [swimlane] = useContext(SwimlaneContext);
-  const [filterProjectIds] = useContext(FilterProjectIdsContext);
-  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
-  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
-
-  const [statuses, statusesAreLoading] = useContext(StatusContext);
-
-  const getRenderedIssues = () => {
-    return (
-      <RenderIssues
-      statuses={[...statuses]}
-      swimlane={swimlane}
-      projectIds={[...filterProjectIds]}
-      milestoneTitles={[...filterMilestoneTitles]}
-      storyTitles={[...filterStoryTitles]}
-    />
-    );
-  }
-
-  const [tableBody, setTableBody] = useState(getRenderedIssues());
-
-  const getIssues = () => {
-    if (
-      !statusesAreLoading && statuses 
-      && filterProjectIds !== undefined && filterProjectIds !== null && filterProjectIds.length > 0
-      && filterMilestoneTitles
-      && filterStoryTitles
-    ) {
-      setTableBody(getRenderedIssues);
-    }
+    const newSettingsOpen = !settingsOpen;
+    setSettingsOpen(newSettingsOpen);
+    localStorage.setItem('settingsOpen', newSettingsOpen);
   };
 
   return (
@@ -82,21 +46,17 @@ const getSavedOpened = () => {
       <Header toggleOpened={toggleOpened} />
       <div
         id="main"
-        // Apply 'pushedStyle' CSS class if the sidebar is opened,
-        // and 'expandedStyle' if it is closed.
+        // Apply 'pushedStyle' CSS class if the sidebar is opened, and 'expandedStyle' if it is closed.
         style={settingsOpen ? pushedStyle : expandedStyle}
       >
-        <Board tableBody={tableBody}/>
+        <Board />
       </div>
       <Settings
-        // Apply 'openedStyle' CSS class if the sidebar is opened,
-        // and 'closedStyle' if it is closed.
+        // Apply 'openedStyle' CSS class if the sidebar is opened, 'closedStyle' if it is closed.
         currentStyle={settingsOpen ? openedStyle : closedStyle}
-        toggleOpened={toggleOpened}
-        getIssues={getIssues}
       />
     </React.Fragment>
   );
-}
+};
 
 export default Main;

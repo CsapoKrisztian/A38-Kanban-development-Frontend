@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const NavButton = styled.div`
   cursor: pointer;
@@ -22,15 +22,17 @@ function Header(props) {
           <b>Kanban</b>Sync
         </Link>
 
-          <div className="col p-1 text-white">
-            <NavButton
-              onClick={props.toggleOpened}
-              // Opens the sidebar with filter settings
-            >
-              <i className="fas fa-cogs" style={{float: "right", paddingRight: "1%"}}></i>
-            </NavButton>
-          </div>
-
+        <div className="col p-1 text-white">
+          <NavButton
+            onClick={props.toggleOpened}
+            // Opens the sidebar with filter settings
+          >
+            <i
+              className="fas fa-cogs"
+              style={{ float: 'right', paddingRight: '1%' }}
+            ></i>
+          </NavButton>
+        </div>
       </nav>
     </React.Fragment>
   );

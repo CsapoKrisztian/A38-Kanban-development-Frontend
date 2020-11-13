@@ -1,32 +1,30 @@
-import React, { useContext } from "react";
-import useApiCall from "../../hooks/useApiCall";
-import Label from "./Label";
-import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
+import React from 'react';
+import useApiCall from '../../hooks/useApiCall';
+import Label from './Label';
 
 /**
  * Fetch and render project labels
  */
-function ProjectLabels() {
-  let projectLabels = "";
-  const [filterProjectIds, setFilterProjectIds] = useContext(FilterProjectIdsContext);
-
+const ProjectLabels = ({ selectedProjectIds, setSelectedProjectIds }) => {
   const [projects, projectsAreLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}/projects`,
-    "GET"
+    `${process.env['REACT_APP_SERVER']}/projects`,
+    'GET'
   );
 
   const addFilter = (projectId) => {
-    let newFilterProjectIds = [...JSON.parse(JSON.stringify(filterProjectIds)), projectId];
-    setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem("projectIds", newFilterProjectIds);
+    const newSettingsProjectIds = [...selectedProjectIds, projectId];
+    setSelectedProjectIds(newSettingsProjectIds);
+    localStorage.setItem('projectIds', newSettingsProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newFilterProjectIds = JSON.parse(JSON.stringify(filterProjectIds));
-    newFilterProjectIds.splice(newFilterProjectIds.indexOf(projectId), 1);
-    setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem("projectIds", newFilterProjectIds);
+    let newSettingsProjectIds = [...selectedProjectIds];
+    newSettingsProjectIds.splice(newSettingsProjectIds.indexOf(projectId), 1);
+    setSelectedProjectIds(newSettingsProjectIds);
+    localStorage.setItem('projectIds', newSettingsProjectIds);
   };
+
+  let projectLabels = '';
 
   if (
     !projectsAreLoading &&
@@ -47,13 +45,14 @@ function ProjectLabels() {
         title={
           project.group === null
             ? project.name
-            : project.group.name + "/" + project.name
+            : project.group.name + '/' + project.name
         }
+        selectedProjectIds={selectedProjectIds}
       />
     ));
   }
 
   return projectLabels;
-}
+};
 
 export default ProjectLabels;
