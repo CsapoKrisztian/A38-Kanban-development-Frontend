@@ -31,16 +31,10 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 const Main = () => {
-  const [swimlane, setSwimlane] = useContext(SwimlaneContext);
-  const [filterProjectIds, setFilterProjectIds] = useContext(
-    FilterProjectIdsContext
-  );
-  const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(
-    FilterMilestoneTitlesContext
-  );
-  const [filterStoryTitles, setFilterStoryTitles] = useContext(
-    FilterStoryTitlesContext
-  );
+  const [swimlane] = useContext(SwimlaneContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
+  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
 
   let urlGetIssues =
     swimlane === 'ASSIGNEE'
@@ -80,8 +74,7 @@ const Main = () => {
       <Header toggleOpened={toggleOpened} />
       <div
         id="main"
-        // Apply 'pushedStyle' CSS class if the sidebar is opened,
-        // and 'expandedStyle' if it is closed.
+        // Apply 'pushedStyle' CSS class if the sidebar is opened, and 'expandedStyle' if it is closed.
         style={settingsOpen ? pushedStyle : expandedStyle}
       >
         <Board
@@ -91,17 +84,8 @@ const Main = () => {
         />
       </div>
       <Settings
-        // Apply 'openedStyle' CSS class if the sidebar is opened,
-        // and 'closedStyle' if it is closed.
+        // Apply 'openedStyle' CSS class if the sidebar is opened, 'closedStyle' if it is closed.
         currentStyle={settingsOpen ? openedStyle : closedStyle}
-        swimlane={swimlane}
-        setSwimlane={setSwimlane}
-        filterProjectIds={filterProjectIds}
-        setFilterProjectIds={setFilterProjectIds}
-        filterMilestoneTitles={filterMilestoneTitles}
-        setFilterMilestoneTitles={setFilterMilestoneTitles}
-        filterStoryTitles={filterStoryTitles}
-        setFilterStoryTitles={setFilterStoryTitles}
       />
     </React.Fragment>
   );
