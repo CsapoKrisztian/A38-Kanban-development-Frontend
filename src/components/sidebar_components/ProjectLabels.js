@@ -5,22 +5,22 @@ import Label from './Label';
 /**
  * Fetch and render project labels
  */
-const ProjectLabels = ({ settingsProjectIds, setSettingsProjectIds }) => {
+const ProjectLabels = ({ selectedProjectIds, setSelectedProjectIds }) => {
   const [projects, projectsAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/projects`,
     'GET'
   );
 
   const addFilter = (projectId) => {
-    const newSettingsProjectIds = [...settingsProjectIds, projectId];
-    setSettingsProjectIds(newSettingsProjectIds);
+    const newSettingsProjectIds = [...selectedProjectIds, projectId];
+    setSelectedProjectIds(newSettingsProjectIds);
     localStorage.setItem('projectIds', newSettingsProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newSettingsProjectIds = [...settingsProjectIds];
+    let newSettingsProjectIds = [...selectedProjectIds];
     newSettingsProjectIds.splice(newSettingsProjectIds.indexOf(projectId), 1);
-    setSettingsProjectIds(newSettingsProjectIds);
+    setSelectedProjectIds(newSettingsProjectIds);
     localStorage.setItem('projectIds', newSettingsProjectIds);
   };
 
@@ -47,7 +47,7 @@ const ProjectLabels = ({ settingsProjectIds, setSettingsProjectIds }) => {
             ? project.name
             : project.group.name + '/' + project.name
         }
-        settingsProjectIds={settingsProjectIds}
+        selectedProjectIds={selectedProjectIds}
       />
     ));
   }

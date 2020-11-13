@@ -8,8 +8,8 @@ import {
   Wrapper,
 } from '../components/sidebar_components/SidebarStyle';
 import ProjectLabels from '../components/sidebar_components/ProjectLabels';
-import StorySelector from '../components/sidebar_components/StorySelector';
-import MilestoneSelector from '../components/sidebar_components/MilestoneSelector';
+import StoryLabels from '../components/sidebar_components/StoryLabels';
+import MilestoneDropDown from '../components/sidebar_components/MilestoneDropDown';
 
 /**
  * Renders the sidebar for filter settings
@@ -26,31 +26,31 @@ const Settings = ({
   filterStoryTitles,
   setFilterStoryTitles,
 }) => {
-  const [settingsSwimlane, setSettingsSwimlane] = useState(swimlane);
-  const [settingsProjectIds, setSettingsProjectIds] = useState(
+  const [selectedSwimlane, setSelectedSwimlane] = useState(swimlane);
+  const [selectedProjectIds, setSelectedProjectIds] = useState(
     filterProjectIds
   );
-  const [settingsMilestoneTitles, setSettingsMilestoneTitles] = useState(
+  const [selectedMilestoneTitles, setSelectedMilestoneTitles] = useState(
     filterMilestoneTitles
   );
-  const [settingsStoryTitles, setSettingsStoryTitles] = useState(
+  const [selectedStoryTitles, setSelectedStoryTitles] = useState(
     filterStoryTitles
   );
 
   const setFilters = () => {
-    setSwimlane(settingsSwimlane);
-    setFilterProjectIds([...settingsProjectIds]);
-    setFilterMilestoneTitles([...settingsMilestoneTitles]);
-    setFilterStoryTitles([...settingsStoryTitles]);
+    setSwimlane(selectedSwimlane);
+    setFilterProjectIds([...selectedProjectIds]);
+    setFilterMilestoneTitles([...selectedMilestoneTitles]);
+    setFilterStoryTitles([...selectedStoryTitles]);
   };
 
   /**
    * While no project is selected "Get issues" button is disabled
    */
   let disabled =
-    settingsProjectIds === undefined ||
-    settingsProjectIds === null ||
-    settingsProjectIds.length === 0;
+    selectedProjectIds === undefined ||
+    selectedProjectIds === null ||
+    selectedProjectIds.length === 0;
 
   return (
     <SideMenu style={currentStyle} className="sidenav">
@@ -60,8 +60,8 @@ const Settings = ({
           <div className="text-left">Assignee</div>
           <div className="text-center">
             <ToggleSwitch
-              settingsSwimlane={settingsSwimlane}
-              setSettingsSwimlane={setSettingsSwimlane}
+              settingsSwimlane={selectedSwimlane}
+              setSettingsSwimlane={setSelectedSwimlane}
             />
           </div>
           <div className="text-right">Story</div>
@@ -71,8 +71,8 @@ const Settings = ({
         <FilterBox>
           <ScrollableBox>
             <ProjectLabels
-              settingsProjectIds={settingsProjectIds}
-              setSettingsProjectIds={setSettingsProjectIds}
+              settingsProjectIds={selectedProjectIds}
+              setSettingsProjectIds={setSelectedProjectIds}
             />
           </ScrollableBox>
         </FilterBox>
@@ -80,19 +80,19 @@ const Settings = ({
         <Subtitle>STORIES</Subtitle>
         <FilterBox>
           <ScrollableBox>
-            <StorySelector
-              settingsProjectIds={settingsProjectIds}
-              settingsStoryTitles={settingsStoryTitles}
-              setSettingsStoryTitles={setSettingsStoryTitles}
+            <StoryLabels
+              settingsProjectIds={selectedProjectIds}
+              settingsStoryTitles={selectedStoryTitles}
+              setSettingsStoryTitles={setSelectedStoryTitles}
             />
           </ScrollableBox>
         </FilterBox>
 
         <Subtitle>MILESTONE</Subtitle>
         <FilterBox>
-          <MilestoneSelector
-            settingsProjectIds={settingsProjectIds}
-            setSettingsMilestoneTitles={setSettingsMilestoneTitles}
+          <MilestoneDropDown
+            settingsProjectIds={selectedProjectIds}
+            setSettingsMilestoneTitles={setSelectedMilestoneTitles}
           />
         </FilterBox>
 

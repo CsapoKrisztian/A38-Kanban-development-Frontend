@@ -78,8 +78,9 @@ export const TableBody = ({
     });
 
     // Update issues on backend
-    updateStatusOnBackend(destinationStatus, draggableId);
-
+    if (sourceStatus !== destinationStatus) {
+      updateStatusOnBackend(destinationStatus, draggableId);
+    }
     if (swimlane === 'ASSIGNEE' && sourceSwimlaneId !== destinationSwimlaneId) {
       updateAssigneeOnBackend(destinationSwimlaneId, draggableId);
     }

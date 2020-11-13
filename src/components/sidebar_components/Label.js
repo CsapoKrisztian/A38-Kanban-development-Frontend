@@ -34,8 +34,8 @@ function Label({
   color,
   addFilter,
   deleteFilter,
-  settingsProjectIds,
-  settingsStoryTitles,
+  selectedProjectIds,
+  selectedStoryTitles,
 }) {
   const offBgColor = '#6c757d';
 
@@ -73,13 +73,13 @@ function Label({
 
   const handleClick = () => {
     if (projectId !== null && projectId !== undefined) {
-      if (settingsProjectIds.indexOf(projectId) < 0) {
+      if (selectedProjectIds.indexOf(projectId) < 0) {
         selectLabel();
       } else {
         deselectLabel();
       }
     } else {
-      if (settingsStoryTitles.indexOf(title) < 0) {
+      if (selectedStoryTitles.indexOf(title) < 0) {
         selectLabel();
       } else {
         deselectLabel();
