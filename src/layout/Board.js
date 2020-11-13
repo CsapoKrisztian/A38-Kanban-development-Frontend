@@ -13,14 +13,10 @@ const ScrollWrapper = styled.div`
 /**
  * Fetches statuses and renders KanbanTable
  */
-const Board = ({
-  objectIssuesMap,
-  objectIssuesMapIsLoading,
-  setObjectIssuesMap,
-}) => {
-  let content = <Loading />;
-
+const Board = () => {
   const [statuses, statusesAreLoading] = useContext(StatusContext);
+
+  let content = <Loading />;
 
   if (!statusesAreLoading && statuses) {
     content = (
@@ -39,11 +35,7 @@ const Board = ({
                 </tr>
               </thead>
               <tbody>
-                <RenderIssues
-                  objectIssuesMap={objectIssuesMap}
-                  objectIssuesMapIsLoading={objectIssuesMapIsLoading}
-                  setObjectIssuesMap={setObjectIssuesMap}
-                />
+                <RenderIssues />
               </tbody>
             </table>
           </div>

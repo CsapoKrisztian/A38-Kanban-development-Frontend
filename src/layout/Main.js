@@ -1,14 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 import Header from './Header';
 import Board from './Board';
 import Settings from './Settings';
-
-import { SwimlaneContext } from '../context/SwimlaneContext';
-import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
-import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesContext';
-import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
-import useApiCall from '../hooks/useApiCall';
 
 const openedStyle = {
   width: '250px',
@@ -31,28 +25,6 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 const Main = () => {
-  const [swimlane] = useContext(SwimlaneContext);
-  const [filterProjectIds] = useContext(FilterProjectIdsContext);
-  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
-  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
-
-  let urlGetIssues =
-    swimlane === 'ASSIGNEE'
-      ? process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE']
-      : process.env['REACT_APP_SERVER_ISSUES_BY_STORY'];
-
-  const [
-    objectIssuesMap,
-    objectIssuesMapIsLoading,
-    setObjectIssuesMap,
-  ] = useApiCall(
-    `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
-    'POST',
-    filterProjectIds,
-    filterMilestoneTitles,
-    filterStoryTitles
-  );
-
   const getSettingsOpenedFromLocalStorage = () => {
     let savedSettingsOpen = localStorage.getItem('settingsOpen');
     return savedSettingsOpen === 'true' ? true : false;
@@ -77,11 +49,7 @@ const Main = () => {
         // Apply 'pushedStyle' CSS class if the sidebar is opened, and 'expandedStyle' if it is closed.
         style={settingsOpen ? pushedStyle : expandedStyle}
       >
-        <Board
-          objectIssuesMap={objectIssuesMap}
-          objectIssuesMapIsLoading={objectIssuesMapIsLoading}
-          setObjectIssuesMap={setObjectIssuesMap}
-        />
+        <Board />
       </div>
       <Settings
         // Apply 'openedStyle' CSS class if the sidebar is opened, 'closedStyle' if it is closed.
