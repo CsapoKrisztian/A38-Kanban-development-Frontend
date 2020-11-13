@@ -3,12 +3,12 @@ import React, { useState, useContext } from 'react';
 import Header from './Header';
 import Board from './Board';
 import Settings from './Settings';
-import useApiCall from '../hooks/useApiCall';
 
 import { SwimlaneContext } from '../context/SwimlaneContext';
 import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
 import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesContext';
 import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
+import useApiCall from '../hooks/useApiCall';
 
 const openedStyle = {
   width: '250px',
@@ -31,21 +31,26 @@ const expandedStyle = {
  * Get issues button and the table) when Settings (sidebar) is opened
  */
 const Main = () => {
-  const [swimlane] = useContext(SwimlaneContext);
-  const [filterProjectIds] = useContext(FilterProjectIdsContext);
-  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
-  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
+  const [swimlane, setSwimlane] = useContext(SwimlaneContext);
+  const [filterProjectIds, setFilterProjectIds] = useContext(
+    FilterProjectIdsContext
+  );
+  const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(
+    FilterMilestoneTitlesContext
+  );
+  const [filterStoryTitles, setFilterStoryTitles] = useContext(
+    FilterStoryTitlesContext
+  );
 
   let urlGetIssues =
-    swimlane === 'STORY'
-      ? process.env['REACT_APP_SERVER_ISSUES_BY_STORY']
-      : process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE'];
+    swimlane === 'ASSIGNEE'
+      ? process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE']
+      : process.env['REACT_APP_SERVER_ISSUES_BY_STORY'];
 
   const [
     objectIssuesMap,
     objectIssuesMapIsLoading,
     setObjectIssuesMap,
-    loadDataFromBackend,
   ] = useApiCall(
     `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
     'POST',
@@ -89,8 +94,14 @@ const Main = () => {
         // Apply 'openedStyle' CSS class if the sidebar is opened,
         // and 'closedStyle' if it is closed.
         currentStyle={settingsOpen ? openedStyle : closedStyle}
-        toggleOpened={toggleOpened}
-        loadDataFromBackend={loadDataFromBackend}
+        swimlane={swimlane}
+        setSwimlane={setSwimlane}
+        filterProjectIds={filterProjectIds}
+        setFilterProjectIds={setFilterProjectIds}
+        filterMilestoneTitles={filterMilestoneTitles}
+        setFilterMilestoneTitles={setFilterMilestoneTitles}
+        filterStoryTitles={filterStoryTitles}
+        setFilterStoryTitles={setFilterStoryTitles}
       />
     </React.Fragment>
   );

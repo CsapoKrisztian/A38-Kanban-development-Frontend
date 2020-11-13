@@ -8,8 +8,9 @@ import Main from '../layout/Main';
  * else redirects to Gitlab server to get code parameter
  * which is required for requesting access token
  */
-function Auth() {
+const AuthController = () => {
   const [gotToken] = useContext(AccessContext);
+
   /**
    * Gitlab will redirect to /getToken Route
    */
@@ -25,6 +26,6 @@ function Auth() {
   }
 
   return content;
-}
+};
 
-export default Auth;
+export default AuthController;

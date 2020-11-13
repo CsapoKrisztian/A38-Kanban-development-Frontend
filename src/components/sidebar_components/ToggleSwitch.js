@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { SwimlaneContext } from "../../context/SwimlaneContext";
+import React from 'react';
+import styled from 'styled-components';
 
 const SwitchLabel = styled.label`
   position: relative;
@@ -35,7 +34,7 @@ const SwitchSlider = styled.span`
     background-color: white;
     border-radius: 50%;
     position: absolute;
-    content: "";
+    content: '';
     height: 20px;
     width: 20px;
     left: 4px;
@@ -49,12 +48,10 @@ const SwitchSlider = styled.span`
  * Choose between story and assignee swimlanes by toggling this switch
  * This is a checkbox basically
  */
-function ToggleSwitch() {
-  const [swimlane, setSwimlane] = useContext(SwimlaneContext);
-
+function ToggleSwitch({ settingsSwimlane, setSettingsSwimlane }) {
   const toggleSwimlane = () => {
-    let newSwimlane = swimlane === "STORY" ? "ASSIGNEE" : "STORY";
-    setSwimlane(newSwimlane);
+    let newSwimlane = settingsSwimlane === 'STORY' ? 'ASSIGNEE' : 'STORY';
+    setSettingsSwimlane(newSwimlane);
     localStorage.setItem('swimlane', newSwimlane);
   };
 
@@ -62,7 +59,7 @@ function ToggleSwitch() {
     <SwitchLabel>
       <SwitchInput
         type="checkbox"
-        checked={swimlane === "STORY" ? true : false}
+        checked={settingsSwimlane === 'STORY' ? true : false}
         onChange={toggleSwimlane}
       />
       <SwitchSlider className="slider" />

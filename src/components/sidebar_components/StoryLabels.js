@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Label from './Label';
 import useApiCall from '../../hooks/useApiCall';
-import { FilterStoryTitlesContext } from '../../context/FilterStoryTitlesContext';
 
 /**
  * Fetch and render story labels
  */
-function StoryLabels({ projectIds }) {
+function StoryLabels({
+  projectIds,
+  settingsStoryTitles,
+  setSettingsStoryTitles,
+}) {
   let storyLabels = <p>No stories in the selected projects.</p>;
 
   const [allStoryTitles, allStoryTitlesAreLoading] = useApiCall(
@@ -15,20 +18,16 @@ function StoryLabels({ projectIds }) {
     projectIds
   );
 
-  const [filterStoryTitles, setFilterStoryTitles] = useContext(
-    FilterStoryTitlesContext
-  );
-
   const addFilter = (storyTitle) => {
-    let newStoryTitles = [...filterStoryTitles, storyTitle];
-    setFilterStoryTitles(newStoryTitles);
+    let newStoryTitles = [...settingsStoryTitles, storyTitle];
+    setSettingsStoryTitles(newStoryTitles);
     localStorage.setItem('storyTitles', newStoryTitles);
   };
 
   const deleteFilter = (storyTitle) => {
-    let newStoryTitles = [...filterStoryTitles];
+    let newStoryTitles = [...settingsStoryTitles];
     newStoryTitles.splice(newStoryTitles.indexOf(storyTitle), 1);
-    setFilterStoryTitles(newStoryTitles);
+    setSettingsStoryTitles(newStoryTitles);
     localStorage.setItem('storyTitles', newStoryTitles);
   };
 
@@ -49,6 +48,7 @@ function StoryLabels({ projectIds }) {
         }}
         title={storyTitle}
         color="#8e44ad"
+        settingsStoryTitles={settingsStoryTitles}
       />
     ));
   }

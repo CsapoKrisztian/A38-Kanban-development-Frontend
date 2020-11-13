@@ -1,22 +1,17 @@
-import React, { useContext } from 'react';
-import { FilterMilestoneTitlesContext } from '../../context/FilterMilestoneTitlesContext';
+import React from 'react';
 import useApiCall from '../../hooks/useApiCall';
 
 /**
  * Fetches milestones and by project ids and shows them in a dropdown
  * @param {*} props
  */
-function MilestoneOptions({ projectIds }) {
+function MilestoneOptions({ settingsProjectIds, setSettingsMilestoneTitles }) {
   let milestoneDropdown = <p>No milestones in the selected projects.</p>;
 
   const [milestoneTitles, milestoneTitlesAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/milestones`,
     'POST',
-    projectIds
-  );
-
-  const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(
-    FilterMilestoneTitlesContext
+    settingsProjectIds
   );
 
   let milestoneOptions = '';
@@ -35,14 +30,14 @@ function MilestoneOptions({ projectIds }) {
 
     const handleChange = (e) => {
       if (e.target.value === 'Select milestone') {
-        setFilterMilestoneTitles([]);
+        setSettingsMilestoneTitles([]);
         localStorage.setItem('milestoneTitles', []);
       } else if (e.target.value === 'allmilestones') {
-        setFilterMilestoneTitles(milestoneTitles);
+        setSettingsMilestoneTitles(milestoneTitles);
         localStorage.setItem('milestoneTitles', milestoneTitles);
       } else {
         let newMilestoneTitle = [e.target.value];
-        setFilterMilestoneTitles(newMilestoneTitle);
+        setSettingsMilestoneTitles(newMilestoneTitle);
         localStorage.setItem('milestoneTitles', newMilestoneTitle);
       }
     };

@@ -1,34 +1,30 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import useApiCall from '../../hooks/useApiCall';
 import Label from './Label';
-import { FilterProjectIdsContext } from '../../context/FilterProjectIdsContext';
 
 /**
  * Fetch and render project labels
  */
-function ProjectLabels() {
-  let projectLabels = '';
-  const [filterProjectIds, setFilterProjectIds] = useContext(
-    FilterProjectIdsContext
-  );
-
+const ProjectLabels = ({ settingsProjectIds, setSettingsProjectIds }) => {
   const [projects, projectsAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/projects`,
     'GET'
   );
 
   const addFilter = (projectId) => {
-    let newFilterProjectIds = [...filterProjectIds, projectId];
-    setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem('projectIds', newFilterProjectIds);
+    const newSettingsProjectIds = [...settingsProjectIds, projectId];
+    setSettingsProjectIds(newSettingsProjectIds);
+    localStorage.setItem('projectIds', newSettingsProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newFilterProjectIds = [...filterProjectIds];
-    newFilterProjectIds.splice(newFilterProjectIds.indexOf(projectId), 1);
-    setFilterProjectIds(newFilterProjectIds);
-    localStorage.setItem('projectIds', newFilterProjectIds);
+    let newSettingsProjectIds = [...settingsProjectIds];
+    newSettingsProjectIds.splice(newSettingsProjectIds.indexOf(projectId), 1);
+    setSettingsProjectIds(newSettingsProjectIds);
+    localStorage.setItem('projectIds', newSettingsProjectIds);
   };
+
+  let projectLabels = '';
 
   if (
     !projectsAreLoading &&
@@ -51,11 +47,12 @@ function ProjectLabels() {
             ? project.name
             : project.group.name + '/' + project.name
         }
+        settingsProjectIds={settingsProjectIds}
       />
     ));
   }
 
   return projectLabels;
-}
+};
 
 export default ProjectLabels;

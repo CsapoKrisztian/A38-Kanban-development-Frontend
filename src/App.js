@@ -4,7 +4,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import ErrorMessage from './service/ErrorMessage';
 import GetToken from './service/GetToken';
 import history from './util/history';
-import Auth from './service/Auth';
+import Auth from './service/AuthController';
 
 const App = () => {
   return (

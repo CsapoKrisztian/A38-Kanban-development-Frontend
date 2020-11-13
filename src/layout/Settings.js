@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import ToggleSwitch from '../components/sidebar_components/ToggleSwitch';
 import {
   SideMenu,
@@ -10,22 +10,47 @@ import {
 import ProjectLabels from '../components/sidebar_components/ProjectLabels';
 import StorySelector from '../components/sidebar_components/StorySelector';
 import MilestoneSelector from '../components/sidebar_components/MilestoneSelector';
-import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
 
 /**
  * Renders the sidebar for filter settings
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
-const Settings = ({ currentStyle, toggleOpened, loadDataFromBackend }) => {
-  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+const Settings = ({
+  currentStyle,
+  swimlane,
+  setSwimlane,
+  filterProjectIds,
+  setFilterProjectIds,
+  filterMilestoneTitles,
+  setFilterMilestoneTitles,
+  filterStoryTitles,
+  setFilterStoryTitles,
+}) => {
+  const [settingsSwimlane, setSettingsSwimlane] = useState(swimlane);
+  const [settingsProjectIds, setSettingsProjectIds] = useState(
+    filterProjectIds
+  );
+  const [settingsMilestoneTitles, setSettingsMilestoneTitles] = useState(
+    filterMilestoneTitles
+  );
+  const [settingsStoryTitles, setSettingsStoryTitles] = useState(
+    filterStoryTitles
+  );
+
+  const setFilters = () => {
+    setSwimlane(settingsSwimlane);
+    setFilterProjectIds([...settingsProjectIds]);
+    setFilterMilestoneTitles([...settingsMilestoneTitles]);
+    setFilterStoryTitles([...settingsStoryTitles]);
+  };
 
   /**
    * While no project is selected "Get issues" button is disabled
    */
   let disabled =
-    filterProjectIds === undefined ||
-    filterProjectIds === null ||
-    filterProjectIds.length === 0;
+    settingsProjectIds === undefined ||
+    settingsProjectIds === null ||
+    settingsProjectIds.length === 0;
 
   return (
     <SideMenu style={currentStyle} className="sidenav">
@@ -34,7 +59,10 @@ const Settings = ({ currentStyle, toggleOpened, loadDataFromBackend }) => {
         <FilterBox className="d-flex justify-content-between">
           <div className="text-left">Assignee</div>
           <div className="text-center">
-            <ToggleSwitch />
+            <ToggleSwitch
+              settingsSwimlane={settingsSwimlane}
+              setSettingsSwimlane={setSettingsSwimlane}
+            />
           </div>
           <div className="text-right">Story</div>
         </FilterBox>
@@ -42,20 +70,30 @@ const Settings = ({ currentStyle, toggleOpened, loadDataFromBackend }) => {
         <Subtitle>PROJECTS</Subtitle>
         <FilterBox>
           <ScrollableBox>
-            <ProjectLabels />
+            <ProjectLabels
+              settingsProjectIds={settingsProjectIds}
+              setSettingsProjectIds={setSettingsProjectIds}
+            />
           </ScrollableBox>
         </FilterBox>
 
         <Subtitle>STORIES</Subtitle>
         <FilterBox>
           <ScrollableBox>
-            <StorySelector />
+            <StorySelector
+              settingsProjectIds={settingsProjectIds}
+              settingsStoryTitles={settingsStoryTitles}
+              setSettingsStoryTitles={setSettingsStoryTitles}
+            />
           </ScrollableBox>
         </FilterBox>
 
         <Subtitle>MILESTONE</Subtitle>
         <FilterBox>
-          <MilestoneSelector />
+          <MilestoneSelector
+            settingsProjectIds={settingsProjectIds}
+            setSettingsMilestoneTitles={setSettingsMilestoneTitles}
+          />
         </FilterBox>
 
         <div className="w-100 d-flex justify-content-center mb-4 mt-4">
@@ -63,7 +101,7 @@ const Settings = ({ currentStyle, toggleOpened, loadDataFromBackend }) => {
             type="button"
             disabled={disabled}
             className="btn btn-success"
-            onClick={loadDataFromBackend}
+            onClick={setFilters}
           >
             Get issues
           </button>
