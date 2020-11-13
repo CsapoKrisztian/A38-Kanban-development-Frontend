@@ -1,10 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-import styled from "styled-components";
-import { FilterProjectIdsContext } from "../../context/FilterProjectIdsContext";
-import { FilterStoryTitlesContext } from "../../context/FilterStoryTitlesContext";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 const LabelStyle = styled.button`
-  background-color: ${(props) => (props.bg ? props.bg : "#17a2b8")};
+  background-color: ${(props) => (props.bg ? props.bg : '#17a2b8')};
   &:hover {
     filter: brightness(125%);
   }
@@ -30,48 +28,58 @@ const LabelStyle = styled.button`
  * the label from the context.
  * @param {*} props
  */
-function Label(props) {
-  const offBgColor = "#6c757d";
-
-  const [filterProjectIds] = useContext(FilterProjectIdsContext);
-  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
+function Label({
+  title,
+  projectId,
+  color,
+  addFilter,
+  deleteFilter,
+  selectedProjectIds,
+  selectedStoryTitles,
+}) {
+  const offBgColor = '#6c757d';
 
   const [bgColor, setBgColor] = useState(offBgColor);
 
   const selectLabel = () => {
-    setBgColor(props.color);
-    props.addFilter();
+    setBgColor(color);
+    addFilter();
   };
 
   const deselectLabel = () => {
     setBgColor(offBgColor);
-    props.deleteFilter();
+    deleteFilter();
   };
 
   useEffect(() => {
-    if (props.projectId !== null && props.projectId !== undefined) {
-      let savedProjectIdsString = localStorage.getItem("projectIds");
-      if (savedProjectIdsString !== null && savedProjectIdsString.includes(props.projectId)) {
-        setBgColor(props.color);
+    if (projectId !== null && projectId !== undefined) {
+      const savedProjectIdsString = localStorage.getItem('projectIds');
+      if (
+        savedProjectIdsString !== null &&
+        savedProjectIdsString.includes(projectId)
+      ) {
+        setBgColor(color);
       }
-    } else  {
-      let savedStoryTitlesString = localStorage.getItem("storyTitles");
-      if (savedStoryTitlesString !== null && savedStoryTitlesString.includes(props.title)) {
-        setBgColor(props.color);
+    } else {
+      const savedStoryTitlesString = localStorage.getItem('storyTitles');
+      if (
+        savedStoryTitlesString !== null &&
+        savedStoryTitlesString.includes(title)
+      ) {
+        setBgColor(color);
       }
     }
-  }, [props.color, props.projectId, props.title]);
-  
+  }, [color, projectId, title]);
 
   const handleClick = () => {
-    if (props.projectId !== null && props.projectId !== undefined) {
-      if (filterProjectIds.indexOf(props.projectId) < 0) {
+    if (projectId !== null && projectId !== undefined) {
+      if (selectedProjectIds.indexOf(projectId) < 0) {
         selectLabel();
-        } else {
-          deselectLabel();
-        }
+      } else {
+        deselectLabel();
+      }
     } else {
-      if (filterStoryTitles.indexOf(props.title) < 0) {
+      if (selectedStoryTitles.indexOf(title) < 0) {
         selectLabel();
       } else {
         deselectLabel();
@@ -79,9 +87,9 @@ function Label(props) {
     }
   };
   return (
-      <LabelStyle bg={bgColor} type="button" onClick={() => handleClick()}>
-        {props.title}
-      </LabelStyle>
+    <LabelStyle bg={bgColor} type="button" onClick={() => handleClick()}>
+      {title}
+    </LabelStyle>
   );
 }
 

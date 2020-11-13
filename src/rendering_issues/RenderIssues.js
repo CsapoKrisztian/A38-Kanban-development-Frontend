@@ -1,109 +1,69 @@
-import React, { useState } from "react";
-import useApiCall from "../hooks/useApiCall";
-import { DragDropContext } from "react-beautiful-dnd";
-import Loading from "../components/reuseables/Loading";
-import { renderContentOfTBody } from "./renderContentOfTBody";
-import { updateStatus } from "../service/updateStatus";
-import { updateAssignee } from "../service/updateAssignee";
+import React, { useContext } from 'react';
+import Loading from '../components/reuseables/Loading';
+import { TableBody } from './TableBody';
+
+import { StatusContext } from '../context/StatusContext';
+import { SwimlaneContext } from '../context/SwimlaneContext';
+import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
+import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesContext';
+import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
+
+import useApiCall from '../hooks/useApiCall';
 
 /**
  * Renders content of tbody
  * @param {*} props
  */
-function RenderIssues(props) {
-  // Get issues ordering by swimlane
+const RenderIssues = () => {
+  const [statuses] = useContext(StatusContext);
+  const [swimlane] = useContext(SwimlaneContext);
+  const [filterProjectIds] = useContext(FilterProjectIdsContext);
+  const [filterMilestoneTitles] = useContext(FilterMilestoneTitlesContext);
+  const [filterStoryTitles] = useContext(FilterStoryTitlesContext);
+
   let urlGetIssues =
-    props.swimlane === "STORY"
-      ? process.env["REACT_APP_SERVER_ISSUES_BY_STORY"]
-      : process.env["REACT_APP_SERVER_ISSUES_BY_ASSIGNEE"];
+    swimlane === 'ASSIGNEE'
+      ? process.env['REACT_APP_SERVER_ISSUES_BY_ASSIGNEE']
+      : process.env['REACT_APP_SERVER_ISSUES_BY_STORY'];
 
-  const [objectIssuesList, objectIssuesListIsLoading] = useApiCall(
-    `${process.env["REACT_APP_SERVER"]}${urlGetIssues}`,
-    "POST",
-    props.projectIds,
-    props.milestoneTitles,
-    props.storyTitles
+  const [
+    objectIssuesMap,
+    objectIssuesMapIsLoading,
+    setObjectIssuesMap,
+  ] = useApiCall(
+    `${process.env['REACT_APP_SERVER']}${urlGetIssues}`,
+    'POST',
+    filterProjectIds,
+    filterMilestoneTitles,
+    filterStoryTitles
   );
-
-  // Value of storyIdOfDraggedIssue will be the story id of the dragged issue.
-  // The story id of the destination cell should be the same, because the story shouldn't change
-  const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState("");
-
-  // On the beginning of the drag story is stored in the state
-  const handleOnDragStart = (start) => {
-    let card = document.getElementById(start.draggableId);
-    let ribbon = card.querySelector(".storyRibbon");
-    if (ribbon !== undefined && ribbon !== null) {
-      setStoryIdOfDraggedIssue(ribbon.id);
-    }
-  };
-
-  // Validation of dragging and finalization of dropping
-  const handleOnDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    let sourceCell = document.getElementById(source.droppableId);
-    let destinationCell = document.getElementById(destination.droppableId);
-    let card = document.getElementById(draggableId);
-
-    // Append destination cell with the dragged issue card
-    destinationCell.appendChild(card);
-    updateStatus(sourceCell, destinationCell, draggableId);
-    if (props.swimlane === "ASSIGNEE") {
-      updateAssignee(sourceCell, destinationCell, draggableId);
-    }
-
-    // Remove story of the dragged issue from the state
-    setStoryIdOfDraggedIssue(null);
-  };
 
   // Showing spinner while loading issues
   let tableBody = <tr></tr>;
-  if (objectIssuesListIsLoading)
+  if (objectIssuesMapIsLoading)
     tableBody = (
       <tr className="border-0">
-        <td className="border-0" colSpan={props.statuses.length + 1}>
+        <td className="border-0" colSpan={statuses.length + 1}>
           <Loading />
         </td>
       </tr>
     );
 
-  // Render table body after fetching is finished
-  // DragDropContext is available only this entity
   if (
-    !objectIssuesListIsLoading &&
-    objectIssuesList !== undefined &&
-    objectIssuesList !== null &&
-    objectIssuesList.length > 0
+    !objectIssuesMapIsLoading &&
+    objectIssuesMap !== undefined &&
+    objectIssuesMap !== null
   ) {
-    if (
-      (props.swimlane === "STORY" && objectIssuesList[0].hasOwnProperty("story")) ||
-      (props.swimlane === "ASSIGNEE" && objectIssuesList[0].hasOwnProperty("assignee"))
-    ) {
-      tableBody = (
-        <DragDropContext
-          onDragEnd={handleOnDragEnd}
-          onDragStart={handleOnDragStart}
-        >
-          {renderContentOfTBody(
-            objectIssuesList,
-            props.statuses,
-            props.swimlane,
-            storyIdOfDraggedIssue
-          )}
-        </DragDropContext>
-      );
-    }
+    return (
+      <TableBody
+        swimlane={swimlane}
+        objectIssuesMap={objectIssuesMap}
+        setObjectIssuesMap={setObjectIssuesMap}
+      />
+    );
   }
 
-  return <React.Fragment>{tableBody}</React.Fragment>;
-}
+  return tableBody;
+};
 
 export default RenderIssues;

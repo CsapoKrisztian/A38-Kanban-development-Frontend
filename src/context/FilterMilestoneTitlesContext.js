@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import getSavedFilters from "./getSavedFilters";
+import React, { createContext, useState } from 'react';
+import getSavedFilters from './getSavedFilters';
 
 /**
  * Selected filters are stored in this context, so all of the
@@ -8,10 +8,14 @@ import getSavedFilters from "./getSavedFilters";
 export const FilterMilestoneTitlesContext = createContext();
 
 export const FilterMilestoneTitlesProvider = (props) => {
-  const [milestoneTitles, setMilestoneTitles] = useState(getSavedFilters("milestoneTitles"));
+  const [milestoneTitles, setMilestoneTitles] = useState(
+    getSavedFilters('milestoneTitles')
+  );
 
   return (
-    <FilterMilestoneTitlesContext.Provider value={[milestoneTitles,setMilestoneTitles,]}>
+    <FilterMilestoneTitlesContext.Provider
+      value={[milestoneTitles, setMilestoneTitles]}
+    >
       {props.children}
     </FilterMilestoneTitlesContext.Provider>
   );
