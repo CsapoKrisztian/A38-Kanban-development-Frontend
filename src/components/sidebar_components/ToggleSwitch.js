@@ -48,10 +48,10 @@ const SwitchSlider = styled.span`
  * Choose between story and assignee swimlanes by toggling this switch
  * This is a checkbox basically
  */
-function ToggleSwitch({ settingsSwimlane, setSettingsSwimlane }) {
+function ToggleSwitch({ selectedSwimlane, setSelectedSwimlane }) {
   const toggleSwimlane = () => {
-    let newSwimlane = settingsSwimlane === 'STORY' ? 'ASSIGNEE' : 'STORY';
-    setSettingsSwimlane(newSwimlane);
+    let newSwimlane = selectedSwimlane === 'STORY' ? 'ASSIGNEE' : 'STORY';
+    setSelectedSwimlane(newSwimlane);
     localStorage.setItem('swimlane', newSwimlane);
   };
 
@@ -59,7 +59,7 @@ function ToggleSwitch({ settingsSwimlane, setSettingsSwimlane }) {
     <SwitchLabel>
       <SwitchInput
         type="checkbox"
-        checked={settingsSwimlane === 'STORY' ? true : false}
+        checked={selectedSwimlane === 'STORY' ? true : false}
         onChange={toggleSwimlane}
       />
       <SwitchSlider className="slider" />
