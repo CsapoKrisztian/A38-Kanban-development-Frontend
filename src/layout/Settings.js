@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ToggleSwitch from '../components/sidebar_components/ToggleSwitch';
 import {
   SideMenu,
@@ -11,21 +11,29 @@ import ProjectLabels from '../components/sidebar_components/ProjectLabels';
 import StoryLabels from '../components/sidebar_components/StoryLabels';
 import MilestoneDropDown from '../components/sidebar_components/MilestoneDropDown';
 
+import { SwimlaneContext } from '../context/SwimlaneContext';
+import { FilterProjectIdsContext } from '../context/FilterProjectIdsContext';
+import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesContext';
+import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
+
 /**
  * Renders the sidebar for filter settings
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
-const Settings = ({
-  currentStyle,
-  swimlane,
-  setSwimlane,
-  filterProjectIds,
-  setFilterProjectIds,
-  filterMilestoneTitles,
-  setFilterMilestoneTitles,
-  filterStoryTitles,
-  setFilterStoryTitles,
-}) => {
+const Settings = ({ currentStyle }) => {
+  // These are the filters that are actually used in the requests to the backend
+  const [swimlane, setSwimlane] = useContext(SwimlaneContext);
+  const [filterProjectIds, setFilterProjectIds] = useContext(
+    FilterProjectIdsContext
+  );
+  const [filterMilestoneTitles, setFilterMilestoneTitles] = useContext(
+    FilterMilestoneTitlesContext
+  );
+  const [filterStoryTitles, setFilterStoryTitles] = useContext(
+    FilterStoryTitlesContext
+  );
+
+  // These are the filters that are selected in Settings
   const [selectedSwimlane, setSelectedSwimlane] = useState(swimlane);
   const [selectedProjectIds, setSelectedProjectIds] = useState(
     filterProjectIds
@@ -37,6 +45,8 @@ const Settings = ({
     filterStoryTitles
   );
 
+  // The actual filters are updated to the selected filters
+  // This is called when Get issues button is clicked
   const setFilters = () => {
     setSwimlane(selectedSwimlane);
     setFilterProjectIds([...selectedProjectIds]);
@@ -44,9 +54,7 @@ const Settings = ({
     setFilterStoryTitles([...selectedStoryTitles]);
   };
 
-  /**
-   * While no project is selected "Get issues" button is disabled
-   */
+  // While no project is selected "Get issues" button is disabled
   let disabled =
     selectedProjectIds === undefined ||
     selectedProjectIds === null ||
@@ -60,8 +68,8 @@ const Settings = ({
           <div className="text-left">Assignee</div>
           <div className="text-center">
             <ToggleSwitch
-              settingsSwimlane={selectedSwimlane}
-              setSettingsSwimlane={setSelectedSwimlane}
+              selectedSwimlane={selectedSwimlane}
+              setSelectedSwimlane={setSelectedSwimlane}
             />
           </div>
           <div className="text-right">Story</div>
@@ -71,8 +79,8 @@ const Settings = ({
         <FilterBox>
           <ScrollableBox>
             <ProjectLabels
-              settingsProjectIds={selectedProjectIds}
-              setSettingsProjectIds={setSelectedProjectIds}
+              selectedProjectIds={selectedProjectIds}
+              setSelectedProjectIds={setSelectedProjectIds}
             />
           </ScrollableBox>
         </FilterBox>
@@ -81,9 +89,9 @@ const Settings = ({
         <FilterBox>
           <ScrollableBox>
             <StoryLabels
-              settingsProjectIds={selectedProjectIds}
-              settingsStoryTitles={selectedStoryTitles}
-              setSettingsStoryTitles={setSelectedStoryTitles}
+              selectedProjectIds={selectedProjectIds}
+              selectedStoryTitles={selectedStoryTitles}
+              setSelectedStoryTitles={setSelectedStoryTitles}
             />
           </ScrollableBox>
         </FilterBox>
@@ -91,13 +99,13 @@ const Settings = ({
         <Subtitle>MILESTONE</Subtitle>
         <FilterBox>
           <MilestoneDropDown
-            settingsProjectIds={selectedProjectIds}
-            setSettingsMilestoneTitles={setSelectedMilestoneTitles}
+            selectedProjectIds={selectedProjectIds}
+            setSelectedMilestoneTitles={setSelectedMilestoneTitles}
           />
         </FilterBox>
 
         <div className="w-100 d-flex justify-content-center mb-4 mt-4">
-          <button // Get issues button
+          <button
             type="button"
             disabled={disabled}
             className="btn btn-success"
