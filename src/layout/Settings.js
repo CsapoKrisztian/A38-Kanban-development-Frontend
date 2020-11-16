@@ -17,7 +17,7 @@ import { FilterMilestoneTitlesContext } from '../context/FilterMilestoneTitlesCo
 import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
 
 /**
- * Renders the sidebar for filter settings
+ * Renders the sidebar to select filters
  * @param {*} props: currentStyle - the sidebar is opened or closed
  */
 const Settings = ({ currentStyle }) => {

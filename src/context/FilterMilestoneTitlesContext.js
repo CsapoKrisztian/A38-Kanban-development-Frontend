@@ -1,10 +1,11 @@
 import React, { createContext, useState } from 'react';
 import getSavedFilters from './getSavedFilters';
 
-/**
- * Selected filters are stored in this context, so all of the
- * components have access to them
- */
+// The filter milestone titles are stored in this context.
+// All of the components have access to them.
+// These are applied when the issues are requested from backend.
+// These are changed only when the "Get issues" button is clicked.
+
 export const FilterMilestoneTitlesContext = createContext();
 
 export const FilterMilestoneTitlesProvider = (props) => {

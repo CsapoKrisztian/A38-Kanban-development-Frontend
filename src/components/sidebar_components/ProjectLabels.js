@@ -9,18 +9,19 @@ const ProjectLabels = ({ selectedProjectIds, setSelectedProjectIds }) => {
   );
 
   const addFilter = (projectId) => {
-    const newSettingsProjectIds = [...selectedProjectIds, projectId];
-    setSelectedProjectIds(newSettingsProjectIds);
-    localStorage.setItem('projectIds', newSettingsProjectIds);
+    const newSelectedProjectIds = [...selectedProjectIds, projectId];
+    setSelectedProjectIds(newSelectedProjectIds);
+    localStorage.setItem('projectIds', newSelectedProjectIds);
   };
 
   const deleteFilter = (projectId) => {
-    let newSettingsProjectIds = [...selectedProjectIds];
-    newSettingsProjectIds.splice(newSettingsProjectIds.indexOf(projectId), 1);
-    setSelectedProjectIds(newSettingsProjectIds);
-    localStorage.setItem('projectIds', newSettingsProjectIds);
+    let newSelectedProjectIds = [...selectedProjectIds];
+    newSelectedProjectIds.splice(newSelectedProjectIds.indexOf(projectId), 1);
+    setSelectedProjectIds(newSelectedProjectIds);
+    localStorage.setItem('projectIds', newSelectedProjectIds);
   };
 
+  // If there are no project ids that can be displayed, then an empty string is returned.
   if (
     projectsAreLoading ||
     projects === undefined ||
