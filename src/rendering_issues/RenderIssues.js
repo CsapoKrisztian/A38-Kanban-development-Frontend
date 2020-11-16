@@ -10,10 +10,6 @@ import { FilterStoryTitlesContext } from '../context/FilterStoryTitlesContext';
 
 import useApiCall from '../hooks/useApiCall';
 
-/**
- * Renders content of tbody
- * @param {*} props
- */
 const RenderIssues = () => {
   const [statuses] = useContext(StatusContext);
   const [swimlane] = useContext(SwimlaneContext);

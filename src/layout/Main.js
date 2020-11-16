@@ -20,10 +20,6 @@ const expandedStyle = {
   marginRight: 0,
 };
 
-/**
- * Responsible for pushing Board (the main part with the
- * Get issues button and the table) when Settings (sidebar) is opened
- */
 const Main = () => {
   const getSettingsOpenedFromLocalStorage = () => {
     let savedSettingsOpen = localStorage.getItem('settingsOpen');
@@ -41,6 +37,7 @@ const Main = () => {
     localStorage.setItem('settingsOpen', newSettingsOpen);
   };
 
+  // The Board will be pushed when Settings (sidebar) is opened
   return (
     <React.Fragment>
       <Header toggleOpened={toggleOpened} />

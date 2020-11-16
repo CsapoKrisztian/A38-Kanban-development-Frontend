@@ -1,10 +1,6 @@
 import React from 'react';
 import useApiCall from '../../hooks/useApiCall';
 
-/**
- * If the selected projects don't have any milestone a message
- * appears instead of the dropdown.
- */
 function MilestoneDropDown({ selectedProjectIds, setSelectedMilestoneTitles }) {
   const [milestoneTitles, milestoneTitlesAreLoading] = useApiCall(
     `${process.env['REACT_APP_SERVER']}/milestones`,
@@ -40,6 +36,7 @@ function MilestoneDropDown({ selectedProjectIds, setSelectedMilestoneTitles }) {
     } else return 'allmilestones';
   };
 
+  // If no projects are selected then this will be indicated in a message instead of the dropdown.
   if (
     selectedProjectIds === undefined ||
     selectedProjectIds === null ||
@@ -48,6 +45,7 @@ function MilestoneDropDown({ selectedProjectIds, setSelectedMilestoneTitles }) {
     return <p>No selected projects</p>;
   }
 
+  // If the selected projects don't have any milestone this will be indicated a message instead of the dropdown.
   if (
     milestoneTitlesAreLoading ||
     milestoneTitles === undefined ||
@@ -57,6 +55,7 @@ function MilestoneDropDown({ selectedProjectIds, setSelectedMilestoneTitles }) {
     return <p>No milestones in the selected projects.</p>;
   }
 
+  // If "Select milestone" option is chosen then this filter will not be used in the request.
   return (
     <select
       className="custom-select"
