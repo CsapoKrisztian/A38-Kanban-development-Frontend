@@ -44,10 +44,7 @@ const SwitchSlider = styled.span`
   }
 `;
 
-/**
- * Choose between story and assignee swimlanes by toggling this switch
- * This is a checkbox basically
- */
+// Choose between story and assignee swimlanes by toggling this switch
 function ToggleSwitch({ selectedSwimlane, setSelectedSwimlane }) {
   const toggleSwimlane = () => {
     let newSwimlane = selectedSwimlane === 'STORY' ? 'ASSIGNEE' : 'STORY';

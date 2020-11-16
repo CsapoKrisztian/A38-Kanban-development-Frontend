@@ -8,7 +8,7 @@ import AssigneeBox from './AssigneeBox';
  * @param {*} objectIssues
  * @param {string} swimlane
  */
-const FirstCellOfRow = (objectIssues, swimlane) => {
+const FirstCellOfRow = ({ objectIssues, swimlane }) => {
   if (swimlane === 'STORY') {
     let withoutStory = {
       title: 'Without story',

@@ -1,8 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-/**
- * Styled components of the Settings component
- */
+// Styled components of the Settings component
+
 export const SideMenu = styled.div`
   height: 100%;
   width: 0;
