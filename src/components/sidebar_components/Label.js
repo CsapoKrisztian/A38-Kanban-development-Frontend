@@ -22,12 +22,6 @@ const LabelStyle = styled.button`
   }
 `;
 
-/**
- * Project and story labels will be stored in FilterContext
- * after clicking on them. Clicking on an active label, removes
- * the label from the context.
- * @param {*} props
- */
 function Label({
   title,
   projectId,
