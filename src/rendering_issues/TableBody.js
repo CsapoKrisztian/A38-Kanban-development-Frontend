@@ -99,10 +99,7 @@ export const TableBody = ({
           <tr key={objectId}>
             <FirstCell>
               <div className="mt-4 pt-2 mb-4 pb-2 text-center">
-                <FirstCellOfRow
-                  objectIssues={objectIssues}
-                  swimlane={swimlane}
-                />
+                {FirstCellOfRow(objectIssues, swimlane)}
               </div>
             </FirstCell>
 
