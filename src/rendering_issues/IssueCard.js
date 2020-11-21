@@ -11,12 +11,6 @@ import { getDueDateBox } from '../components/card_components/getDueDateBox';
 import { getNotesCounterBox } from '../components/card_components/getNotesCounterBox';
 import { getOtherLabelsBox } from '../components/card_components/getOtherLabelsBox';
 
-/**
- * Returns Card component if the card is at the right column
- * @param {*} issue
- * @param {*} status
- */
-
 const MilestoneBox = styled.div`
   text-align: left;
   overflow: hidden;

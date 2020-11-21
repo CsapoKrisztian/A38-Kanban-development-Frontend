@@ -10,21 +10,21 @@ const FirstCell = styled.td`
   min-height: 100px !important;
 `;
 
-const updateStatusOnBackend = (newStatusTitle, issueId) => {
+const updateStatusOnBackend = (newStatusTitle, issueId, projectFullPath) => {
   axios({
     method: 'POST',
     withCredentials: true,
     url: `${process.env['REACT_APP_SERVER']}${process.env['REACT_APP_SERVER_UPDATE_STATUS']}`,
-    data: { issueId, newStatusTitle },
+    data: { issueId, newStatusTitle, projectFullPath },
   }).catch((error) => console.log(error));
 };
 
-const updateAssigneeOnBackend = (newAssigneeId, issueId) => {
+const updateAssigneeOnBackend = (newAssigneeId, issueId, projectFullPath) => {
   axios({
     method: 'POST',
     withCredentials: true,
     url: `${process.env['REACT_APP_SERVER']}${process.env['REACT_APP_SERVER_UPDATE_ASSIGNEE']}`,
-    data: { issueId, newAssigneeId },
+    data: { issueId, newAssigneeId, projectFullPath },
   }).catch((error) => console.log(error));
 };
 
@@ -38,11 +38,9 @@ export const TableBody = ({
   const [storyIdOfDraggedIssue, setStoryIdOfDraggedIssue] = useState('');
 
   const handleOnDragStart = (start) => {
-    let card = document.getElementById(start.draggableId);
-    let ribbon = card.querySelector('.storyRibbon');
-    if (ribbon !== undefined && ribbon !== null) {
-      setStoryIdOfDraggedIssue(ribbon.id);
-    }
+    const card = document.getElementById(start.draggableId);
+    const ribbon = card.querySelector('.storyRibbon');
+    setStoryIdOfDraggedIssue(ribbon.id);
   };
 
   // Validation of dragging and finalization of dropping
@@ -66,23 +64,32 @@ export const TableBody = ({
     const sourceSwimlaneIssues = objectIssuesMap[sourceSwimlaneId];
     const sourceFieldIssues =
       sourceSwimlaneIssues.statusIssuesMap[sourceStatus];
-    const [removed] = sourceFieldIssues.splice(source.index, 1);
+    const [draggedIssue] = sourceFieldIssues.splice(source.index, 1);
 
     const destinationSwimlaneIssues = objectIssuesMap[destinationSwimlaneId];
     const destinationFieldIssues =
       destinationSwimlaneIssues.statusIssuesMap[destinationStatus];
-    destinationFieldIssues.splice(destination.index, 0, removed);
+    destinationFieldIssues.splice(destination.index, 0, draggedIssue);
 
     setObjectIssuesMap({
       ...objectIssuesMap,
     });
 
     // Update issues on backend
+    const projectFullPathOfDraggedIssue = draggedIssue.project.fullPath;
     if (sourceStatus !== destinationStatus) {
-      updateStatusOnBackend(destinationStatus, draggableId);
+      updateStatusOnBackend(
+        destinationStatus,
+        draggableId,
+        projectFullPathOfDraggedIssue
+      );
     }
     if (swimlane === 'ASSIGNEE' && sourceSwimlaneId !== destinationSwimlaneId) {
-      updateAssigneeOnBackend(destinationSwimlaneId, draggableId);
+      updateAssigneeOnBackend(
+        destinationSwimlaneId,
+        draggableId,
+        projectFullPathOfDraggedIssue
+      );
     }
 
     // Remove story of the dragged issue from the state
